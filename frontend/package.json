@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,7 +11,7 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
-    "@apollo/client": "^4.1.6",
+    "@apollo/client": "^3.13.9",
     "@vue/apollo-composable": "^4.2.2",
     "graphql": "^16.13.2",
     "pinia": "^3.0.4",
