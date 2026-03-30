@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-30T20:23:09Z",
+  "task": "predict",
+  "model": "yolov8n.pt",
+  "data": "C:\\Users\\pemip\\Desktop\\Proyecto-ia-dental\\entrenamiento ia\\dataset\\data.yaml",
+  "source": "C:\\Users\\pemip\\Desktop\\Proyecto-ia-dental\\entrenamiento ia\\dataset\\images\\test\\0004_jpg.rf.6434bfce7667ea786e5f251dc0d8b8b1.jpg",
+  "output_dir": "C:\\Users\\pemip\\Desktop\\Proyecto-ia-dental\\entrenamiento ia\\runs\\eval_predict\\sanity_save_dir",
+  "ultralytics_save_dir": "C:\\Users\\pemip\\Desktop\\Proyecto-ia-dental\\entrenamiento ia\\runs\\eval_predict\\sanity_save_dir",
+  "val_metrics": null,
+  "prediction_items": 1
+}

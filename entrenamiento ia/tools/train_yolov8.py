@@ -18,6 +18,17 @@ from typing import Any, Dict
 from device_resolver import resolve_device
 
 
+TOOLS_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _resolve_project_dir(project_arg: str) -> Path:
+    # Fuerza rutas relativas a vivir dentro de `entrenamiento ia` para evitar salidas fuera.
+    project_path = Path(project_arg)
+    if project_path.is_absolute():
+        return project_path
+    return (TOOLS_ROOT / project_path).resolve()
+
+
 def parse_args() -> argparse.Namespace:
     # Define todos los parametros de entrada del entrenamiento.
     # La idea es poder ejecutar el script tanto en pruebas rapidas como en corridas largas.
@@ -54,7 +65,7 @@ def build_train_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
         "imgsz": args.imgsz,
         "batch": args.batch,
         "device": args.device,
-        "project": args.project,
+        "project": str(_resolve_project_dir(args.project)),
         "name": args.name,
         "workers": args.workers,
         "patience": args.patience,
@@ -93,12 +104,20 @@ def main() -> int:
         return 0
 
     # Import diferido para permitir pruebas sin instalar ultralytics.
-    from ultralytics import YOLO
+    from ultralytics import YOLO, settings
+
+    # Mantiene todos los artefactos de Ultralytics bajo `entrenamiento ia/runs`.
+    settings.update({"runs_dir": str((TOOLS_ROOT / "runs").resolve())})
 
     # 4) Carga pesos base y ejecuta el entrenamiento.
     # Si args.model es un .pt, usa pesos preentrenados; si es .yaml, inicializa arquitectura.
     model = YOLO(args.model)
     model.train(**train_kwargs)
+
+    # `trainer.save_dir` refleja el directorio final (incluyendo sufijos incrementales).
+    save_dir = getattr(getattr(model, "trainer", None), "save_dir", None)
+    if save_dir is not None:
+        print(f"ultralytics_save_dir: {Path(save_dir).resolve()}")
 
     print("Entrenamiento finalizado.")
     return 0

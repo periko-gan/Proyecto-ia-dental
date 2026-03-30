@@ -22,6 +22,17 @@ from typing import Any, Dict, Iterable
 from device_resolver import resolve_device
 
 
+TOOLS_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _resolve_project_dir(project_arg: str) -> Path:
+    # Fuerza rutas relativas a vivir dentro de `entrenamiento ia` para evitar salidas fuera.
+    project_path = Path(project_arg)
+    if project_path.is_absolute():
+        return project_path
+    return (TOOLS_ROOT / project_path).resolve()
+
+
 def parse_args() -> argparse.Namespace:
     # Expone un CLI unico para validar, predecir o ejecutar ambos pasos.
     # Esto evita mantener dos scripts separados para tareas muy parecidas.
@@ -68,7 +79,7 @@ def build_val_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
         "imgsz": args.imgsz,
         "batch": args.batch,
         "device": args.device,
-        "project": args.project,
+        "project": str(_resolve_project_dir(args.project)),
         "name": args.name,
     }
 
@@ -82,7 +93,7 @@ def build_predict_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
         "conf": args.conf,
         "iou": args.iou,
         "device": args.device,
-        "project": args.project,
+        "project": str(_resolve_project_dir(args.project)),
         "name": args.name,
         "save": True,
         "stream": False,
@@ -183,6 +194,7 @@ def write_run_report(
     args: argparse.Namespace,
     val_metrics: Dict[str, Any] | None,
     prediction_count: int | None,
+    ultralytics_save_dir: str | None,
 ) -> Path:
     # Registra un resumen de ejecucion para trazabilidad del experimento.
     # Incluye configuracion y rutas para reconstruir la corrida mas adelante.
@@ -193,6 +205,7 @@ def write_run_report(
         "data": str(Path(args.data).resolve()),
         "source": str(Path(args.source).resolve()),
         "output_dir": str(output_dir.resolve()),
+        "ultralytics_save_dir": ultralytics_save_dir,
         "val_metrics": val_metrics,
         "prediction_items": prediction_count,
     }
@@ -223,6 +236,13 @@ def _predict_count(results: Iterable[Any]) -> int:
     return count
 
 
+def _extract_save_dir(value: Any) -> str | None:
+    save_dir = getattr(value, "save_dir", None)
+    if save_dir is None:
+        return None
+    return str(Path(save_dir).resolve())
+
+
 def main() -> int:
     # 1) Prepara y valida configuracion de entrada.
     args = parse_args()
@@ -235,7 +255,7 @@ def main() -> int:
     val_kwargs = build_val_kwargs(args)
     predict_kwargs = build_predict_kwargs(args)
     # Carpeta canonica de salida para reportes y artefactos.
-    output_dir = (Path(args.project) / args.name).resolve()
+    output_dir = (_resolve_project_dir(args.project) / args.name).resolve()
 
     print("Configuracion eval/predict:")
     print(f"  task: {args.task}")
@@ -255,17 +275,22 @@ def main() -> int:
         return 0
 
     # Import diferido para permitir pruebas smoke sin ultralytics.
-    from ultralytics import YOLO
+    from ultralytics import YOLO, settings
+
+    # Mantiene todos los artefactos de Ultralytics bajo `entrenamiento ia/runs`.
+    settings.update({"runs_dir": str((TOOLS_ROOT / "runs").resolve())})
 
     # 4) Carga modelo y ejecuta tareas solicitadas.
     model = YOLO(args.model)
 
     val_metrics: Dict[str, Any] | None = None
     prediction_count: int | None = None
+    ultralytics_save_dir: str | None = None
 
     if args.task in ("val", "both"):
         # Guarda metricas de validacion para analisis posterior.
         metrics_obj = model.val(**val_kwargs)
+        ultralytics_save_dir = ultralytics_save_dir or _extract_save_dir(metrics_obj)
         val_metrics = extract_metrics(metrics_obj)
         write_metrics_files(val_metrics, output_dir)
 
@@ -273,6 +298,10 @@ def main() -> int:
         # Ejecuta prediccion y reporta cuantas muestras fueron procesadas.
         results = model.predict(**predict_kwargs)
         prediction_count = _predict_count(results)
+        if ultralytics_save_dir is None:
+            ultralytics_save_dir = _extract_save_dir(results)
+            if ultralytics_save_dir is None and isinstance(results, list) and results:
+                ultralytics_save_dir = _extract_save_dir(results[0])
 
     # 5) Escribe reporte global de ejecucion.
     report_path = write_run_report(
@@ -280,7 +309,11 @@ def main() -> int:
         args=args,
         val_metrics=val_metrics,
         prediction_count=prediction_count,
+        ultralytics_save_dir=ultralytics_save_dir,
     )
+
+    if ultralytics_save_dir:
+        print(f"ultralytics_save_dir: {ultralytics_save_dir}")
 
     # Mensaje final con la ruta principal de salida.
     print(f"Proceso completado. Reporte: {report_path}")

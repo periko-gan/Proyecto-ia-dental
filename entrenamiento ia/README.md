@@ -103,8 +103,9 @@ python .\tools\train_yolov8.py --data .\dataset\data.yaml --dry-run
 
 Dónde buscar el entrenamiento:
 
-- Pesos del modelo entrenado: `runs/detect/runs/train/<nombre_run>/weights/best.pt` y `last.pt`
-- Ejemplo real: `runs/detect/runs/train/dental_yolov84/weights/best.pt`
+- Pesos del modelo entrenado: `runs/train/<nombre_run>/weights/best.pt` y `last.pt`
+- Ejemplo real: `runs/train/dental_yolov8/weights/best.pt`
+- Verificación en consola: al finalizar, `train_yolov8.py` imprime `ultralytics_save_dir` con la ruta final real.
 
 ## Evaluar y predecir YOLOv8
 
@@ -142,11 +143,13 @@ Salida esperada en `runs/eval_predict/<name>`:
 
 Dónde buscar test y evaluación:
 
-- Test (predicción sobre `dataset/images/test`): imágenes resultantes en `runs/detect/runs/eval_predict/<nombre_run>/`
+- Test (predicción sobre `dataset/images/test`): imágenes resultantes en `runs/eval_predict/<nombre_run>/`
 - Evaluación (`--task val`): métricas en `runs/eval_predict/<nombre_run>/val_metrics.json` y `val_metrics.csv`
 - Reporte consolidado (val/predict): `runs/eval_predict/<nombre_run>/run_report.json`
+- Verificación en consola: al finalizar, `eval_predict_yolov8.py` imprime `ultralytics_save_dir`.
+- `run_report.json` también incluye el campo `ultralytics_save_dir`.
 
-Nota de rutas: Ultralytics puede guardar artefactos visuales bajo `runs/detect/...` según su `runs_dir`, mientras que este script guarda reportes/métricas en `runs/eval_predict/...`.
+Nota de rutas: en estos scripts, todas las salidas se guardan dentro de `entrenamiento ia/runs`.
 
 ## Limpieza rápida (entrenamiento limpio)
 
@@ -154,26 +157,21 @@ Para empezar desde cero, vacía los directorios generados por entrenamiento, tes
 
 Rutas que se limpian:
 
-- `entrenamiento ia/runs/detect/runs/train`
+- `entrenamiento ia/runs/train`
 - `entrenamiento ia/runs/eval_predict`
 - `entrenamiento ia/runs/pipeline`
-- `runs/detect/runs/train`
-- `runs/detect/runs/eval_predict`
 
 Ejecuta este comando desde `entrenamiento ia`:
 
 ```powershell
-$repoRoot = Split-Path -Parent (Get-Location)
 $targets = @(
-  (Join-Path (Get-Location) "runs\detect\runs\train"),
+  (Join-Path (Get-Location) "runs\train"),
   (Join-Path (Get-Location) "runs\eval_predict"),
-  (Join-Path (Get-Location) "runs\pipeline"),
-  (Join-Path $repoRoot "runs\detect\runs\train"),
-  (Join-Path $repoRoot "runs\detect\runs\eval_predict")
+  (Join-Path (Get-Location) "runs\pipeline")
 )
 foreach ($path in $targets) {
   if (Test-Path $path) {
-	Get-ChildItem -Path $path -Force | Remove-Item -Recurse -Force
+    Get-ChildItem -Path $path -Force | Remove-Item -Recurse -Force
   }
 }
 ```
@@ -213,6 +211,8 @@ Salida del pipeline:
 - `runs/pipeline/<name_prefix>_<timestamp>_pipeline/pipeline_report.json`
 - Entrenamiento en `runs/train/<name_prefix>_<timestamp>_train`
 - Evaluación/predicción en `runs/eval_predict/<name_prefix>_<timestamp>_evalpredict`
+
+Todas las rutas anteriores son relativas a `entrenamiento ia/`.
 
 ## Ejecutar pruebas rápidas
 

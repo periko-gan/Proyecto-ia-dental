@@ -21,6 +21,17 @@ from pathlib import Path
 from typing import Dict, List
 
 
+TOOLS_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _resolve_project_dir(project_arg: str) -> Path:
+    # Fuerza rutas relativas a vivir dentro de `entrenamiento ia` para evitar salidas fuera.
+    project_path = Path(project_arg)
+    if project_path.is_absolute():
+        return project_path
+    return (TOOLS_ROOT / project_path).resolve()
+
+
 def parse_args() -> argparse.Namespace:
     # Define un CLI unico para encadenar train -> eval/predict.
     # El objetivo es ejecutar el flujo completo con un solo comando reproducible.
@@ -101,6 +112,9 @@ def _resolve_trained_model(train_project: Path, train_name: str, fallback_model:
 def main() -> int:
     # 1) Lee argumentos y valida recursos de entrada.
     args = parse_args()
+    args.project_train = str(_resolve_project_dir(args.project_train))
+    args.project_eval = str(_resolve_project_dir(args.project_eval))
+    args.project_pipeline = str(_resolve_project_dir(args.project_pipeline))
 
     data_path = Path(args.data)
     if not data_path.exists():
