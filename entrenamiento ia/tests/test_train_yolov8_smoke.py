@@ -30,6 +30,8 @@ def test_train_script_dry_run(tmp_path: Path):
             str(script_path),
             "--data",
             str(data_yaml),
+            "--device",
+            "0",
             "--dry-run",
         ],
         capture_output=True,
@@ -40,4 +42,6 @@ def test_train_script_dry_run(tmp_path: Path):
     # ASSERT: el script termina bien y confirma modo dry-run en stdout.
     assert result.returncode == 0, result.stderr
     assert "Dry run activo" in result.stdout
+    assert "requested_device: 0" in result.stdout
+    assert "resolved_device:" in result.stdout
 

@@ -38,7 +38,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--epochs", type=int, default=100, help="Epocas de entrenamiento")
     parser.add_argument("--imgsz", type=int, default=640, help="Tamano de imagen")
     parser.add_argument("--batch", type=int, default=16, help="Batch size")
-    parser.add_argument("--device", default="cpu", help="Dispositivo: cpu, 0, 0,1...")
+    parser.add_argument(
+        "--device",
+        default="auto",
+        help="Dispositivo: auto, cpu, 0, 0,1...",
+    )
     parser.add_argument("--project-train", default="runs/train", help="Proyecto para train")
     parser.add_argument("--project-eval", default="runs/eval_predict", help="Proyecto para eval/predict")
     parser.add_argument("--project-pipeline", default="runs/pipeline", help="Proyecto para reporte de pipeline")

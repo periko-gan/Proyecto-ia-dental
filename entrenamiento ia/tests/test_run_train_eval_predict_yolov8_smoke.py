@@ -51,6 +51,8 @@ def test_pipeline_script_dry_run(tmp_path: Path):
             str(eval_project),
             "--project-pipeline",
             str(pipeline_project),
+            "--device",
+            "0",
             "--dry-run",
         ],
         capture_output=True,
@@ -63,6 +65,7 @@ def test_pipeline_script_dry_run(tmp_path: Path):
     assert "[train] Ejecutando:" in result.stdout
     assert "[eval_predict] Ejecutando:" in result.stdout
     assert "Pipeline completado." in result.stdout
+    assert "requested_device: 0" in result.stdout
 
     # ASSERT: el pipeline debe crear un unico reporte JSON en la carpeta de pipeline.
     # Si hubiera 0 o >1 reportes, indicaria que el nombrado/versionado no es consistente.

@@ -15,6 +15,8 @@ import argparse
 from pathlib import Path
 from typing import Any, Dict
 
+from device_resolver import resolve_device
+
 
 def parse_args() -> argparse.Namespace:
     # Define todos los parametros de entrada del entrenamiento.
@@ -25,7 +27,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--epochs", type=int, default=100, help="Numero de epocas")
     parser.add_argument("--imgsz", type=int, default=640, help="Tamano de imagen")
     parser.add_argument("--batch", type=int, default=16, help="Batch size")
-    parser.add_argument("--device", default="cpu", help="Dispositivo: cpu, 0, 0,1, ...")
+    parser.add_argument(
+        "--device",
+        default="auto",
+        help="Dispositivo: auto, cpu, 0, 0,1, ... (auto usa GPU si existe)",
+    )
     parser.add_argument("--project", default="runs/train", help="Carpeta base de resultados")
     parser.add_argument("--name", default="dental_yolov8", help="Nombre del experimento")
     parser.add_argument("--workers", type=int, default=4, help="Workers del dataloader")
@@ -66,11 +72,17 @@ def main() -> int:
         raise FileNotFoundError(f"No se encontro data.yaml: {data_path}")
 
     # 2) Prepara e imprime la configuracion final que se enviara a Ultralytics.
+    device_resolution = resolve_device(args.device)
+    args.device = device_resolution.resolved
     train_kwargs = build_train_kwargs(args)
 
     # Mostrar configuracion ayuda a reproducir la corrida exacta despues.
     print("Configuracion de entrenamiento:")
     print(f"  model: {args.model}")
+    print(f"  requested_device: {device_resolution.requested}")
+    print(f"  resolved_device: {device_resolution.resolved}")
+    if device_resolution.warning:
+        print(f"  warning: {device_resolution.warning}")
     for key, value in train_kwargs.items():
         print(f"  {key}: {value}")
 

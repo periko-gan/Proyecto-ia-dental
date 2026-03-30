@@ -15,9 +15,11 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable
+
+from device_resolver import resolve_device
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,7 +38,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--imgsz", type=int, default=640, help="Tamano de imagen")
     parser.add_argument("--batch", type=int, default=16, help="Batch size para validacion")
-    parser.add_argument("--device", default="cpu", help="Dispositivo: cpu, 0, 0,1, ...")
+    parser.add_argument(
+        "--device",
+        default="auto",
+        help="Dispositivo: auto, cpu, 0, 0,1, ... (auto usa GPU si existe)",
+    )
     parser.add_argument("--conf", type=float, default=0.25, help="Confianza minima")
     parser.add_argument("--iou", type=float, default=0.7, help="IOU NMS para prediccion")
     parser.add_argument("--project", default="runs/eval_predict", help="Directorio base")
@@ -84,33 +90,74 @@ def build_predict_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
     }
 
 
+def _normalize_metric_value(value: Any) -> Any:
+    # Convierte valores de Ultralytics (incluyendo arrays/tensores) a tipos JSON-safe.
+    if value is None:
+        return None
+
+    if isinstance(value, (bool, int, float, str)):
+        return value
+
+    if hasattr(value, "item"):
+        try:
+            return float(value.item())
+        except Exception:
+            pass
+
+    if hasattr(value, "tolist"):
+        try:
+            return _normalize_metric_value(value.tolist())
+        except Exception:
+            pass
+
+    if isinstance(value, dict):
+        normalized: Dict[str, Any] = {}
+        for k, v in value.items():
+            normalized_v = _normalize_metric_value(v)
+            if normalized_v is not None:
+                normalized[str(k)] = normalized_v
+        return normalized
+
+    if isinstance(value, (list, tuple)):
+        normalized_list = []
+        for item in value:
+            normalized_item = _normalize_metric_value(item)
+            if normalized_item is not None:
+                normalized_list.append(normalized_item)
+        return normalized_list
+
+    try:
+        return float(value)
+    except Exception:
+        return str(value)
+
+
 def extract_metrics(metrics_obj: Any) -> Dict[str, Any]:
     # Extrae metadatos estables para serializarlos en JSON/CSV.
     # Esta capa protege contra cambios menores en la estructura interna de Ultralytics.
     metrics: Dict[str, Any] = {}
     for key in ("fitness", "speed"):
         value = getattr(metrics_obj, key, None)
-        if value is not None:
-            metrics[key] = value
+        normalized_value = _normalize_metric_value(value)
+        if normalized_value is not None:
+            metrics[key] = normalized_value
 
     box_obj = getattr(metrics_obj, "box", None)
     if box_obj is not None:
         for source_name in ("map", "map50", "map75", "maps"):
             value = getattr(box_obj, source_name, None)
-            if value is None:
-                continue
-            if isinstance(value, (list, tuple)):
-                metrics[f"box_{source_name}"] = [float(v) for v in value]
-            else:
-                metrics[f"box_{source_name}"] = float(value)
+            normalized_value = _normalize_metric_value(value)
+            if normalized_value is not None:
+                metrics[f"box_{source_name}"] = normalized_value
 
     # Fallback para objetos no estandar.
     # Si la API devuelve un diccionario de resultados, se conserva lo simple (int/float/str).
     results_dict = getattr(metrics_obj, "results_dict", None)
     if isinstance(results_dict, dict):
         for k, v in results_dict.items():
-            if isinstance(v, (int, float, str)):
-                metrics[str(k)] = v
+            normalized_value = _normalize_metric_value(v)
+            if normalized_value is not None:
+                metrics[str(k)] = normalized_value
 
     return metrics
 
@@ -140,7 +187,7 @@ def write_run_report(
     # Registra un resumen de ejecucion para trazabilidad del experimento.
     # Incluye configuracion y rutas para reconstruir la corrida mas adelante.
     report = {
-        "timestamp": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "task": args.task,
         "model": args.model,
         "data": str(Path(args.data).resolve()),
@@ -181,6 +228,9 @@ def main() -> int:
     args = parse_args()
     _validate_inputs(args)
 
+    device_resolution = resolve_device(args.device)
+    args.device = device_resolution.resolved
+
     # 2) Compone parametros de val/predict y muestra configuracion final.
     val_kwargs = build_val_kwargs(args)
     predict_kwargs = build_predict_kwargs(args)
@@ -190,6 +240,10 @@ def main() -> int:
     print("Configuracion eval/predict:")
     print(f"  task: {args.task}")
     print(f"  model: {args.model}")
+    print(f"  requested_device: {device_resolution.requested}")
+    print(f"  resolved_device: {device_resolution.resolved}")
+    if device_resolution.warning:
+        print(f"  warning: {device_resolution.warning}")
     print(f"  data: {val_kwargs['data']}")
     print(f"  source: {predict_kwargs['source']}")
     print(f"  output_dir: {output_dir}")

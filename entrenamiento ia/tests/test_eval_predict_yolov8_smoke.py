@@ -37,6 +37,8 @@ def test_eval_predict_script_dry_run(tmp_path: Path):
             str(data_yaml),
             "--source",
             str(source_dir),
+            "--device",
+            "0",
             "--dry-run",
         ],
         capture_output=True,
@@ -47,4 +49,6 @@ def test_eval_predict_script_dry_run(tmp_path: Path):
     # ASSERT: la ejecucion finaliza correctamente y reporta dry-run.
     assert result.returncode == 0, result.stderr
     assert "Dry run activo" in result.stdout
+    assert "requested_device: 0" in result.stdout
+    assert "resolved_device:" in result.stdout
 
