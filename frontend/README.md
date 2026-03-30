@@ -1,57 +1,117 @@
-# frontend
+# Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicacion frontend construida con **Vue 3 + Vite**.
 
-## Recommended IDE Setup
+## Stack principal
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Vue 3
+- Vite
+- Pinia
+- Vue Router
+- Apollo Client + GraphQL
+- Tailwind CSS v4 + daisyUI
 
-## Recommended Browser Setup
+## Requisitos
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Node.js**: `^20.19.0 || >=22.12.0`
+- **pnpm**: recomendado (definido en `packageManager`: `pnpm@10.17.1`)
 
-## Customize configuration
+## Instalacion
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+Desde la carpeta `frontend`:
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+## Scripts disponibles
 
 ```sh
 pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
 pnpm build
+pnpm preview
+pnpm format
 ```
 
-## Tailwind CSS v4 (Vite)
+- `pnpm dev`: inicia el servidor de desarrollo
+- `pnpm build`: genera el build de produccion
+- `pnpm preview`: sirve localmente el build generado
+- `pnpm format`: formatea `src/` con `oxfmt`
 
-Este proyecto usa Tailwind v4 con el plugin de Vite. En v4 ya no se recomienda el flujo
-`tailwindcss init -p`, por eso puede fallar con `Command "tailwindcss" not found`.
+## Estructura basica
 
-Instalacion y uso:
-
-```sh
-pnpm install
-pnpm dev
+```text
+frontend/
+  src/
+    App.vue
+    main.js
+    style.css
+    components/
+      AnalysisResults.vue
+      UploadRadiography.vue
+    graphql/
+      mutations.js
+    router/
+      index.js
+    stores/
 ```
 
-La configuracion activa esta en:
+## Tailwind CSS v4 + daisyUI
+
+La configuracion activa usa el plugin oficial de Vite para Tailwind v4:
 
 - `vite.config.js` con `@tailwindcss/vite`
-- `src/style.css` con `@import "tailwindcss"`
-- `src/main.js` importando `./style.css`
+- `src/style.css` con:
+  - `@import 'tailwindcss';`
+  - `@plugin "daisyui";`
+- `src/main.js` importa `./style.css`
 
+En Tailwind v4 no es necesario `tailwindcss init -p`.
+
+## Uso desde la raiz del repositorio
+
+Con `pnpm-workspace.yaml` y `package.json` en la raiz (`codigo proyecto final`), puedes ejecutar:
+
+```sh
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+pnpm format
+```
+
+Los scripts de la raiz delegan al paquete `frontend`.
+
+## Problemas comunes
+
+### 1) Error de dependencias con `npm` (`ERESOLVE`)
+
+Este proyecto esta preparado para **pnpm**. Evita mezclar gestores.
+
+```sh
+# recomendado
+pnpm install
+```
+
+### 2) `ERR_PNPM_UNEXPECTED_VIRTUAL_STORE`
+
+Suele ocurrir si cambiaste de ruta/proyecto o instalaste antes desde otra ubicacion.
+
+Pasos recomendados (en la raiz del frontend):
+
+```sh
+pnpm install
+```
+
+Si persiste, limpia instalaciones previas y reinstala:
+
+```sh
+Remove-Item -Recurse -Force node_modules
+Remove-Item -Force pnpm-lock.yaml
+pnpm install
+```
+
+## Notas
+
+- Usa **solo pnpm** para evitar conflictos de lockfile y peers.
+- Si vas a trabajar varios paquetes desde la raiz, considera mantener un `pnpm-workspace.yaml` en la raiz del repo.

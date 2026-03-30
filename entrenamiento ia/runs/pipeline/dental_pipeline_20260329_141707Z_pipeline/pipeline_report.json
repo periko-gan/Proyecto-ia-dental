@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "20260329_141707Z",
+  "train_name": "dental_pipeline_20260329_141707Z_train",
+  "eval_name": "dental_pipeline_20260329_141707Z_evalpredict",
+  "pipeline_name": "dental_pipeline_20260329_141707Z_pipeline",
+  "model_for_eval": "yolov8n.pt",
+  "train_project": "C:\\Users\\pemip\\OneDrive\\Desktop\\entrenamiento ia\\runs\\train",
+  "eval_project": "C:\\Users\\pemip\\OneDrive\\Desktop\\entrenamiento ia\\runs\\eval_predict",
+  "task": "both",
+  "dry_run": "True"
+}

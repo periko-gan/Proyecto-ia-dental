@@ -1,0 +1,2 @@
+pytest>=8.0.0
+ultralytics>=8.2.0

@@ -1,0 +1,12 @@
+{
+  "name": "codigo-proyecto-final",
+  "private": true,
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "preview": "pnpm --filter frontend preview",
+    "format": "pnpm --filter frontend format"
+  }
+}
+
