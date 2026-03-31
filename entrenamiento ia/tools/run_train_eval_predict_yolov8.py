@@ -212,7 +212,7 @@ def main() -> int:
         "dry_run": str(args.dry_run),
     }
 
-    # Archivo "indice" de la corrida: enlaza nombres, proyectos y modo de ejecucion.
+    # Archivo "índice" de la corrida: enlaza nombres, proyectos y modo de ejecucion.
     report_path = pipeline_dir / "pipeline_report.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"Pipeline completado. Reporte: {report_path.resolve()}")

@@ -74,7 +74,7 @@ def build_train_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
 
 
 def main() -> int:
-    # 1) Lee argumentos y valida precondiciones minimas.
+    # 1) Lee argumentos y valida precondiciones mínimas.
     args = parse_args()
     data_path = Path(args.data)
 

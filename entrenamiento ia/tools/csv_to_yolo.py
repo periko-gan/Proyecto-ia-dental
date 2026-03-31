@@ -147,7 +147,7 @@ def row_to_box(row: Dict[str, str], class_to_id: Dict[str, int]) -> Tuple[Box | 
     ymin = max(0.0, min(ymin, float(img_h)))
     ymax = max(0.0, min(ymax, float(img_h)))
 
-    # Una caja sin area no sirve para entrenamiento.
+    # Una caja sin área no sirve para entrenamiento.
     if xmax <= xmin or ymax <= ymin:
         return None, "Caja degenerada tras normalizacion"
 
@@ -160,13 +160,13 @@ def row_to_box(row: Dict[str, str], class_to_id: Dict[str, int]) -> Tuple[Box | 
 
 
 def write_label_file(path: Path, boxes: Iterable[Box]) -> None:
-    # Genera el .txt YOLO por imagen, con una linea por caja.
+    # Genera el .txt YOLO por imagen, con una línea por caja.
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
         f"{box.class_id} {box.x_center:.6f} {box.y_center:.6f} {box.width:.6f} {box.height:.6f}"
         for box in boxes
     ]
-    # YOLO espera una linea por caja: class_id x_center y_center width height.
+    # YOLO espera una línea por caja: class_id x_center y_center width height.
     content = "\n".join(lines)
     if content:
         content += "\n"
@@ -180,7 +180,7 @@ def convert_split(
     class_to_id: Dict[str, int],
     output_labels_root: Path,
 ) -> SplitSummary:
-    # Procesa un split completo: valida filas, agrupa cajas y escribe etiquetas.
+    # Procesa un split completo: válida filas, agrupa cajas y escribe etiquetas.
     summary = SplitSummary()
     csv_path = dataset_root / "labels" / split / csv_name
     images_dir = dataset_root / "images" / split
