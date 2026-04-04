@@ -31,7 +31,7 @@ REQUIRED_COLUMNS = {
     "xmax",
     "ymax",
 }
-# Extensiones de imagen admitidas durante la validacion de archivos.
+# Extensiones de imagen admitidas durante la validación de archivos.
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 # Splits esperados en estructura estilo YOLO.
 SPLITS = ("train", "val", "test")
@@ -49,7 +49,7 @@ class Box:
 
 @dataclass
 class SplitSummary:
-    # Acumula metricas de calidad del split para auditar conversion y detectar problemas.
+    # Acumula métricas de calidad del split para auditar conversion y detectar problemas.
     csv_rows: int = 0
     valid_boxes: int = 0
     invalid_rows: int = 0
@@ -96,10 +96,10 @@ def collect_classes(dataset_root: Path, csv_name: str) -> List[str]:
             continue
         with csv_path.open("r", newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            # Validacion temprana: fallamos antes de convertir si el esquema es incompleto.
+            # Validación temprana: fallamos antes de convertir, si el esquema es incompleto.
             if not reader.fieldnames or not REQUIRED_COLUMNS.issubset(set(reader.fieldnames)):
                 missing = REQUIRED_COLUMNS.difference(set(reader.fieldnames or []))
-                raise ValueError(f"CSV invalido en {csv_path}: faltan columnas {sorted(missing)}")
+                raise ValueError(f"CSV inválido en {csv_path}: faltan columnas {sorted(missing)}")
             for row in reader:
                 value = (row.get("class") or "").strip()
                 if value:
@@ -110,7 +110,7 @@ def collect_classes(dataset_root: Path, csv_name: str) -> List[str]:
 
 
 def list_images(images_dir: Path) -> Set[str]:
-    # Lista unicamente archivos de imagen validos para evitar falsos positivos.
+    # Lista únicamente archivos de imagen válidos para evitar falsos positivos.
     if not images_dir.exists():
         return set()
     return {
@@ -126,7 +126,7 @@ def row_to_box(row: Dict[str, str], class_to_id: Dict[str, int]) -> Tuple[Box | 
     if class_name not in class_to_id:
         return None, f"Clase desconocida: {class_name!r}"
 
-    # Parseo robusto: acepta enteros/decimales en texto y convierte a numeros reales.
+    # Parseo robusto: acepta enteros/decimales en texto y convierte a números reales.
     try:
         img_w = int(float(row["width"]))
         img_h = int(float(row["height"]))
@@ -137,11 +137,11 @@ def row_to_box(row: Dict[str, str], class_to_id: Dict[str, int]) -> Tuple[Box | 
     except (KeyError, ValueError) as exc:
         return None, f"Valores no numericos: {exc}"
 
-    # Evita divisiones invalidas y datos fisicamente imposibles.
+    # Evita divisiones inválidas y datos físicamente imposibles.
     if img_w <= 0 or img_h <= 0:
         return None, "Dimensiones no validas"
 
-    # Ajuste defensivo de coordenadas al tamano de imagen.
+    # Ajuste defensivo de coordenadas al tamaño de imagen.
     xmin = max(0.0, min(xmin, float(img_w)))
     xmax = max(0.0, min(xmax, float(img_w)))
     ymin = max(0.0, min(ymin, float(img_h)))
@@ -149,7 +149,7 @@ def row_to_box(row: Dict[str, str], class_to_id: Dict[str, int]) -> Tuple[Box | 
 
     # Una caja sin área no sirve para entrenamiento.
     if xmax <= xmin or ymax <= ymin:
-        return None, "Caja degenerada tras normalizacion"
+        return None, "Caja degenerada tras normalización"
 
     width = (xmax - xmin) / img_w
     height = (ymax - ymin) / img_h
@@ -189,7 +189,7 @@ def convert_split(
     if not csv_path.exists():
         raise FileNotFoundError(f"CSV no encontrado: {csv_path}")
     if not images_dir.exists():
-        raise FileNotFoundError(f"Directorio de imagenes no encontrado: {images_dir}")
+        raise FileNotFoundError(f"Directorio de imágenes no encontrado: {images_dir}")
 
     # Referencia de verdad para validar que cada fila apunte a una imagen existente.
     image_files = list_images(images_dir)
@@ -204,7 +204,7 @@ def convert_split(
             raise ValueError(f"CSV invalido en {csv_path}: faltan columnas {sorted(missing)}")
 
         for row in reader:
-            # Acumula estadisticas de calidad para el reporte final.
+            # Acumula estadísticas de calidad para el reporte final.
             summary.csv_rows += 1
             filename = (row.get("filename") or "").strip()
             if not filename:
@@ -215,7 +215,7 @@ def convert_split(
                 summary.missing_images += 1
                 continue
 
-            # Reusa la validacion centralizada de coordenadas y normalizacion.
+            # Reusa la validación centralizada de coordenadas y normalización.
             box, error = row_to_box(row, class_to_id)
             if error:
                 summary.invalid_rows += 1
@@ -226,7 +226,7 @@ def convert_split(
 
     summary.images_in_csv = len(grouped_boxes)
 
-    # Escribe un .txt por imagen para que YOLO soporte también imagenes sin cajas.
+    # Escribe un .txt por imagen para que YOLO soporte también imágenes sin cajas.
     # Si una imagen no tiene objetos, su archivo .txt queda vacío a propósito.
     for image_name in sorted(image_files):
         label_path = output_dir / f"{Path(image_name).stem}.txt"
@@ -291,7 +291,7 @@ def main() -> int:
     # 3) Emite archivos de salida (data.yaml + reporte JSON).
     data_yaml_path = write_data_yaml(dataset_root, args.data_yaml, class_names)
 
-    # 4) Construye un reporte legible para trazabilidad y depuracion.
+    # 4) Construye un reporte legible para trazabilidad y depuración.
     report: Dict[str, object] = {
         "dataset_root": str(dataset_root),
         "class_to_id": class_to_id,

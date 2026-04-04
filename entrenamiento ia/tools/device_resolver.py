@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Utilidades para resolver el dispositivo de ejecucion (CPU/GPU)."""
+"""Utilidades para resolver el dispositivo de ejecución (CPU/GPU)."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ class DeviceResolution:
 
 
 def _safe_torch_info() -> tuple[bool, int] | None:
-    """Devuelve (cuda_available, cuda_count) o None si torch no esta disponible."""
+    """Devuelve (cuda_available, cuda_count) o None si torch no está disponible."""
     try:
         import torch
     except Exception:
@@ -30,7 +30,7 @@ def resolve_device(requested_device: str) -> DeviceResolution:
     """Normaliza y valida el parametro --device con fallback seguro a CPU.
 
     Reglas:
-    - `auto`: usa GPU 0 si CUDA esta disponible, si no CPU.
+    - `auto`: usa GPU 0 si CUDA está disponible, si no CPU.
     - `cpu`: fuerza CPU.
     - `0`, `0,1`, ...: si no hay CUDA, hace fallback a CPU con warning.
     """

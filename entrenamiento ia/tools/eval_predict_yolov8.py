@@ -85,7 +85,7 @@ def build_val_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
 
 
 def build_predict_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
-    # Construye los argumentos de model.predict() con guardado de resultados activado.
+    # Construye los argumentos de model.predict() con guardado de resultados activados.
     # save=True asegura visualizar rapidamente resultados sin codigo adicional.
     return {
         "source": str(Path(args.source).resolve()),
@@ -174,14 +174,14 @@ def extract_metrics(metrics_obj: Any) -> Dict[str, Any]:
 
 
 def write_metrics_files(metrics: Dict[str, Any], output_dir: Path) -> None:
-    # Escribe metricas en formatos legibles para humanos (CSV) y maquinas (JSON).
+    # Escribe métricas en formatos legibles para humanos (CSV) y máquinas (JSON).
     output_dir.mkdir(parents=True, exist_ok=True)
 
     json_path = output_dir / "val_metrics.json"
     json_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
 
     csv_path = output_dir / "val_metrics.csv"
-    # El CSV en formato key/value facilita abrir metricas en Excel o Google Sheets.
+    # El CSV en formato key/value facilita abrir métricas en Excel o Google Sheets.
     with csv_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["metric", "value"])
@@ -196,8 +196,8 @@ def write_run_report(
     prediction_count: int | None,
     ultralytics_save_dir: str | None,
 ) -> Path:
-    # Registra un resumen de ejecucion para trazabilidad del experimento.
-    # Incluye configuracion y rutas para reconstruir la corrida mas adelante.
+    # Registra un resumen de ejecución para trazabilidad del experimento.
+    # Incluye configuración y rutas para reconstruir más adelante.
     report = {
         "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "task": args.task,
@@ -216,7 +216,7 @@ def write_run_report(
 
 
 def _validate_inputs(args: argparse.Namespace) -> None:
-    # Verifica rutas criticas antes de cargar YOLO para fallar rapido.
+    # Verífica rutas criticas antes de cargar YOLO para fallar rapido.
     data_path = Path(args.data)
     if not data_path.exists():
         raise FileNotFoundError(f"No se encontro data.yaml: {data_path}")
@@ -244,17 +244,17 @@ def _extract_save_dir(value: Any) -> str | None:
 
 
 def main() -> int:
-    # 1) Prepara y valida configuracion de entrada.
+    # 1) Prepara y valida configuración de entrada.
     args = parse_args()
     _validate_inputs(args)
 
     device_resolution = resolve_device(args.device)
     args.device = device_resolution.resolved
 
-    # 2) Compone parametros de val/predict y muestra configuracion final.
+    # 2) Compone parámetros de val/predict y muestra configuración final.
     val_kwargs = build_val_kwargs(args)
     predict_kwargs = build_predict_kwargs(args)
-    # Carpeta canonica de salida para reportes y artefactos.
+    # Carpeta canónica de salida para reportes y artefactos.
     output_dir = (_resolve_project_dir(args.project) / args.name).resolve()
 
     print("Configuracion eval/predict:")
@@ -288,14 +288,14 @@ def main() -> int:
     ultralytics_save_dir: str | None = None
 
     if args.task in ("val", "both"):
-        # Guarda metricas de validacion para analisis posterior.
+        # Guarda métricas de validación para análisis posterior.
         metrics_obj = model.val(**val_kwargs)
         ultralytics_save_dir = ultralytics_save_dir or _extract_save_dir(metrics_obj)
         val_metrics = extract_metrics(metrics_obj)
         write_metrics_files(val_metrics, output_dir)
 
     if args.task in ("predict", "both"):
-        # Ejecuta prediccion y reporta cuantas muestras fueron procesadas.
+        # Ejecuta predicción y reporta cuantas muestras fueron procesadas.
         results = model.predict(**predict_kwargs)
         prediction_count = _predict_count(results)
         if ultralytics_save_dir is None:
@@ -303,7 +303,7 @@ def main() -> int:
             if ultralytics_save_dir is None and isinstance(results, list) and results:
                 ultralytics_save_dir = _extract_save_dir(results[0])
 
-    # 5) Escribe reporte global de ejecucion.
+    # 5) Escribe reporte global de ejecución.
     report_path = write_run_report(
         output_dir=output_dir,
         args=args,

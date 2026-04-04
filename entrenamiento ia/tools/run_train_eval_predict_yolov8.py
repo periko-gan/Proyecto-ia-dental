@@ -98,7 +98,7 @@ def _run_step(command: List[str], label: str) -> None:
 
 def _resolve_trained_model(train_project: Path, train_name: str, fallback_model: str) -> str:
     # Prioriza best.pt, luego last.pt, y usa fallback si no hay pesos entrenados.
-    # Esto permite continuar flujo de evaluacion aun si no se genero best.pt por alguna razon.
+    # Esto permite continuar flujo de evaluación aun si no se generó best.pt por alguna razón.
     run_dir = train_project / train_name / "weights"
     best = run_dir / "best.pt"
     last = run_dir / "last.pt"
@@ -120,11 +120,11 @@ def main() -> int:
     if not data_path.exists():
         raise FileNotFoundError(f"No se encontro data.yaml: {data_path}")
 
-    # Solo validamos source si realmente habra etapa de prediccion.
+    # Solo validamos source si realmente habrá etapa de predicción.
     if args.task in ("predict", "both"):
         source_path = Path(args.source)
         if not source_path.exists():
-            raise FileNotFoundError(f"No se encontro source para prediccion: {source_path}")
+            raise FileNotFoundError(f"No se encontro source para predicción: {source_path}")
 
     # 2) Construye nombres versionados y localiza scripts hijos.
     stamp = utc_stamp()
@@ -132,13 +132,13 @@ def main() -> int:
     eval_name = f"{args.name_prefix}_{stamp}_evalpredict"
     pipeline_name = f"{args.name_prefix}_{stamp}_pipeline"
 
-    # Resolver desde __file__ evita depender del directorio actual de ejecucion.
+    # Resolver desde __file__ evita depender del directorio actual de ejecución.
     tools_dir = Path(__file__).resolve().parent
     train_script = tools_dir / "train_yolov8.py"
     eval_script = tools_dir / "eval_predict_yolov8.py"
 
     if not args.skip_train:
-        # 3) Ejecuta entrenamiento con el nombre versionado de esta corrida.
+        # 3) Ejecuta entrenamiento con el nombre versionado.
         train_cmd = [
             sys.executable,
             str(train_script),
@@ -159,7 +159,7 @@ def main() -> int:
             "--name",
             train_name,
         ]
-        # En modo seco delegamos tambien en dry-run del script hijo para coherencia.
+        # En modo seco delegamos también en dry-run del script hijo para coherencia.
         if args.dry_run:
             train_cmd.append("--dry-run")
         _run_step(train_cmd, "train")
@@ -170,7 +170,7 @@ def main() -> int:
         # Si hubo train real, intenta evaluar con los mejores pesos generados.
         eval_model = _resolve_trained_model(Path(args.project_train), train_name, args.model)
 
-    # 4) Ejecuta evaluacion/prediccion con el modelo seleccionado.
+    # 4) Ejecuta evaluación/predicción con el modelo seleccionado.
     eval_cmd = [
         sys.executable,
         str(eval_script),
