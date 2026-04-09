@@ -1,0 +1,27 @@
+# IDE and editor files
+.idea/
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build output
+/frontend/dist/
+
+# Local database data
+/backend/pgdata/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
