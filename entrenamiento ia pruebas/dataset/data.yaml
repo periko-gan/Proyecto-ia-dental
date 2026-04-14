@@ -1,4 +1,4 @@
-path: C:/Users/pemip/Desktop/entrenamiento ia/dataset
+path: C:/Users/pemip/Desktop/entrenamiento ia pruebas/dataset
 train: images/train
 val: images/val
 test: images/test
