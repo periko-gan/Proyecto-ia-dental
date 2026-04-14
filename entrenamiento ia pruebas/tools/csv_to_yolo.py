@@ -241,9 +241,9 @@ def convert_split(
 def write_data_yaml(dataset_root: Path, data_yaml_name: str, class_names: List[str]) -> Path:
     # Escribe el manifiesto de dataset que consumirà Ultralytics.
     data_yaml_path = dataset_root / data_yaml_name
-    # Usar ruta absoluta evita ambigüedad si el comando se ejecuta desde otro directorio.
+    # Usar ruta relativa evita que el data.yaml quede atado a una maquina concreta.
     lines = [
-        f"path: {dataset_root.resolve().as_posix()}",
+        "path: .",
         "train: images/train",
         "val: images/val",
         "test: images/test",

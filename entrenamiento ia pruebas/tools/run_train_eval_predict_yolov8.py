@@ -85,20 +85,35 @@ def _run_step(command: List[str], label: str) -> None:
     # Asi mantenemos logs completos de cada fase del pipeline en la misma consola.
     printable = " ".join(command)
     print(f"[{label}] Ejecutando: {printable}")
-    result = subprocess.run(command, capture_output=True, text=True, check=False)
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
 
     if result.stdout:
-        print(result.stdout, end="")
+        stdout_encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        safe_stdout = result.stdout.encode(stdout_encoding, errors="replace").decode(
+            stdout_encoding, errors="replace"
+        )
+        print(safe_stdout, end="")
     if result.stderr:
-        print(result.stderr, end="", file=sys.stderr)
+        stderr_encoding = getattr(sys.stderr, "encoding", None) or "utf-8"
+        safe_stderr = result.stderr.encode(stderr_encoding, errors="replace").decode(
+            stderr_encoding, errors="replace"
+        )
+        print(safe_stderr, end="", file=sys.stderr)
 
     if result.returncode != 0:
         raise RuntimeError(f"Fallo en {label} (exit={result.returncode})")
 
 
 def _resolve_trained_model(train_project: Path, train_name: str, fallback_model: str) -> str:
-    # Prioriza best.pt, luego last.pt, y usa fallback si no hay pesos entrenados.
-    # Esto permite continuar flujo de evaluación aun si no se generó best.pt por alguna razón.
+    # Prioriza best.pt, luego last.pt.
+    # Si no hay pesos tras un train real, falla para evitar evaluar el modelo base por error.
     run_dir = train_project / train_name / "weights"
     best = run_dir / "best.pt"
     last = run_dir / "last.pt"
@@ -106,7 +121,10 @@ def _resolve_trained_model(train_project: Path, train_name: str, fallback_model:
         return str(best.resolve())
     if last.exists():
         return str(last.resolve())
-    return fallback_model
+    raise FileNotFoundError(
+        "No se encontraron pesos entrenados en "
+        f"{run_dir.resolve()}. Se esperaba best.pt o last.pt tras entrenamiento."
+    )
 
 
 def main() -> int:

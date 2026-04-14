@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable
@@ -23,6 +24,7 @@ from device_resolver import resolve_device
 
 
 TOOLS_ROOT = Path(__file__).resolve().parents[1]
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}
 
 
 def _resolve_project_dir(project_arg: str) -> Path:
@@ -87,8 +89,19 @@ def build_val_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
 def build_predict_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
     # Construye los argumentos de model.predict() con guardado de resultados activados.
     # save=True asegura visualizar rapidamente resultados sin codigo adicional.
+    source_path = Path(args.source).resolve()
+    predict_source: str | list[str] = str(source_path)
+    if args.max_pred_images > 0 and source_path.is_dir():
+        image_paths = [
+            str(image_path.resolve())
+            for image_path in sorted(source_path.iterdir())
+            if image_path.is_file() and image_path.suffix.lower() in IMAGE_EXTENSIONS
+        ]
+        if image_paths:
+            predict_source = image_paths[: args.max_pred_images]
+
     return {
-        "source": str(Path(args.source).resolve()),
+        "source": predict_source,
         "imgsz": args.imgsz,
         "conf": args.conf,
         "iou": args.iou,
@@ -99,6 +112,37 @@ def build_predict_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
         "stream": False,
         "max_det": 300,
     }
+
+
+def _materialize_data_yaml_for_ultralytics(data_path: Path) -> tuple[Path, Path | None]:
+    # Ultralytics puede resolver `path:` relativo respecto al CWD; lo convertimos a absoluto.
+    lines = data_path.read_text(encoding="utf-8").splitlines()
+
+    path_line_index: int | None = None
+    path_value: str | None = None
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("path:"):
+            path_line_index = index
+            path_value = stripped.split(":", 1)[1].strip().strip('"').strip("'")
+            break
+
+    if path_line_index is None or path_value is None:
+        return data_path, None
+
+    candidate = Path(path_value)
+    if candidate.is_absolute():
+        return data_path, None
+
+    resolved_root = (data_path.parent / candidate).resolve().as_posix()
+    indent = lines[path_line_index][: len(lines[path_line_index]) - len(lines[path_line_index].lstrip())]
+    lines[path_line_index] = f"{indent}path: {resolved_root}"
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False, encoding="utf-8") as tmp:
+        tmp.write("\n".join(lines) + "\n")
+        temp_path = Path(tmp.name)
+
+    return temp_path, temp_path
 
 
 def _normalize_metric_value(value: Any) -> Any:
@@ -248,6 +292,11 @@ def main() -> int:
     args = parse_args()
     _validate_inputs(args)
 
+    temp_data_yaml: Path | None = None
+    if not args.dry_run and args.task in ("val", "both"):
+        resolved_data_yaml, temp_data_yaml = _materialize_data_yaml_for_ultralytics(Path(args.data))
+        args.data = str(resolved_data_yaml)
+
     device_resolution = resolve_device(args.device)
     args.device = device_resolution.resolved
 
@@ -281,27 +330,30 @@ def main() -> int:
     settings.update({"runs_dir": str((TOOLS_ROOT / "runs").resolve())})
 
     # 4) Carga modelo y ejecuta tareas solicitadas.
-    model = YOLO(args.model)
-
     val_metrics: Dict[str, Any] | None = None
     prediction_count: int | None = None
     ultralytics_save_dir: str | None = None
+    try:
+        model = YOLO(args.model)
 
-    if args.task in ("val", "both"):
-        # Guarda métricas de validación para análisis posterior.
-        metrics_obj = model.val(**val_kwargs)
-        ultralytics_save_dir = ultralytics_save_dir or _extract_save_dir(metrics_obj)
-        val_metrics = extract_metrics(metrics_obj)
-        write_metrics_files(val_metrics, output_dir)
+        if args.task in ("val", "both"):
+            # Guarda métricas de validación para análisis posterior.
+            metrics_obj = model.val(**val_kwargs)
+            ultralytics_save_dir = ultralytics_save_dir or _extract_save_dir(metrics_obj)
+            val_metrics = extract_metrics(metrics_obj)
+            write_metrics_files(val_metrics, output_dir)
 
-    if args.task in ("predict", "both"):
-        # Ejecuta predicción y reporta cuantas muestras fueron procesadas.
-        results = model.predict(**predict_kwargs)
-        prediction_count = _predict_count(results)
-        if ultralytics_save_dir is None:
-            ultralytics_save_dir = _extract_save_dir(results)
-            if ultralytics_save_dir is None and isinstance(results, list) and results:
-                ultralytics_save_dir = _extract_save_dir(results[0])
+        if args.task in ("predict", "both"):
+            # Ejecuta predicción y reporta cuantas muestras fueron procesadas.
+            results = model.predict(**predict_kwargs)
+            prediction_count = _predict_count(results)
+            if ultralytics_save_dir is None:
+                ultralytics_save_dir = _extract_save_dir(results)
+                if ultralytics_save_dir is None and isinstance(results, list) and results:
+                    ultralytics_save_dir = _extract_save_dir(results[0])
+    finally:
+        if temp_data_yaml is not None and temp_data_yaml.exists():
+            temp_data_yaml.unlink(missing_ok=True)
 
     # 5) Escribe reporte global de ejecución.
     report_path = write_run_report(

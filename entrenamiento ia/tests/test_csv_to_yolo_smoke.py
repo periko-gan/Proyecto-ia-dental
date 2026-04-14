@@ -72,7 +72,7 @@ def test_smoke_conversion(tmp_path: Path):
     data_yaml = dataset_root / "data.yaml"
     assert data_yaml.exists()
     data_yaml_text = data_yaml.read_text(encoding="utf-8")
-    assert f"path: {dataset_root.resolve().as_posix()}" in data_yaml_text
+    assert "path: ." in data_yaml_text
     assert "train: images/train" in data_yaml_text
     assert "val: images/val" in data_yaml_text
 

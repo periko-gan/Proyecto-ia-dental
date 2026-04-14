@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import argparse
+import tempfile
 from pathlib import Path
 from typing import Any, Dict
 
@@ -73,6 +74,37 @@ def build_train_kwargs(args: argparse.Namespace) -> Dict[str, Any]:
     }
 
 
+def _materialize_data_yaml_for_ultralytics(data_path: Path) -> tuple[Path, Path | None]:
+    # Ultralytics puede resolver `path:` relativo respecto al CWD; lo convertimos a absoluto.
+    lines = data_path.read_text(encoding="utf-8").splitlines()
+
+    path_line_index: int | None = None
+    path_value: str | None = None
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("path:"):
+            path_line_index = index
+            path_value = stripped.split(":", 1)[1].strip().strip('"').strip("'")
+            break
+
+    if path_line_index is None or path_value is None:
+        return data_path, None
+
+    candidate = Path(path_value)
+    if candidate.is_absolute():
+        return data_path, None
+
+    resolved_root = (data_path.parent / candidate).resolve().as_posix()
+    indent = lines[path_line_index][: len(lines[path_line_index]) - len(lines[path_line_index].lstrip())]
+    lines[path_line_index] = f"{indent}path: {resolved_root}"
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False, encoding="utf-8") as tmp:
+        tmp.write("\n".join(lines) + "\n")
+        temp_path = Path(tmp.name)
+
+    return temp_path, temp_path
+
+
 def main() -> int:
     # 1) Lee argumentos y valida precondiciones mínimas.
     args = parse_args()
@@ -81,6 +113,11 @@ def main() -> int:
     # El entrenamiento debe fallar rapido si falta el manifiesto del dataset.
     if not data_path.exists():
         raise FileNotFoundError(f"No se encontro data.yaml: {data_path}")
+
+    temp_data_yaml: Path | None = None
+    if not args.dry_run:
+        resolved_data_yaml, temp_data_yaml = _materialize_data_yaml_for_ultralytics(data_path)
+        args.data = str(resolved_data_yaml)
 
     # 2) Prepara e imprime la configuración final que se enviara a Ultralytics.
     device_resolution = resolve_device(args.device)
@@ -111,8 +148,12 @@ def main() -> int:
 
     # 4) Carga pesos base y ejecuta el entrenamiento.
     # Si args.model es un .pt, usa pesos preentrenados; si es .yaml, inicializa arquitectura.
-    model = YOLO(args.model)
-    model.train(**train_kwargs)
+    try:
+        model = YOLO(args.model)
+        model.train(**train_kwargs)
+    finally:
+        if temp_data_yaml is not None and temp_data_yaml.exists():
+            temp_data_yaml.unlink(missing_ok=True)
 
     # `trainer.save_dir` refleja el directorio final (incluyendo sufijos incrementales).
     save_dir = getattr(getattr(model, "trainer", None), "save_dir", None)
