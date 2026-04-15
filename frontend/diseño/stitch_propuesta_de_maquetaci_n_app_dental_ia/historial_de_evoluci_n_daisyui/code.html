@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="light" data-theme="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dentis AI - Historial de Evolución</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#003f87",
+                        "secondary": "#006877",
+                        "accent": "#75e7fe",
+                        "neutral": "#191c1d",
+                        "base-100": "#f8f9fa",
+                        "info": "#0056b3",
+                        "success": "#006722",
+                        "warning": "#ba1a1a",
+                        "error": "#ba1a1a",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+            daisyui: {
+                themes: [{
+                    light: {
+                        ...require("daisyui/src/theming/themes")["light"],
+                        "primary": "#003f87",
+                        "secondary": "#006877",
+                        "accent": "#75e7fe",
+                        "base-100": "#f8f9fa",
+                        "base-200": "#edeeef",
+                        "base-300": "#e1e3e4",
+                    },
+                }],
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #191c1d;
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-shadow {
+            box-shadow: 0 20px 40px rgba(0, 86, 179, 0.04);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen font-body">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col bg-white border-r border-base-200 z-50">
+<div class="flex flex-col h-full py-8 gap-2">
+<div class="px-6 mb-8">
+<span class="text-xl font-extrabold text-primary font-headline tracking-tight">Dentis AI</span>
+</div>
+<div class="px-4 mb-6 flex items-center gap-3">
+<div class="avatar">
+<div class="w-10 rounded-full">
+<img alt="Clinic Administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGur7GZkDmS9XdVBGcAofkozVMYZqG8GYSqfIjUSWW51gTgZjcMq54FaWZsCk-KiuDHX64x9AT2t6PesPWa9t4bLj6Ylr63mogCErr4fVnpCOHnLZMTrPiJInyVPpfCsX6cZdzHjRchs75fT_oWiH3Zc2zwY71pF5NvqvFpp3eOrInG6yMF13iFYPzUwhOMGSPvAlpFF7o9mh_8i4z-rH5Fz9l5-vIVvrg_J74Yksm3tgssnr_sCc_ddv6Xkb-JZSUEhh7ISHdbeRO"/>
+</div>
+</div>
+<div>
+<p class="text-sm font-bold text-neutral leading-none">Dr. Henderson</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tight mt-1">Dental Surgeon</p>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-base-200 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-base-200 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg">clinical_notes</span>
+<span class="font-medium text-sm">Analyze</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 bg-primary/5 text-primary border-r-4 border-primary transition-all rounded-l-lg" href="#">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-bold text-sm">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-base-200 transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-4">
+<button class="btn btn-primary btn-block shadow-lg gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Scan
+            </button>
+</div>
+<div class="px-2 pt-4 border-t border-base-200">
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-500 hover:bg-base-200 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="font-medium text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-error hover:bg-error/5 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span class="font-medium text-sm">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar Component -->
+<header class="navbar bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-base-200 px-6">
+<div class="flex-1 gap-4">
+<h1 class="font-headline font-bold tracking-tight text-neutral text-xl">Historial de Evolución</h1>
+<div class="hidden lg:flex tabs tabs-bordered ml-8">
+<a class="tab tab-active font-headline font-bold text-sm text-primary border-primary">History</a>
+<a class="tab font-headline font-bold text-sm text-slate-500">Patients</a>
+<a class="tab font-headline font-bold text-sm text-slate-500">Reports</a>
+</div>
+</div>
+<div class="flex-none gap-2">
+<div class="form-control hidden sm:block">
+<div class="relative">
+<input class="input input-bordered input-sm w-48 md:w-64 bg-base-100 focus:input-primary pl-9" placeholder="Search records..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-slate-400 text-xl">search</span>
+</div>
+</div>
+<button class="btn btn-ghost btn-circle btn-sm">
+<div class="indicator">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="badge badge-xs badge-primary indicator-item"></span>
+</div>
+</button>
+<div class="dropdown dropdown-end">
+<div class="btn btn-ghost btn-circle avatar btn-sm" role="button" tabindex="0">
+<div class="w-8 rounded-full">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLoCXcHHx5AG4xaPHRHHWdGz8M4t1JnMZ5uLxACP_iCus9Vj1CKNsTbKDJXRaSHAQL0Z58ZjWZfV6kzZBsRjBfUyd0kQEZJ01qh5g8gVmpV-IBieJFepyZ7qrfUEwlZTgWiBzJXRmhf4gwhXmM-PIudB4HETI-95qVq6GchZ6KbXxGa6mZwqSMO4WWlBbd2Dsa97DfZihnV0DHyxC45_5v2qtrc-i1GH_fo29jshiyS6TxPzF1y77Hn84K3RLXnlsLUSra3KvliV2I"/>
+</div>
+</div>
+<ul class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 border border-base-200" tabindex="0">
+<li><a>Profile</a></li>
+<li><a>Settings</a></li>
+<li><a class="text-error">Logout</a></li>
+</ul>
+</div>
+</div>
+</header>
+<!-- Content -->
+<div class="p-6 lg:p-10 max-w-7xl mx-auto w-full space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Análisis de Progreso</div>
+<h3 class="text-4xl font-headline font-extrabold text-neutral tracking-tight">Evolución de Salud Dental</h3>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="join bg-white border border-base-200">
+<button class="join-item btn btn-sm btn-ghost hover:bg-primary/10 text-primary font-bold">6 Meses</button>
+<button class="join-item btn btn-sm btn-ghost text-slate-500">1 Año</button>
+<button class="join-item btn btn-sm btn-ghost text-slate-500">Todo</button>
+</div>
+<button class="btn btn-sm btn-outline border-base-300 gap-2">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                    Filtros
+                </button>
+<button class="btn btn-sm btn-secondary gap-2 text-white">
+<span class="material-symbols-outlined text-lg">share</span>
+                    Exportar
+                </button>
+</div>
+</div>
+<!-- Dashboard Widgets -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Charts Card -->
+<div class="lg:col-span-8 card bg-white border border-base-200 shadow-sm overflow-hidden">
+<div class="card-body p-0">
+<div class="flex items-center justify-between p-6 border-b border-base-200">
+<div>
+<h4 class="card-title font-headline font-bold text-primary">Puntuación de Salud General</h4>
+<div class="badge badge-success badge-sm badge-outline gap-1 mt-1 font-bold">
+<span class="material-symbols-outlined text-[10px]">trending_up</span>
+                                +12% mejora
+                            </div>
+</div>
+<div class="flex items-center gap-2 text-[11px] font-bold text-secondary uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                            AI Predictive Engine
+                        </div>
+</div>
+<div class="p-6 h-64 flex items-end justify-between gap-3 bg-slate-50/30">
+<!-- Chart Mockup with DaisyUI color accents -->
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/10 rounded-t-lg transition-all hover:bg-primary/20" style="height: 40%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Ene</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-lg transition-all hover:bg-primary/30" style="height: 45%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Feb</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/30 rounded-t-lg transition-all hover:bg-primary/40" style="height: 58%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Mar</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/40 rounded-t-lg transition-all hover:bg-primary/50" style="height: 52%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Abr</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/50 rounded-t-lg transition-all hover:bg-primary/60" style="height: 65%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">May</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-secondary rounded-t-lg relative group" style="height: 82%">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral text-white text-[10px] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">82%</div>
+</div>
+<span class="text-[10px] font-bold text-secondary uppercase">Jun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats/Metric Card -->
+<div class="lg:col-span-4 card bg-white border border-base-200 shadow-sm">
+<div class="card-body p-6">
+<h4 class="card-title font-headline font-bold text-primary mb-4 text-lg">Comparativa Directa</h4>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 bg-base-100 p-4 rounded-xl border border-base-200">
+<div class="avatar-group -space-x-4 rtl:space-x-reverse">
+<div class="avatar border-white">
+<div class="w-16 rounded-lg bg-slate-200">
+<img class="grayscale opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe-W-Ca7g9eXU1KlgZqL1w8rruLs8ZaeG9X0k39DlPvUGF_TvoLfG6DuLAtSdAMTgjCUDxijNJ6yi_pvMaBYTYZyPP_yKwsqjjfgHQqaa6RjQI7mfCFtjfrh_-uzCMt1oZCQDnX70HmkadvI4_dmRZOqVXLqr8iBjbE-hd6GIThLbV6B4y-GFdTPzKESwx5BPT0ShDIxLwIeCe-x3Wcr1U6wFGDqfgLzthzuQPGXsNhuVDU_5Jbj9maMOcx4y-z9WCwIYjMbbiABFU"/>
+</div>
+</div>
+<div class="avatar border-white">
+<div class="w-16 rounded-lg border-2 border-secondary">
+<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4J0U9xIdCwOPOrWwpQeqhCs3hAOcXGgGnQhElbmod4IPUOabK6T3wbXyy56gDsHGreoOhni7WZa4E5TocaF9ZomaHzjoXPw7z4q4mSZCNm-j_d5fo3p2sGSRoX7HuW7duuGstK1KTca9ooUOKpKM3DhbwVMRZKYL3DhTIBgkahGWimTHCUsKpHj2YUkhwjveb8piDwWd_Zj7g2QC_l_p_VCU2AqdzAS5aJzJMXiNxpBW_xV43SV5AdGyVtiWJTJSUZFrSiFqgOtUv"/>
+</div>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Estado Actual</p>
+<p class="text-xs font-medium text-neutral mt-1 leading-tight">Mejora del 45% en inflamación gingival.</p>
+</div>
+</div>
+<div class="stats stats-vertical bg-primary text-white shadow">
+<div class="stat py-3">
+<div class="stat-title text-white/70 text-[10px] uppercase font-bold">Densidad Ósea</div>
+<div class="stat-value text-2xl font-headline">Estable</div>
+<div class="stat-desc text-white/60">Sector 32 - Sin cambios</div>
+</div>
+<div class="stat py-3 border-t border-white/10">
+<div class="stat-title text-white/70 text-[10px] uppercase font-bold">Riesgo AI</div>
+<div class="stat-value text-2xl font-headline">Bajo</div>
+<div class="stat-desc text-white/60">Monitoreo cada 3 meses</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="lg:col-span-12 space-y-6">
+<div class="flex items-center justify-between">
+<h4 class="font-headline font-bold text-2xl text-neutral">Cronología de Escaneos</h4>
+<div class="badge badge-outline badge-sm text-slate-400 font-bold border-base-300">Total: 12 registros</div>
+</div>
+<div class="overflow-x-auto bg-white rounded-xl border border-base-200 shadow-sm">
+<table class="table table-zebra w-full">
+<!-- head -->
+<thead>
+<tr class="bg-base-100 text-[11px] uppercase tracking-widest text-slate-500 border-b border-base-200">
+<th class="py-4">Procedimiento</th>
+<th class="py-4">Personal Médico</th>
+<th class="py-4">Fecha &amp; Score</th>
+<th class="py-4">Estado AI</th>
+<th class="py-4 text-right">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<!-- row 1 -->
+<tr class="hover">
+<td>
+<div class="flex items-center gap-3">
+<div class="avatar">
+<div class="mask mask-squircle w-12 h-12 bg-base-200">
+<img alt="Scan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKgigzjoiQqElNKDqpOpDaeLPOM7rleU_6Uk-c9mYeJ4x6wLgVOBnrmc8APVJb7hFScpveAjGYlFKVqqA0wE6ESXjB1RCbrb19KVq8uAaX5phFpKNIwfg5EVL-gRq40NIx7hcnjsPrabhsen7U-AWfSBDaTVpam4wBe_NvjCFCBhp1No_FGXbbzVDalrUB659fpwHoZcxFLbga7kyb9YpA2fZjeOTf7qEPf0KmGCEu5sX6bTq2r4A8Te9TbGqbZCus3hP2srx7vzRe"/>
+</div>
+</div>
+<div>
+<div class="font-bold text-neutral text-sm">Escaneo de Control Trimestral</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Hallazgo: Sanación completa</div>
+</div>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-600">Dr. Henderson</span>
+<span class="text-[10px] text-slate-400 uppercase tracking-tighter">Cirujano Dentista</span>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral">14 Jun, 2024</span>
+<span class="text-[10px] font-extrabold text-secondary mt-1">SCORE: 82/100</span>
+</div>
+</td>
+<td><span class="badge badge-success badge-sm text-white font-bold">ESTABLE</span></td>
+<th class="text-right">
+<div class="join join-horizontal">
+<button class="btn btn-ghost btn-xs join-item"><span class="material-symbols-outlined text-sm">visibility</span></button>
+<button class="btn btn-ghost btn-xs join-item"><span class="material-symbols-outlined text-sm">download</span></button>
+</div>
+</th>
+</tr>
+<!-- row 2 -->
+<tr class="hover">
+<td>
+<div class="flex items-center gap-3">
+<div class="avatar">
+<div class="mask mask-squircle w-12 h-12 bg-base-200 grayscale opacity-40">
+<img alt="Prophylaxis" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQVkPN0gAFlDDuTtU2qYMocTIrQ6K3HL2x1RRapr4pMGkOHDzotrkO2snOab_BbIN-ZbtwSRqJy7qr3jja-nMFRhLLVyVONV2DM2D8LI2eKEt2qAWs0cMkn7vS-TDqkhH9z2LztlzYSWapHNOsGv_M57SV3a3K8qIJsB6c2vctUTHmWdNOFyt2ChucHg_JZZ0gOIkRIxrMngotnbFiJ8qnku3gpGv80KPgZhSCEcoUgAYHZUcByuLTcba7pU9KvIqcJQ7LxvKJCYm"/>
+</div>
+</div>
+<div>
+<div class="font-bold text-neutral text-sm">Limpieza Profunda &amp; Profilaxis</div>
+<div class="text-[10px] text-slate-400 mt-0.5">Mantenimiento preventivo</div>
+</div>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-600">Dra. Martinez</span>
+<span class="text-[10px] text-slate-400 uppercase tracking-tighter">Higienista</span>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral">02 Abr, 2024</span>
+<span class="text-[10px] font-extrabold text-slate-300 mt-1">N/A</span>
+</div>
+</td>
+<td><span class="badge badge-info badge-sm text-white font-bold">PROCEDIMIENTO</span></td>
+<th class="text-right">
+<button class="btn btn-ghost btn-xs disabled"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</th>
+</tr>
+<!-- row 3 -->
+<tr class="hover">
+<td>
+<div class="flex items-center gap-3">
+<div class="avatar">
+<div class="mask mask-squircle w-12 h-12 bg-error/10">
+<img alt="Emergency" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4TLailUnD4rKpG2WbgfmbvyL6yBkvrPI8_0cIN-9HaQ3UNls8KgXmCtPia-AE54QJFo-t9ZQf3K-CKSUcPfEvCjpYU8ql40IM_3qaVp3Q2BQYWGgWiCmIO3m6VlyGBuuBQRMajcLjD2cyhAw5Id-93zN4J_34d7oiQ6hCKbaSEt4fpwxZOz5LoaZzULltZ6_WHnaTpowRvVyrRY7SnPMv312Bt0-wxQUoWX-MAxb-1s44K4HUg9PYjZwRZYi54I2jC5mCTZ8flfox"/>
+</div>
+</div>
+<div>
+<div class="font-bold text-neutral text-sm">Escaneo de Emergencia</div>
+<div class="text-[10px] text-error mt-0.5">Dolor agudo detectado</div>
+</div>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-600">Dr. Henderson</span>
+<span class="text-[10px] text-slate-400 uppercase tracking-tighter">Cirujano Dentista</span>
+</div>
+</td>
+<td>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral">12 Ene, 2024</span>
+<span class="text-[10px] font-extrabold text-error mt-1">SCORE: 68/100</span>
+</div>
+</td>
+<td><span class="badge badge-error badge-sm text-white font-bold">ALERTA</span></td>
+<th class="text-right">
+<button class="btn btn-ghost btn-xs"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</th>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Component -->
+<div class="flex justify-center mt-6">
+<div class="join bg-white border border-base-200">
+<button class="join-item btn btn-sm btn-ghost"><span class="material-symbols-outlined text-lg">chevron_left</span></button>
+<button class="join-item btn btn-sm btn-active btn-primary text-white font-bold">1</button>
+<button class="join-item btn btn-sm btn-ghost">2</button>
+<button class="join-item btn btn-sm btn-ghost">3</button>
+<button class="join-item btn btn-sm btn-ghost"><span class="material-symbols-outlined text-lg">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Component -->
+<footer class="footer p-8 bg-white text-slate-400 border-t border-base-200 mt-auto">
+<aside class="flex flex-col gap-1">
+<p class="font-extrabold text-primary font-headline">Dentis AI Clinical Systems</p>
+<p class="text-[10px] uppercase tracking-[0.15em]">© 2024 - All AI diagnostics require professional verification.</p>
+</aside>
+<nav class="md:place-self-center md:justify-self-end">
+<div class="grid grid-flow-col gap-6">
+<a class="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors cursor-pointer">Disclaimer</a>
+<a class="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors cursor-pointer">Privacy</a>
+<a class="text-[10px] uppercase font-bold tracking-widest hover:text-primary transition-colors cursor-pointer">Terms</a>
+</div>
+</nav>
+</footer>
+</main>
+<!-- Contextual FAB (Only for Mobile) -->
+<button class="btn btn-primary btn-circle shadow-2xl fixed bottom-8 right-8 md:hidden z-50">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+</body></html>
