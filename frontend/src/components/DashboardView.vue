@@ -3,7 +3,6 @@
 import Header from '@/components/parts/Header.vue'
 import Aside from '@/components/parts/Aside.vue'
 import Footer from "@/components/parts/Footer.vue";
-
 </script>
 
 <template>

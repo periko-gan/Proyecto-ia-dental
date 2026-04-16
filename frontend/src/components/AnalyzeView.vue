@@ -3,7 +3,6 @@
 import Header from '@/components/parts/Header.vue'
 import Aside from "@/components/parts/Aside.vue";
 import Footer from "@/components/parts/Footer.vue";
-
 </script>
 
 <template>
@@ -12,7 +11,7 @@ import Footer from "@/components/parts/Footer.vue";
     <!-- TopNavBar (Shared Component) -->
     <Header/>
 
-    <Aside />
+    <Aside/>
 
     <!-- Main Content Canvas -->
     <main class="pt-20 md:pl-64 min-h-screen flex flex-col lg:flex-row gap-0">
@@ -22,10 +21,12 @@ import Footer from "@/components/parts/Footer.vue";
           <div class="flex justify-between items-end">
             <div>
               <h3 class="font-headline text-3xl font-extrabold text-primary mb-2">Clinical Image Analysis</h3>
-              <p class="text-on-surface-variant font-medium">Upload intraoral photos or radiographic scans for AI diagnostic support.</p>
+              <p class="text-on-surface-variant font-medium">Upload intraoral photos or radiographic scans for AI
+                diagnostic support.</p>
             </div>
             <div class="flex gap-3">
-              <div class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]">
+              <div
+                  class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]">
                 <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
                 AI System Ready
               </div>
@@ -33,15 +34,19 @@ import Footer from "@/components/parts/Footer.vue";
           </div>
           <!-- Drag & Drop Zone -->
           <div class="relative group">
-            <div class="border-2 border-dashed border-outline-variant bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-surface-container-lowest hover:border-primary cursor-pointer min-h-[450px]">
+            <div
+                class="border-2 border-dashed border-outline-variant bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-surface-container-lowest hover:border-primary cursor-pointer min-h-[450px]">
               <!-- Upload Prompt -->
               <div class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
-                <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <span class="material-symbols-outlined text-primary text-4xl" data-icon="cloud_upload">cloud_upload</span>
+                <div
+                    class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span class="material-symbols-outlined text-primary text-4xl"
+                        data-icon="cloud_upload">cloud_upload</span>
                 </div>
                 <div class="space-y-2">
                   <h4 class="text-xl font-bold text-on-surface font-headline">Drag &amp; Drop clinical media</h4>
-                  <p class="text-on-surface-variant text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per file.</p>
+                  <p class="text-on-surface-variant text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per
+                    file.</p>
                 </div>
                 <!-- DaisyUI File Input -->
                 <div class="form-control w-full">
@@ -104,11 +109,13 @@ import Footer from "@/components/parts/Footer.vue";
         </div>
       </section>
       <!-- Right Side Panel: Visual Guide -->
-      <aside class="w-full lg:w-[400px] bg-slate-50 dark:bg-slate-900 border-l border-slate-200/50 p-8 space-y-8 lg:min-h-screen">
+      <aside
+          class="w-full lg:w-[400px] bg-slate-50 dark:bg-slate-900 border-l border-slate-200/50 p-8 space-y-8 lg:min-h-screen">
         <div class="space-y-2">
           <span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Protocol Guide</span>
           <h4 class="font-headline text-2xl font-extrabold text-blue-900">Clinical Visual Guide</h4>
-          <p class="text-sm text-on-surface-variant">Ensure high-fidelity analysis by following these imaging protocols.</p>
+          <p class="text-sm text-on-surface-variant">Ensure high-fidelity analysis by following these imaging
+            protocols.</p>
         </div>
         <!-- DaisyUI Steps -->
         <div class="mt-8">
@@ -119,10 +126,15 @@ import Footer from "@/components/parts/Footer.vue";
                   <h5 class="text-sm font-bold text-blue-900">Optimal Lighting</h5>
                 </div>
                 <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">
-                  <img class="w-full h-full object-cover" data-alt="bright clinical lighting setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>
-                  <div class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">Soft Neutral Light</div>
+                  <img class="w-full h-full object-cover" data-alt="bright clinical lighting setup"
+                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>
+                  <div
+                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">
+                    Soft Neutral Light
+                  </div>
                 </div>
-                <p class="text-[11px] text-on-surface-variant leading-relaxed">Avoid direct flash on shiny surfaces. Use secondary, diffused white light sources.</p>
+                <p class="text-[11px] text-on-surface-variant leading-relaxed">Avoid direct flash on shiny surfaces. Use
+                  secondary, diffused white light sources.</p>
               </div>
             </li>
             <li class="step">
@@ -131,10 +143,15 @@ import Footer from "@/components/parts/Footer.vue";
                   <h5 class="text-sm font-bold text-blue-900">Correct Angle</h5>
                 </div>
                 <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">
-                  <img class="w-full h-full object-cover" data-alt="side view macro photography of dental models" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>
-                  <div class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">Orthogonal View</div>
+                  <img class="w-full h-full object-cover" data-alt="side view macro photography of dental models"
+                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>
+                  <div
+                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">
+                    Orthogonal View
+                  </div>
                 </div>
-                <p class="text-[11px] text-on-surface-variant leading-relaxed">Capture images perpendicular to the tooth surface. Maintain horizontal occlusal plane.</p>
+                <p class="text-[11px] text-on-surface-variant leading-relaxed">Capture images perpendicular to the tooth
+                  surface. Maintain horizontal occlusal plane.</p>
               </div>
             </li>
             <li class="step">
@@ -144,7 +161,8 @@ import Footer from "@/components/parts/Footer.vue";
                 </div>
                 <div class="alert bg-white/50 border-slate-200 p-3 rounded-lg flex items-center gap-4">
                   <span class="material-symbols-outlined text-primary text-2xl" data-icon="center_focus_weak">center_focus_weak</span>
-                  <p class="text-[11px] text-on-surface-variant">The AI requires min 300 DPI. Use optical focus lock.</p>
+                  <p class="text-[11px] text-on-surface-variant">The AI requires min 300 DPI. Use optical focus
+                    lock.</p>
                 </div>
               </div>
             </li>
@@ -154,9 +172,11 @@ import Footer from "@/components/parts/Footer.vue";
         <div class="card bg-primary text-primary-content shadow-xl mt-8">
           <div class="card-body p-6 gap-4">
             <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Professional Verification</p>
-            <p class="text-sm font-medium leading-relaxed">AI results are advisory. Always cross-reference with tactile clinical exams.</p>
+            <p class="text-sm font-medium leading-relaxed">AI results are advisory. Always cross-reference with tactile
+              clinical exams.</p>
             <div class="card-actions">
-              <button class="btn btn-block btn-sm btn-neutral bg-white text-primary border-none hover:bg-slate-100 font-bold uppercase tracking-tight">
+              <button
+                  class="btn btn-block btn-sm btn-neutral bg-white text-primary border-none hover:bg-slate-100 font-bold uppercase tracking-tight">
                 Request Manual Review
               </button>
             </div>
@@ -165,7 +185,7 @@ import Footer from "@/components/parts/Footer.vue";
       </aside>
     </main>
     <!-- Footer (Shared Component) -->
-    <Footer />
+    <Footer/>
   </div>
 
 </template>
@@ -174,6 +194,7 @@ import Footer from "@/components/parts/Footer.vue";
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
 .scan-line {
   height: 2px;
   background: linear-gradient(90deg, transparent, #22d3ee, transparent);
@@ -183,6 +204,7 @@ import Footer from "@/components/parts/Footer.vue";
   top: 0;
   z-index: 20;
 }
+
 .glass-panel {
   backdrop-filter: blur(12px);
   background: rgba(15, 23, 42, 0.8);
