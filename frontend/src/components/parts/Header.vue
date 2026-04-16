@@ -4,14 +4,24 @@
 
 <template>
   <!-- Navbar -->
-  <div class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8">
+  <header class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">Dentis
         AI</a>
       <div class="hidden lg:flex ml-10 space-x-2">
-        <router-link :to="{name: 'Home'}" class="btn btn-ghost btn-sm text-blue-700 font-bold border-b-2 border-blue-700 rounded-none">Dashboard</router-link>
-        <router-link :to="{name: 'Analyze'}" class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">❤️Analyze</router-link>
-        <a class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">History</a>
+        <router-link :to="{name: 'Dashboard'}"
+                     class="btn btn-ghost btn-sm text-blue-700 font-bold border-b-2 border-blue-700 rounded-none">
+          Dashboard
+        </router-link>
+        <router-link :to="{name: 'Analyze'}" class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">
+          Analyze
+        </router-link>
+        <router-link :to="{name: 'Diagnostic'}"
+                     class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">Diagnostic
+        </router-link>
+        <router-link :to="{name: 'Evolution'}"
+                     class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">Evolution
+        </router-link>
       </div>
     </div>
     <div class="flex-none gap-2">
@@ -42,7 +52,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <style scoped>

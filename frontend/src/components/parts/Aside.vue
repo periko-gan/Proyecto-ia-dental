@@ -22,22 +22,25 @@
     <nav class="p-6">
       <ul class="menu menu-md w-full p-0 gap-1">
         <li>
-          <a class="active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-none">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-            Dashboard
-          </a>
+          <router-link :to="{name: 'Dashboard'}"
+                       class="active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-none">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">Dashboard</span>
+          </router-link>
         </li>
         <li>
-          <a class="text-slate-500 hover:text-blue-700">
-            <span class="material-symbols-outlined">clinical_notes</span>
-            Analyze
-          </a>
+          <router-link :to="{name: 'Analyze'}" class="text-slate-500 hover:text-blue-700">
+            <span class="material-symbols-outlined">Analyze</span>
+          </router-link>
         </li>
         <li>
-          <a class="text-slate-500 hover:text-blue-700">
-            <span class="material-symbols-outlined">history</span>
-            History
-          </a>
+          <router-link :to="{name: 'Diagnostic'}" class="text-slate-500 hover:text-blue-700">
+            <span class="material-symbols-outlined">Diagnostic</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'Evolution'}" class="text-slate-500 hover:text-blue-700">
+            <span class="material-symbols-outlined">Evolution</span>
+          </router-link>
         </li>
       </ul>
     </nav>
