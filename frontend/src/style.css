@@ -1,32 +1,33 @@
 @import 'tailwindcss';
+
 @plugin 'daisyui';
 @import './styles/themes/theme.css';
 
 @layer base {
-  :root,
-  [data-theme='light'] {
-	color-scheme: light;
-  }
+    :root,
+    [data-theme='light'] {
+        color-scheme: light;
+    }
 
-  html.dark,
-  [data-theme='dark'] {
-	color-scheme: dark;
-  }
+    html.dark,
+    [data-theme='dark'] {
+        color-scheme: dark;
+    }
 
-  html {
-  background-color: var(--surface);
-  color: var(--on-surface);
-  }
+    html {
+        background-color: var(--surface);
+        color: var(--on-surface);
+    }
 
-  body {
-  background-color: var(--surface);
-  color: var(--on-surface);
-  font-family: var(--font-body, 'Inter', sans-serif);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  }
+    body {
+        background-color: var(--surface);
+        color: var(--on-surface);
+        font-family: var(--font-body, 'Inter', sans-serif);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-  #app {
-  min-height: 100vh;
-  }
+    #app {
+        min-height: 100vh;
+    }
 }

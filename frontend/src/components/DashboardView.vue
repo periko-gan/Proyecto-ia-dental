@@ -1,8 +1,8 @@
 <script setup>
 
-import Header from '@/components/parts/Header.vue'
-import Aside from '@/components/parts/Aside.vue'
-import Footer from "@/components/parts/Footer.vue";
+import Header from '@/components/parts/all_pages/Header.vue'
+import Aside from '@/components/parts/all_pages/Aside.vue'
+import Footer from "@/components/parts/all_pages/Footer.vue";
 </script>
 
 <template>

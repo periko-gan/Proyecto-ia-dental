@@ -1,6 +1,6 @@
 <script setup>
 
-import Aside from "@/components/parts/Aside.vue";
+import Aside from "@/components/parts/all_pages/Aside.vue";
 </script>
 
 <template>
