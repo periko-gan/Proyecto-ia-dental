@@ -13,7 +13,7 @@
                         data-icon="cloud_upload">cloud_upload</span>
       </div>
       <div class="space-y-2">
-        <h4 class="text-xl font-bold text-on-surface font-headline">Drag &amp; Drop clinical media</h4>
+        <h4 class="text-xl font-bold text-on-surface font-headline">Drag & Drop clinical media</h4>
         <p class="text-on-surface-variant text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per
           file.</p>
       </div>
