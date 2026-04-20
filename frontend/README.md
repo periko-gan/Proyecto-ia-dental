@@ -82,6 +82,32 @@ pnpm format
 
 Los scripts de la raiz delegan al paquete `frontend`.
 
+## Docker (solo carpeta frontend)
+
+El `Dockerfile` de `frontend` publica Nginx en el puerto `80`. Para lanzarlo con Compose:
+
+```sh
+cd frontend
+docker compose up --build -d
+```
+
+Abrir en navegador:
+
+```text
+http://localhost:80
+```
+
+Comandos utiles:
+
+```sh
+cd frontend
+docker compose ps
+docker compose logs -f
+docker compose down
+```
+
+Si el puerto `80` ya esta ocupado en tu maquina, cambia temporalmente el mapeo en `docker-compose.yml` a `8080:80` y abre `http://localhost:8080`.
+
 ## Problemas comunes
 
 ### 1) Error de dependencias con `npm` (`ERESOLVE`)
