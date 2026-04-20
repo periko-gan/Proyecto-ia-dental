@@ -1,0 +1,158 @@
+version: '3.8'
+
+networks:
+  data_network:
+    driver: bridge
+
+# Definición de volúmenes para persistencia de datos
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
+  nodered_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+services:
+  # ==========================================
+  # MENSAJERÍA Y EVENTOS (KAFKA + ZOOKEEPER)
+  # ==========================================
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.7.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  kafka:
+    image: confluentinc/cp-kafka:7.7.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+
+  # ==========================================
+  # ORQUESTACIÓN AUXILIAR (NODE-RED)
+  # ==========================================
+  node-red:
+    image: nodered/node-red:latest
+    container_name: nodered
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered_data:/data
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
+  # ==========================================
+  # LOGS Y ANALÍTICA OPERATIVA (ELK STACK)
+  # ==========================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.0
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    environment:
+      - LS_JAVA_OPTS="-Xmx1G -Xms1G"
+    ports:
+      - "5044:5044"
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
+  # ==========================================
+  # VISUALIZACIÓN TÉCNICA Y ANALÍTICA (GRAFANA)
+  # ==========================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - data_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M

@@ -5,6 +5,6 @@ services:
       dockerfile: Dockerfile
     container_name: frontend-web
     ports:
-      - "80:80"
+      - "8080:80"
     restart: unless-stopped
 
