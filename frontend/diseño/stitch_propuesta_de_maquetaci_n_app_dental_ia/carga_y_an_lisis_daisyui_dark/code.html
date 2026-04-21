@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Dentis AI - Analyze Scan</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dentis AI - Analyze Scan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -67,7 +70,7 @@
                         "body": ["Inter"],
                         "label": ["Inter"]
                     },
-                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
                 },
             },
             daisyui: {
@@ -86,10 +89,11 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .scan-line {
             height: 2px;
             background: linear-gradient(90deg, transparent, #22d3ee, transparent);
@@ -99,6 +103,7 @@
             top: 0;
             z-index: 20;
         }
+
         .glass-panel {
             backdrop-filter: blur(12px);
             background: rgba(15, 23, 42, 0.8);
@@ -108,234 +113,262 @@
 <body class="bg-surface font-body text-on-surface antialiased">
 <!-- SideNavBar (Shared Component) -->
 <aside class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col bg-slate-900 shadow-[20px_0_40px_rgba(0,0,0,0.3)] z-40">
-<div class="flex flex-col h-full py-8 gap-2">
-<div class="px-6 mb-8">
-<h1 class="text-lg font-bold text-white font-headline">Dentis AI</h1>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium" href="#">
-<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+    <div class="flex flex-col h-full py-8 gap-2">
+        <div class="px-6 mb-8">
+            <h1 class="text-lg font-bold text-white font-headline">Dentis AI</h1>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium"
+               href="#">
+                <span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center px-6 py-3 bg-blue-900/30 text-blue-400 border-l-4 border-blue-500 transition-all font-['Inter'] text-sm font-medium" href="#">
-<span class="material-symbols-outlined mr-3" data-icon="clinical_notes">clinical_notes</span>
+            <a class="flex items-center px-6 py-3 bg-blue-900/30 text-blue-400 border-l-4 border-blue-500 transition-all font-['Inter'] text-sm font-medium"
+               href="#">
+                <span class="material-symbols-outlined mr-3" data-icon="clinical_notes">clinical_notes</span>
                 Analyze
             </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium" href="#">
-<span class="material-symbols-outlined mr-3" data-icon="history">history</span>
+            <a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium"
+               href="#">
+                <span class="material-symbols-outlined mr-3" data-icon="history">history</span>
                 History
             </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium" href="#">
-<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+            <a class="flex items-center px-6 py-3 text-slate-400 hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer font-['Inter'] text-sm font-medium"
+               href="#">
+                <span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
                 Settings
             </a>
-</nav>
-<div class="mt-auto px-6 py-6 border-t border-slate-800">
-<div class="flex items-center gap-3 mb-6">
-<div class="avatar">
-<div class="w-10 rounded-full ring ring-slate-800">
-<img data-alt="professional portrait of a male dental surgeon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6U4FRC9SmbBNDhZ-tJESgi2UgtW6a-5oylEeWZ1RlnjLegnAFSgs8wYqSAxuMHu9Pemhqne9uOWzjdJUt7yuJ7YmmONlaRKA31C4M8XEBqLX5-R9CLi_tjsn0barAhAp1W_nrctT5LeEMcHrUI4hhPYbeFQMdKkAOFopPQpv6lksBTGlOfe6qVuhvfRlxXmB7s3AnVhpz6o1SNg54GdxjccpXVSVO2b-e3zihYyfB-B0QW06vswwq9CXOIKWlyMqgYGqpFpGZcVOg"/>
-</div>
-</div>
-<div>
-<p class="text-xs font-bold text-slate-200">Dr. Henderson</p>
-<p class="text-[10px] text-slate-500 uppercase tracking-wider">Dental Surgeon</p>
-</div>
-</div>
-<button class="btn btn-primary btn-block btn-sm font-bold shadow-lg shadow-blue-900/20">
+        </nav>
+        <div class="mt-auto px-6 py-6 border-t border-slate-800">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="avatar">
+                    <div class="w-10 rounded-full ring ring-slate-800">
+                        <img data-alt="professional portrait of a male dental surgeon"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6U4FRC9SmbBNDhZ-tJESgi2UgtW6a-5oylEeWZ1RlnjLegnAFSgs8wYqSAxuMHu9Pemhqne9uOWzjdJUt7yuJ7YmmONlaRKA31C4M8XEBqLX5-R9CLi_tjsn0barAhAp1W_nrctT5LeEMcHrUI4hhPYbeFQMdKkAOFopPQpv6lksBTGlOfe6qVuhvfRlxXmB7s3AnVhpz6o1SNg54GdxjccpXVSVO2b-e3zihYyfB-B0QW06vswwq9CXOIKWlyMqgYGqpFpGZcVOg"/>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-slate-200">Dr. Henderson</p>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-wider">Dental Surgeon</p>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block btn-sm font-bold shadow-lg shadow-blue-900/20">
                 New Scan
             </button>
-</div>
-</div>
+        </div>
+    </div>
 </aside>
 <!-- TopNavBar (Shared Component) -->
 <header class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-<div class="flex justify-between items-center px-6 py-3 w-full max-w-full md:pl-72">
-<div class="flex items-center gap-8">
-<h2 class="text-xl font-black text-blue-100 font-['Manrope'] tracking-tight">Analyze</h2>
-<nav class="hidden lg:flex items-center gap-6">
-<a class="text-slate-400 hover:text-blue-400 transition-colors font-bold text-sm" href="#">Dashboard</a>
-<a class="text-blue-400 border-b-2 border-blue-400 pb-1 font-bold text-sm" href="#">Analyze</a>
-<a class="text-slate-400 hover:text-blue-400 transition-colors font-bold text-sm" href="#">History</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="relative hidden sm:block">
-<input class="input input-sm bg-slate-800 border-slate-700 w-64 focus:ring-2 focus:ring-blue-500 transition-all text-sm" placeholder="Search patient data..." type="text"/>
-<span class="material-symbols-outlined absolute right-3 top-1.5 text-slate-500 text-lg" data-icon="search">search</span>
-</div>
-<div class="flex gap-2">
-<button class="btn btn-ghost btn-circle btn-sm text-slate-400">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="btn btn-ghost btn-circle btn-sm text-slate-400">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-</div>
-</div>
-</div>
+    <div class="flex justify-between items-center px-6 py-3 w-full max-w-full md:pl-72">
+        <div class="flex items-center gap-8">
+            <h2 class="text-xl font-black text-blue-100 font-['Manrope'] tracking-tight">Analyze</h2>
+            <nav class="hidden lg:flex items-center gap-6">
+                <a class="text-slate-400 hover:text-blue-400 transition-colors font-bold text-sm" href="#">Dashboard</a>
+                <a class="text-blue-400 border-b-2 border-blue-400 pb-1 font-bold text-sm" href="#">Analyze</a>
+                <a class="text-slate-400 hover:text-blue-400 transition-colors font-bold text-sm" href="#">History</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative hidden sm:block">
+                <input class="input input-sm bg-slate-800 border-slate-700 w-64 focus:ring-2 focus:ring-blue-500 transition-all text-sm"
+                       placeholder="Search patient data..." type="text"/>
+                <span class="material-symbols-outlined absolute right-3 top-1.5 text-slate-500 text-lg"
+                      data-icon="search">search</span>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-ghost btn-circle btn-sm text-slate-400">
+                    <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+                </button>
+                <button class="btn btn-ghost btn-circle btn-sm text-slate-400">
+                    <span class="material-symbols-outlined" data-icon="settings">settings</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </header>
 <!-- Main Content Canvas -->
 <main class="pt-20 md:pl-64 min-h-screen flex flex-col lg:flex-row gap-0 bg-slate-950">
-<!-- Left Analysis Workspace -->
-<section class="flex-1 p-6 md:p-10 flex flex-col items-center">
-<div class="w-full max-w-4xl space-y-8">
-<div class="flex justify-between items-end">
-<div>
-<h3 class="font-headline text-3xl font-extrabold text-blue-400 mb-2">Clinical Image Analysis</h3>
-<p class="text-slate-400 font-medium">Upload intraoral photos or radiographic scans for AI diagnostic support.</p>
-</div>
-<div class="flex gap-3">
-<div class="badge badge-outline border-cyan-500 text-cyan-500 gap-2 p-3 font-bold uppercase tracking-widest text-[10px]">
-<span class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
+    <!-- Left Analysis Workspace -->
+    <section class="flex-1 p-6 md:p-10 flex flex-col items-center">
+        <div class="w-full max-w-4xl space-y-8">
+            <div class="flex justify-between items-end">
+                <div>
+                    <h3 class="font-headline text-3xl font-extrabold text-blue-400 mb-2">Clinical Image Analysis</h3>
+                    <p class="text-slate-400 font-medium">Upload intraoral photos or radiographic scans for AI
+                        diagnostic support.</p>
+                </div>
+                <div class="flex gap-3">
+                    <div class="badge badge-outline border-cyan-500 text-cyan-500 gap-2 p-3 font-bold uppercase tracking-widest text-[10px]">
+                        <span class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
                         AI System Ready
                     </div>
-</div>
-</div>
-<!-- Drag & Drop Zone -->
-<div class="relative group">
-<div class="border-2 border-dashed border-slate-800 bg-slate-900 rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-slate-800/50 hover:border-blue-500 cursor-pointer min-h-[450px]">
-<!-- Upload Prompt -->
-<div class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
-<div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-blue-400 text-4xl" data-icon="cloud_upload">cloud_upload</span>
-</div>
-<div class="space-y-2">
-<h4 class="text-xl font-bold text-white font-headline">Drag &amp; Drop clinical media</h4>
-<p class="text-slate-400 text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per file.</p>
-</div>
-<!-- DaisyUI File Input -->
-<div class="form-control w-full">
-<input class="file-input file-input-bordered file-input-primary w-full bg-slate-800 border-slate-700 text-slate-300" type="file"/>
-</div>
-<div class="divider text-[10px] font-bold text-slate-600 uppercase tracking-widest">or</div>
-<button class="btn btn-primary btn-wide font-bold gap-2 shadow-lg shadow-blue-900/20">
-<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+                </div>
+            </div>
+            <!-- Drag & Drop Zone -->
+            <div class="relative group">
+                <div class="border-2 border-dashed border-slate-800 bg-slate-900 rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-slate-800/50 hover:border-blue-500 cursor-pointer min-h-[450px]">
+                    <!-- Upload Prompt -->
+                    <div class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
+                        <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-blue-400 text-4xl" data-icon="cloud_upload">cloud_upload</span>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-xl font-bold text-white font-headline">Drag &amp; Drop clinical media</h4>
+                            <p class="text-slate-400 text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per
+                                file.</p>
+                        </div>
+                        <!-- DaisyUI File Input -->
+                        <div class="form-control w-full">
+                            <input class="file-input file-input-bordered file-input-primary w-full bg-slate-800 border-slate-700 text-slate-300"
+                                   type="file"/>
+                        </div>
+                        <div class="divider text-[10px] font-bold text-slate-600 uppercase tracking-widest">or</div>
+                        <button class="btn btn-primary btn-wide font-bold gap-2 shadow-lg shadow-blue-900/20">
+                            <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
                             Browse Files
                         </button>
-</div>
-</div>
-</div>
-<!-- Bento Grid Tools -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="card bg-slate-900 border-l-4 border-cyan-500 shadow-xl shadow-black/20">
-<div class="card-body p-5 flex-row items-center gap-4">
-<div class="p-2 bg-cyan-500/10 rounded-lg">
-<span class="material-symbols-outlined text-cyan-400" data-icon="auto_awesome">auto_awesome</span>
-</div>
-<div>
-<p class="text-xs font-bold text-white">Precision Scan</p>
-<p class="text-[10px] text-slate-400">Enhanced caries detection enabled</p>
-</div>
-</div>
-</div>
-<div class="card bg-slate-900 border border-slate-800 shadow-xl shadow-black/20">
-<div class="card-body p-5 flex-row items-center gap-4">
-<div class="p-2 bg-slate-800 rounded-lg">
-<span class="material-symbols-outlined text-slate-400" data-icon="history">history</span>
-</div>
-<div>
-<p class="text-xs font-bold text-white">Patient History</p>
-<p class="text-[10px] text-slate-400">Comparison mode available</p>
-</div>
-</div>
-</div>
-<div class="card bg-slate-900 border border-slate-800 shadow-xl shadow-black/20">
-<div class="card-body p-5 flex-row items-center gap-4">
-<div class="p-2 bg-slate-800 rounded-lg">
-<span class="material-symbols-outlined text-slate-400" data-icon="share">share</span>
-</div>
-<div>
-<p class="text-xs font-bold text-white">Export Data</p>
-<p class="text-[10px] text-slate-400">Cloud sync with EMR active</p>
-</div>
-</div>
-</div>
-</div>
-<!-- AI Progress Alert (Hidden by default) -->
-<div class="alert alert-info shadow-2xl bg-slate-800 border-blue-500/50 hidden">
-<span class="material-symbols-outlined text-blue-400" data-icon="info">info</span>
-<div class="flex-1">
-<h3 class="font-bold text-sm text-white">Neural Network Active</h3>
-<div class="text-xs text-slate-300">Analyzing pathology patterns... 78% Complete</div>
-<progress class="progress progress-primary w-full mt-2" max="100" value="78"></progress>
-</div>
-<button class="btn btn-sm btn-ghost text-slate-400">Cancel</button>
-</div>
-</div>
-</section>
-<!-- Right Side Panel: Visual Guide -->
-<aside class="w-full lg:w-[400px] bg-slate-900 border-l border-slate-800 p-8 space-y-8 lg:min-h-screen">
-<div class="space-y-2">
-<span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Protocol Guide</span>
-<h4 class="font-headline text-2xl font-extrabold text-white">Clinical Visual Guide</h4>
-<p class="text-sm text-slate-400">Ensure high-fidelity analysis by following these imaging protocols.</p>
-</div>
-<!-- DaisyUI Steps -->
-<div class="mt-8">
-<ul class="steps steps-vertical w-full space-y-8">
-<li class="step step-primary" data-content="✓">
-<div class="text-left w-full pl-4">
-<div class="flex justify-between items-center mb-3">
-<h5 class="text-sm font-bold text-white">Optimal Lighting</h5>
-</div>
-<div class="relative h-32 rounded-lg overflow-hidden shadow-2xl border border-slate-800 mb-3">
-<img class="w-full h-full object-cover brightness-75 grayscale-[0.2]" data-alt="bright clinical lighting setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>
-<div class="absolute bottom-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-md rounded text-[9px] text-cyan-400 font-bold uppercase tracking-wider">Soft Neutral Light</div>
-</div>
-<p class="text-[11px] text-slate-400 leading-relaxed">Avoid direct flash on shiny surfaces. Use secondary, diffused white light sources.</p>
-</div>
-</li>
-<li class="step">
-<div class="text-left w-full pl-4">
-<div class="flex justify-between items-center mb-3">
-<h5 class="text-sm font-bold text-white">Correct Angle</h5>
-</div>
-<div class="relative h-32 rounded-lg overflow-hidden shadow-2xl border border-slate-800 mb-3">
-<img class="w-full h-full object-cover brightness-75 grayscale-[0.2]" data-alt="side view macro photography of dental models" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>
-<div class="absolute bottom-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-md rounded text-[9px] text-cyan-400 font-bold uppercase tracking-wider">Orthogonal View</div>
-</div>
-<p class="text-[11px] text-slate-400 leading-relaxed">Capture images perpendicular to the tooth surface. Maintain horizontal occlusal plane.</p>
-</div>
-</li>
-<li class="step">
-<div class="text-left w-full pl-4">
-<div class="flex justify-between items-center mb-3">
-<h5 class="text-sm font-bold text-white">Focus Calibration</h5>
-</div>
-<div class="alert bg-slate-800 border-slate-700 p-3 rounded-lg flex items-center gap-4">
-<span class="material-symbols-outlined text-blue-400 text-2xl" data-icon="center_focus_weak">center_focus_weak</span>
-<p class="text-[11px] text-slate-400">The AI requires min 300 DPI. Use optical focus lock.</p>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<!-- Support Module / High Visibility Action -->
-<div class="card bg-blue-600 text-white shadow-2xl mt-8">
-<div class="card-body p-6 gap-4">
-<p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Professional Verification</p>
-<p class="text-sm font-medium leading-relaxed">AI results are advisory. Always cross-reference with tactile clinical exams.</p>
-<div class="card-actions">
-<button class="btn btn-block btn-sm bg-white text-blue-600 border-none hover:bg-slate-100 font-bold uppercase tracking-tight shadow-lg">
+                    </div>
+                </div>
+            </div>
+            <!-- Bento Grid Tools -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="card bg-slate-900 border-l-4 border-cyan-500 shadow-xl shadow-black/20">
+                    <div class="card-body p-5 flex-row items-center gap-4">
+                        <div class="p-2 bg-cyan-500/10 rounded-lg">
+                            <span class="material-symbols-outlined text-cyan-400"
+                                  data-icon="auto_awesome">auto_awesome</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Precision Scan</p>
+                            <p class="text-[10px] text-slate-400">Enhanced caries detection enabled</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-slate-900 border border-slate-800 shadow-xl shadow-black/20">
+                    <div class="card-body p-5 flex-row items-center gap-4">
+                        <div class="p-2 bg-slate-800 rounded-lg">
+                            <span class="material-symbols-outlined text-slate-400" data-icon="history">history</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Patient History</p>
+                            <p class="text-[10px] text-slate-400">Comparison mode available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-slate-900 border border-slate-800 shadow-xl shadow-black/20">
+                    <div class="card-body p-5 flex-row items-center gap-4">
+                        <div class="p-2 bg-slate-800 rounded-lg">
+                            <span class="material-symbols-outlined text-slate-400" data-icon="share">share</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-white">Export Data</p>
+                            <p class="text-[10px] text-slate-400">Cloud sync with EMR active</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- AI Progress Alert (Hidden by default) -->
+            <div class="alert alert-info shadow-2xl bg-slate-800 border-blue-500/50 hidden">
+                <span class="material-symbols-outlined text-blue-400" data-icon="info">info</span>
+                <div class="flex-1">
+                    <h3 class="font-bold text-sm text-white">Neural Network Active</h3>
+                    <div class="text-xs text-slate-300">Analyzing pathology patterns... 78% Complete</div>
+                    <progress class="progress progress-primary w-full mt-2" max="100" value="78"></progress>
+                </div>
+                <button class="btn btn-sm btn-ghost text-slate-400">Cancel</button>
+            </div>
+        </div>
+    </section>
+    <!-- Right Side Panel: Visual Guide -->
+    <aside class="w-full lg:w-[400px] bg-slate-900 border-l border-slate-800 p-8 space-y-8 lg:min-h-screen">
+        <div class="space-y-2">
+            <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Protocol Guide</span>
+            <h4 class="font-headline text-2xl font-extrabold text-white">Clinical Visual Guide</h4>
+            <p class="text-sm text-slate-400">Ensure high-fidelity analysis by following these imaging protocols.</p>
+        </div>
+        <!-- DaisyUI Steps -->
+        <div class="mt-8">
+            <ul class="steps steps-vertical w-full space-y-8">
+                <li class="step step-primary" data-content="✓">
+                    <div class="text-left w-full pl-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <h5 class="text-sm font-bold text-white">Optimal Lighting</h5>
+                        </div>
+                        <div class="relative h-32 rounded-lg overflow-hidden shadow-2xl border border-slate-800 mb-3">
+                            <img class="w-full h-full object-cover brightness-75 grayscale-[0.2]"
+                                 data-alt="bright clinical lighting setup"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>
+                            <div class="absolute bottom-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-md rounded text-[9px] text-cyan-400 font-bold uppercase tracking-wider">
+                                Soft Neutral Light
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">Avoid direct flash on shiny surfaces. Use
+                            secondary, diffused white light sources.</p>
+                    </div>
+                </li>
+                <li class="step">
+                    <div class="text-left w-full pl-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <h5 class="text-sm font-bold text-white">Correct Angle</h5>
+                        </div>
+                        <div class="relative h-32 rounded-lg overflow-hidden shadow-2xl border border-slate-800 mb-3">
+                            <img class="w-full h-full object-cover brightness-75 grayscale-[0.2]"
+                                 data-alt="side view macro photography of dental models"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>
+                            <div class="absolute bottom-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-md rounded text-[9px] text-cyan-400 font-bold uppercase tracking-wider">
+                                Orthogonal View
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">Capture images perpendicular to the tooth
+                            surface. Maintain horizontal occlusal plane.</p>
+                    </div>
+                </li>
+                <li class="step">
+                    <div class="text-left w-full pl-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <h5 class="text-sm font-bold text-white">Focus Calibration</h5>
+                        </div>
+                        <div class="alert bg-slate-800 border-slate-700 p-3 rounded-lg flex items-center gap-4">
+                            <span class="material-symbols-outlined text-blue-400 text-2xl"
+                                  data-icon="center_focus_weak">center_focus_weak</span>
+                            <p class="text-[11px] text-slate-400">The AI requires min 300 DPI. Use optical focus
+                                lock.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- Support Module / High Visibility Action -->
+        <div class="card bg-blue-600 text-white shadow-2xl mt-8">
+            <div class="card-body p-6 gap-4">
+                <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Professional Verification</p>
+                <p class="text-sm font-medium leading-relaxed">AI results are advisory. Always cross-reference with
+                    tactile clinical exams.</p>
+                <div class="card-actions">
+                    <button class="btn btn-block btn-sm bg-white text-blue-600 border-none hover:bg-slate-100 font-bold uppercase tracking-tight shadow-lg">
                         Request Manual Review
                     </button>
-</div>
-</div>
-</div>
-</aside>
+                </div>
+            </div>
+        </div>
+    </aside>
 </main>
 <!-- Footer (Shared Component) -->
 <footer class="w-full py-8 mt-auto bg-slate-950 border-t border-slate-900 md:pl-64">
-<div class="flex flex-col md:flex-row justify-between items-center px-8 gap-6">
-<p class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600">
+    <div class="flex flex-col md:flex-row justify-between items-center px-8 gap-6">
+        <p class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600">
             © 2024 Dentis AI Clinical Systems. All AI diagnostics require professional verification.
         </p>
-<div class="flex gap-6">
-<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all" href="#">Medical Disclaimer</a>
-<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all" href="#">Privacy Policy</a>
-<a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all" href="#">Terms of Service</a>
-</div>
-</div>
+        <div class="flex gap-6">
+            <a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all"
+               href="#">Medical Disclaimer</a>
+            <a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all"
+               href="#">Privacy Policy</a>
+            <a class="font-['Inter'] text-[10px] uppercase tracking-widest text-slate-600 hover:text-blue-400 transition-all"
+               href="#">Terms of Service</a>
+        </div>
+    </div>
 </footer>
-</body></html>
+</body>
+</html>

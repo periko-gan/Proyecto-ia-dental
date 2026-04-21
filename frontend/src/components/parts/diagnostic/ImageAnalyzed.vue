@@ -61,7 +61,8 @@
     <!-- AI Recommendations - DaisyUI Accordion/Collapse -->
     <div class="space-y-4">
       <div class="flex items-center gap-2 px-2">
-        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <span class="material-symbols-outlined text-primary"
+              style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
         <h3 class="text-lg font-headline font-extrabold text-primary">AI Treatment Recommendations</h3>
       </div>
       <div class="collapse collapse-arrow bg-white border border-slate-200 shadow-sm rounded-xl">

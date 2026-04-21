@@ -4,10 +4,16 @@ import AnalyzeView from '@/components/AnalyzeView.vue'
 import DashboardView from '@/components/DashboardView.vue'
 import DiagnosticView from "@/components/DiagnosticView.vue";
 import EvolutionView from "@/components/EvolutionView.vue";
+import LandingView from "@/components/LandingView.vue";
 
 const routes = [
     {
         path: '/',
+        name: 'Landing',
+        component: LandingView,
+    },
+    {
+        path: '/dashboard',
         name: 'Dashboard',
         component: DashboardView,
     },

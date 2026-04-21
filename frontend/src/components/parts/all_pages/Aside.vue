@@ -33,7 +33,7 @@ function navLinkClass(routeName) {
       <ul class="menu menu-md w-full p-0 gap-1">
         <li>
           <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">Dashboard</span>
+            <span class="material-symbols-outlined">Dashboard</span>
           </router-link>
         </li>
         <li>

@@ -1,374 +1,420 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.css" rel="stylesheet" type="text/css"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "on-secondary-fixed": "#e0f7fa",
-              "surface-container-lowest": "#0b0e14",
-              "tertiary-fixed": "#83fc8e",
-              "surface": "#12161f",
-              "primary-container": "#004491",
-              "tertiary-container": "#003912",
-              "background": "#0b0e14",
-              "outline-variant": "#424752",
-              "on-tertiary-container": "#83fc8e",
-              "on-primary-fixed-variant": "#d7e2ff",
-              "on-surface": "#e1e3e4",
-              "surface-container": "#1d2129",
-              "secondary-container": "#004e5a",
-              "on-primary-container": "#d7e2ff",
-              "secondary": "#4fd8eb",
-              "on-tertiary-fixed-variant": "#83fc8e",
-              "tertiary-fixed-dim": "#66df75",
-              "primary-fixed": "#d7e2ff",
-              "secondary-fixed": "#a4eeff",
-              "on-secondary-fixed-variant": "#a4eeff",
-              "surface-dim": "#0b0e14",
-              "inverse-surface": "#e1e3e4",
-              "surface-tint": "#acc7ff",
-              "error-container": "#93000a",
-              "on-secondary": "#00363d",
-              "tertiary": "#66df75",
-              "error": "#ffb4ab",
-              "on-error-container": "#ffdad6",
-              "on-tertiary-fixed": "#002106",
-              "surface-variant": "#424752",
-              "on-primary-fixed": "#001a40",
-              "on-primary": "#002f66",
-              "surface-container-low": "#191c23",
-              "outline": "#8c919e",
-              "secondary-fixed-dim": "#62d6ed",
-              "inverse-on-surface": "#191c1d",
-              "inverse-primary": "#005bc1",
-              "on-background": "#e1e3e4",
-              "on-surface-variant": "#c2c6d4",
-              "surface-container-highest": "#32363f",
-              "on-secondary-container": "#a4eeff",
-              "primary-fixed-dim": "#acc7ff",
-              "surface-container-high": "#272b34",
-              "primary": "#acc7ff",
-              "on-tertiary": "#003912",
-              "on-error": "#690005",
-              "surface-bright": "#383b42"
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#e0f7fa",
+                        "surface-container-lowest": "#0b0e14",
+                        "tertiary-fixed": "#83fc8e",
+                        "surface": "#12161f",
+                        "primary-container": "#004491",
+                        "tertiary-container": "#003912",
+                        "background": "#0b0e14",
+                        "outline-variant": "#424752",
+                        "on-tertiary-container": "#83fc8e",
+                        "on-primary-fixed-variant": "#d7e2ff",
+                        "on-surface": "#e1e3e4",
+                        "surface-container": "#1d2129",
+                        "secondary-container": "#004e5a",
+                        "on-primary-container": "#d7e2ff",
+                        "secondary": "#4fd8eb",
+                        "on-tertiary-fixed-variant": "#83fc8e",
+                        "tertiary-fixed-dim": "#66df75",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary-fixed": "#a4eeff",
+                        "on-secondary-fixed-variant": "#a4eeff",
+                        "surface-dim": "#0b0e14",
+                        "inverse-surface": "#e1e3e4",
+                        "surface-tint": "#acc7ff",
+                        "error-container": "#93000a",
+                        "on-secondary": "#00363d",
+                        "tertiary": "#66df75",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002106",
+                        "surface-variant": "#424752",
+                        "on-primary-fixed": "#001a40",
+                        "on-primary": "#002f66",
+                        "surface-container-low": "#191c23",
+                        "outline": "#8c919e",
+                        "secondary-fixed-dim": "#62d6ed",
+                        "inverse-on-surface": "#191c1d",
+                        "inverse-primary": "#005bc1",
+                        "on-background": "#e1e3e4",
+                        "on-surface-variant": "#c2c6d4",
+                        "surface-container-highest": "#32363f",
+                        "on-secondary-container": "#a4eeff",
+                        "primary-fixed-dim": "#acc7ff",
+                        "surface-container-high": "#272b34",
+                        "primary": "#acc7ff",
+                        "on-tertiary": "#003912",
+                        "on-error": "#690005",
+                        "surface-bright": "#383b42"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
             },
-            fontFamily: {
-              "headline": ["Manrope"],
-              "body": ["Inter"],
-              "label": ["Inter"]
+            daisyui: {
+                themes: [
+                    {
+                        dark: {
+                            ...require("daisyui/src/theming/themes")["dark"],
+                            "primary": "#acc7ff",
+                            "secondary": "#4fd8eb",
+                            "accent": "#66df75",
+                            "neutral": "#1d2129",
+                            "base-100": "#0b0e14",
+                            "info": "#75e7fe",
+                            "success": "#66df75",
+                            "warning": "#ffb4ab",
+                            "error": "#ffb4ab",
+                        },
+                    },
+                ],
             },
-            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-          },
-        },
-        daisyui: {
-          themes: [
-            {
-              dark: {
-                ...require("daisyui/src/theming/themes")["dark"],
-                "primary": "#acc7ff",
-                "secondary": "#4fd8eb",
-                "accent": "#66df75",
-                "neutral": "#1d2129",
-                "base-100": "#0b0e14",
-                "info": "#75e7fe",
-                "success": "#66df75",
-                "warning": "#ffb4ab",
-                "error": "#ffb4ab",
-              },
-            },
-          ],
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             vertical-align: middle;
         }
-        body { background-color: #0b0e14; }
+
+        body {
+            background-color: #0b0e14;
+        }
     </style>
 </head>
 <body class="bg-background font-body text-on-surface">
 <!-- Navbar -->
 <div class="navbar fixed top-0 z-50 bg-base-100/80 backdrop-blur-md border-b border-surface-variant px-4 md:px-8">
-<div class="flex-1">
-<a class="btn btn-ghost text-xl font-black text-primary font-headline normal-case tracking-tight px-0">Dentis AI</a>
-<div class="hidden lg:flex ml-10 space-x-2">
-<a class="btn btn-ghost btn-sm text-primary font-bold border-b-2 border-primary rounded-none">Dashboard</a>
-<a class="btn btn-ghost btn-sm text-outline hover:text-primary font-bold">Analyze</a>
-<a class="btn btn-ghost btn-sm text-outline hover:text-primary font-bold">History</a>
-</div>
-</div>
-<div class="flex-none gap-2">
-<div class="hidden sm:flex form-control relative">
-<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm">search</span>
-<input class="input input-sm input-bordered bg-surface-container-low border-outline-variant pl-9 w-48 focus:outline-primary" placeholder="Search diagnostics..." type="text"/>
-</div>
-<button class="btn btn-ghost btn-circle btn-sm">
-<div class="indicator">
-<span class="material-symbols-outlined text-outline">notifications</span>
-<span class="badge badge-xs badge-primary indicator-item"></span>
-</div>
-</button>
-<div class="dropdown dropdown-end ml-2">
-<div class="btn btn-ghost btn-circle avatar border border-outline-variant" role="button" tabindex="0">
-<div class="w-8 rounded-full">
-<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9xbAbyQCpcxRzZfqtzqLxPKaDAq2C0CKQok4nfj2JCMt4JeQUjiy2O0XNWTRAzTj5O_RhvmGWyalpU1UuUSJKkITid8KHsaNDdb-kjqkJ_zUEdSKyJljfZxXHaoBo6OYr6tgsV9Vqg7Q3CjPAVYs2QB9rMqc2hcQBUQ6OEaF1_KpN8P9nCbOd31M9v6cx1dzAQMLRDU5ZXuZz_m5UlOdRylWBH-CEE_dIhDMBRxEkYULmlM22TsEvZbHc799hltrcMLtFk0pn9IYt"/>
-</div>
-</div>
-<ul class="mt-3 z-[1] p-2 shadow-xl menu menu-sm dropdown-content bg-surface-container-high rounded-box w-52 border border-outline-variant" tabindex="0">
-<li><a>Profile</a></li>
-<li><a>Settings</a></li>
-<li><a class="text-error font-bold">Logout</a></li>
-</ul>
-</div>
-</div>
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl font-black text-primary font-headline normal-case tracking-tight px-0">Dentis
+            AI</a>
+        <div class="hidden lg:flex ml-10 space-x-2">
+            <a class="btn btn-ghost btn-sm text-primary font-bold border-b-2 border-primary rounded-none">Dashboard</a>
+            <a class="btn btn-ghost btn-sm text-outline hover:text-primary font-bold">Analyze</a>
+            <a class="btn btn-ghost btn-sm text-outline hover:text-primary font-bold">History</a>
+        </div>
+    </div>
+    <div class="flex-none gap-2">
+        <div class="hidden sm:flex form-control relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm">search</span>
+            <input class="input input-sm input-bordered bg-surface-container-low border-outline-variant pl-9 w-48 focus:outline-primary"
+                   placeholder="Search diagnostics..." type="text"/>
+        </div>
+        <button class="btn btn-ghost btn-circle btn-sm">
+            <div class="indicator">
+                <span class="material-symbols-outlined text-outline">notifications</span>
+                <span class="badge badge-xs badge-primary indicator-item"></span>
+            </div>
+        </button>
+        <div class="dropdown dropdown-end ml-2">
+            <div class="btn btn-ghost btn-circle avatar border border-outline-variant" role="button" tabindex="0">
+                <div class="w-8 rounded-full">
+                    <img alt="User profile"
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9xbAbyQCpcxRzZfqtzqLxPKaDAq2C0CKQok4nfj2JCMt4JeQUjiy2O0XNWTRAzTj5O_RhvmGWyalpU1UuUSJKkITid8KHsaNDdb-kjqkJ_zUEdSKyJljfZxXHaoBo6OYr6tgsV9Vqg7Q3CjPAVYs2QB9rMqc2hcQBUQ6OEaF1_KpN8P9nCbOd31M9v6cx1dzAQMLRDU5ZXuZz_m5UlOdRylWBH-CEE_dIhDMBRxEkYULmlM22TsEvZbHc799hltrcMLtFk0pn9IYt"/>
+                </div>
+            </div>
+            <ul class="mt-3 z-[1] p-2 shadow-xl menu menu-sm dropdown-content bg-surface-container-high rounded-box w-52 border border-outline-variant"
+                tabindex="0">
+                <li><a>Profile</a></li>
+                <li><a>Settings</a></li>
+                <li><a class="text-error font-bold">Logout</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- Layout Container -->
 <div class="flex pt-16 min-h-screen">
-<!-- Sidebar -->
-<aside class="w-64 fixed left-0 h-full hidden md:flex flex-col bg-surface border-r border-outline-variant z-40 transition-all">
-<div class="p-6">
-<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl mb-8">
-<div class="avatar placeholder">
-<div class="bg-primary text-on-primary rounded-lg w-10">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
-</div>
-</div>
-<div>
-<p class="text-sm font-bold font-headline text-on-surface leading-none">Dr. Henderson</p>
-<p class="text-[10px] uppercase tracking-widest text-outline font-label mt-1">Dental Surgeon</p>
-</div>
-</div>
-<ul class="menu menu-md w-full p-0 gap-1">
-<li>
-<a class="active bg-primary-container text-on-primary-container font-bold border-r-4 border-primary rounded-none">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-                            Dashboard
-                        </a>
-</li>
-<li>
-<a class="text-outline hover:text-primary">
-<span class="material-symbols-outlined">clinical_notes</span>
-                            Analyze
-                        </a>
-</li>
-<li>
-<a class="text-outline hover:text-primary">
-<span class="material-symbols-outlined">history</span>
-                            History
-                        </a>
-</li>
-<li>
-<a class="text-outline hover:text-primary">
-<span class="material-symbols-outlined">settings</span>
-                            Settings
-                        </a>
-</li>
-</ul>
-<div class="divider before:bg-outline-variant after:bg-outline-variant my-4"></div>
-<button class="btn btn-primary w-full shadow-lg gap-2">
-<span class="material-symbols-outlined text-sm">add_circle</span>
-                    New Scan
-                </button>
-</div>
-<div class="mt-auto p-6 space-y-2">
-<a class="btn btn-ghost btn-sm w-full justify-start text-outline font-medium normal-case">
-<span class="material-symbols-outlined text-lg mr-2">help</span>
-                    Support
-                </a>
-<a class="btn btn-ghost btn-sm w-full justify-start text-error hover:bg-error/10 font-medium normal-case">
-<span class="material-symbols-outlined text-lg mr-2">logout</span>
-                    Sign Out
-                </a>
-</div>
-</aside>
-<!-- Main Content -->
-<main class="flex-1 md:ml-64 p-6 md:p-10">
-<div class="max-w-6xl mx-auto">
-<!-- Header -->
-<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-<div class="space-y-1">
-<span class="badge badge-secondary badge-outline font-bold tracking-widest text-[10px] h-auto py-1 px-3">CLINICAL OVERVIEW</span>
-<h1 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface">Patient Health Dashboard</h1>
-</div>
-<div class="alert bg-surface-container border border-outline-variant shadow-sm w-auto py-2 px-4 gap-3">
-<div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-<span class="text-xs font-bold text-outline tracking-wider">AI ENGINE ACTIVE</span>
-</div>
-</div>
-<!-- Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-<!-- Health Score Hero -->
-<div class="md:col-span-4 card bg-primary-container text-on-primary-container shadow-2xl overflow-hidden group">
-<div class="absolute top-[-10%] right-[-10%] w-48 h-48 bg-white/5 rounded-full blur-3xl transition-transform group-hover:scale-110"></div>
-<div class="card-body relative z-10 p-8">
-<h2 class="card-title font-headline text-primary opacity-90 text-lg">Dental Health Index</h2>
-<p class="text-[10px] text-primary-fixed uppercase tracking-widest font-label -mt-2">Updated 2 hours ago</p>
-<div class="py-10 flex items-baseline gap-2">
-<span class="text-7xl font-black font-headline">85</span>
-<span class="text-2xl font-bold opacity-60">/100</span>
-</div>
-<div class="space-y-4">
-<progress class="progress progress-secondary w-full" max="100" value="85"></progress>
-<p class="text-sm font-medium leading-relaxed text-on-primary-container/80">Your oral health is above average. We detected minor plaque buildup in the molar region.</p>
-</div>
-</div>
-</div>
-<!-- Latest Diagnosis -->
-<div class="md:col-span-5 card bg-surface-container border border-outline-variant shadow-sm">
-<div class="card-body p-6">
-<div class="flex justify-between items-start mb-6">
-<div>
-<h3 class="font-headline font-extrabold text-on-surface text-lg">Latest AI Diagnosis</h3>
-<p class="text-[10px] text-outline font-label tracking-wide uppercase">MAY 24, 2024 • 14:30</p>
-</div>
-<div class="badge badge-secondary font-black text-[10px] py-3 px-3">VERIFIED</div>
-</div>
-<div class="flex flex-col sm:flex-row gap-6">
-<div class="relative group cursor-zoom-in w-full sm:w-32 aspect-square rounded-xl overflow-hidden border border-outline-variant">
-<img alt="Diagnostic scan" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBtlhexqqhYryJOAvfwoEJW6CPye5m2Pm-ZL_VlHL4LSVf5qiR2vrQeIcXtwqPPkx_i6S8W5tA8FJf1EKYJlYk-Ny35EF1iyrLD3fftK86LXpTrwvNRC7taWBVCiqevbmAutb-A31zna-HKZOxaFTqhuxjlOxpsXCvLPOpF-ggkpIHaO9S0KL7gCGXb9ZYoSJJZE733-jvlEOH8LQ_cCMprgBgzacVk64OMTPlcyhshQ9TIoznJUsgBue352KHJ6JbJsbf_tr1XAdO"/>
-<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-<span class="material-symbols-outlined text-white">zoom_in</span>
-</div>
-</div>
-<div class="flex-1 flex flex-col justify-center space-y-4">
-<div class="space-y-1">
-<p class="text-[10px] font-bold text-outline uppercase tracking-tighter">PRIMARY FINDING</p>
-<p class="text-base font-bold text-on-surface leading-tight">Minor enamel erosion on tooth #14</p>
-</div>
-<div class="flex items-center gap-2">
-<div class="avatar-group -space-x-3 rtl:space-x-reverse">
-<div class="avatar border-surface-container w-6 h-6">
-<div class="bg-surface-container-highest text-[10px] flex items-center justify-center">
-<span class="material-symbols-outlined text-[10px] scale-75 text-accent">drive_ai</span>
-</div>
-</div>
-<div class="avatar border-surface-container w-6 h-6">
-<div class="bg-primary text-on-primary text-[8px] font-bold flex items-center justify-center">DH</div>
-</div>
-</div>
-<span class="text-[10px] font-medium text-outline italic">Validated by Dr. Henderson</span>
-</div>
-</div>
-</div>
-<div class="card-actions mt-6">
-<button class="btn btn-outline btn-sm w-full font-bold text-primary hover:bg-primary-container/20 border-outline-variant hover:border-primary transition-all">View Detailed Report</button>
-</div>
-</div>
-</div>
-<!-- Reminders -->
-<div class="md:col-span-3 card bg-surface-container-low border border-outline-variant shadow-sm">
-<div class="card-body p-6">
-<h3 class="font-headline font-extrabold text-on-surface mb-4">Reminders</h3>
-<div class="space-y-4">
-<div class="flex items-start gap-4">
-<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary shadow-sm flex-shrink-0">
-<span class="material-symbols-outlined text-lg">calendar_month</span>
-</div>
-<div class="space-y-0.5">
-<p class="text-sm font-bold text-on-surface">Professional Cleaning</p>
-<p class="text-[10px] text-outline font-medium">JUNE 12, 10:00 AM</p>
-</div>
-</div>
-<div class="flex items-start gap-4 opacity-40">
-<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-outline shadow-sm flex-shrink-0">
-<span class="material-symbols-outlined text-lg">pill</span>
-</div>
-<div class="space-y-0.5">
-<p class="text-sm font-bold text-on-surface">Antibiotic Course</p>
-<p class="text-[10px] text-outline font-medium uppercase">Completed May 15</p>
-</div>
-</div>
-</div>
-<div class="mt-auto pt-6">
-<div class="p-4 bg-surface-container-highest/30 rounded-xl border-l-4 border-accent shadow-sm">
-<p class="text-[10px] font-black text-accent uppercase mb-1 tracking-wider">PRO TIP</p>
-<p class="text-[11px] text-on-surface/70 italic leading-relaxed">Next scan recommended in 14 days for trend tracking.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Chart Section -->
-<div class="md:col-span-8 card bg-surface-container border border-outline-variant shadow-sm overflow-hidden">
-<div class="card-body p-8">
-<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
-<div>
-<h3 class="font-headline font-extrabold text-xl text-on-surface">Health by Dental Zone</h3>
-<p class="text-sm text-outline font-label">AI distribution analysis across all quadrants</p>
-</div>
-<div class="join border border-outline-variant p-1 bg-surface-container-low rounded-lg">
-<button class="btn btn-xs join-item btn-ghost text-[10px] h-7 font-bold text-primary bg-surface-container-highest shadow-sm">MONTHLY</button>
-<button class="btn btn-xs join-item btn-ghost text-[10px] h-7 font-bold text-outline">YEARLY</button>
-</div>
-</div>
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-10">
-<div class="flex flex-col items-center gap-6">
-<div class="radial-progress text-primary font-black font-headline text-lg" role="progressbar" style="--value:90; --size:6rem; --thickness: 8px;">90%</div>
-<span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Incisors</span>
-</div>
-<div class="flex flex-col items-center gap-6">
-<div class="radial-progress text-secondary font-black font-headline text-lg" role="progressbar" style="--value:75; --size:6rem; --thickness: 8px;">75%</div>
-<span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Molars</span>
-</div>
-<div class="flex flex-col items-center gap-6">
-<div class="radial-progress text-info font-black font-headline text-lg" role="progressbar" style="--value:85; --size:6rem; --thickness: 8px;">85%</div>
-<span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Canines</span>
-</div>
-<div class="flex flex-col items-center gap-6">
-<div class="radial-progress text-accent font-black font-headline text-lg" role="progressbar" style="--value:80; --size:6rem; --thickness: 8px;">80%</div>
-<span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Premolars</span>
-</div>
-</div>
-</div>
-</div>
-<!-- CTA Action -->
-<div class="md:col-span-4 h-full">
-<button class="card w-full h-full min-h-[220px] bg-gradient-to-br from-secondary-container to-primary-container text-white shadow-xl hover:shadow-2xl transition-all duration-300 group">
-<div class="card-body items-start text-left p-8 justify-between relative overflow-hidden">
-<div class="absolute -bottom-8 -right-8 opacity-10 group-hover:scale-125 transition-transform">
-<span class="material-symbols-outlined text-[180px]">biotech</span>
-</div>
-<div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md group-hover:bg-white/20 transition-all border border-white/10">
-<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">biotech</span>
-</div>
-<div class="space-y-2 relative z-10">
-<h2 class="card-title text-2xl font-black font-headline leading-tight text-white">Nuevo Análisis de IA</h2>
-<p class="text-white/80 text-xs font-medium max-w-[200px]">Suba una foto o radiografía para un diagnóstico instantáneo asistido por IA</p>
-</div>
-<div class="flex items-center gap-2 font-black text-sm uppercase tracking-widest mt-4 text-white">
-<span>Get Started</span>
-<span class="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
-</div>
-</div>
-</button>
-</div>
-</div>
-</div>
-</main>
+    <!-- Sidebar -->
+    <aside class="w-64 fixed left-0 h-full hidden md:flex flex-col bg-surface border-r border-outline-variant z-40 transition-all">
+        <div class="p-6">
+            <div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl mb-8">
+                <div class="avatar placeholder">
+                    <div class="bg-primary text-on-primary rounded-lg w-10">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-sm font-bold font-headline text-on-surface leading-none">Dr. Henderson</p>
+                    <p class="text-[10px] uppercase tracking-widest text-outline font-label mt-1">Dental Surgeon</p>
+                </div>
+            </div>
+            <ul class="menu menu-md w-full p-0 gap-1">
+                <li>
+                    <a class="active bg-primary-container text-on-primary-container font-bold border-r-4 border-primary rounded-none">
+                        <span class="material-symbols-outlined"
+                              style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="text-outline hover:text-primary">
+                        <span class="material-symbols-outlined">clinical_notes</span>
+                        Analyze
+                    </a>
+                </li>
+                <li>
+                    <a class="text-outline hover:text-primary">
+                        <span class="material-symbols-outlined">history</span>
+                        History
+                    </a>
+                </li>
+                <li>
+                    <a class="text-outline hover:text-primary">
+                        <span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+            <div class="divider before:bg-outline-variant after:bg-outline-variant my-4"></div>
+            <button class="btn btn-primary w-full shadow-lg gap-2">
+                <span class="material-symbols-outlined text-sm">add_circle</span>
+                New Scan
+            </button>
+        </div>
+        <div class="mt-auto p-6 space-y-2">
+            <a class="btn btn-ghost btn-sm w-full justify-start text-outline font-medium normal-case">
+                <span class="material-symbols-outlined text-lg mr-2">help</span>
+                Support
+            </a>
+            <a class="btn btn-ghost btn-sm w-full justify-start text-error hover:bg-error/10 font-medium normal-case">
+                <span class="material-symbols-outlined text-lg mr-2">logout</span>
+                Sign Out
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 p-6 md:p-10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                <div class="space-y-1">
+                    <span class="badge badge-secondary badge-outline font-bold tracking-widest text-[10px] h-auto py-1 px-3">CLINICAL OVERVIEW</span>
+                    <h1 class="text-3xl font-extrabold font-headline tracking-tight text-on-surface">Patient Health
+                        Dashboard</h1>
+                </div>
+                <div class="alert bg-surface-container border border-outline-variant shadow-sm w-auto py-2 px-4 gap-3">
+                    <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+                    <span class="text-xs font-bold text-outline tracking-wider">AI ENGINE ACTIVE</span>
+                </div>
+            </div>
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Health Score Hero -->
+                <div class="md:col-span-4 card bg-primary-container text-on-primary-container shadow-2xl overflow-hidden group">
+                    <div class="absolute top-[-10%] right-[-10%] w-48 h-48 bg-white/5 rounded-full blur-3xl transition-transform group-hover:scale-110"></div>
+                    <div class="card-body relative z-10 p-8">
+                        <h2 class="card-title font-headline text-primary opacity-90 text-lg">Dental Health Index</h2>
+                        <p class="text-[10px] text-primary-fixed uppercase tracking-widest font-label -mt-2">Updated 2
+                            hours ago</p>
+                        <div class="py-10 flex items-baseline gap-2">
+                            <span class="text-7xl font-black font-headline">85</span>
+                            <span class="text-2xl font-bold opacity-60">/100</span>
+                        </div>
+                        <div class="space-y-4">
+                            <progress class="progress progress-secondary w-full" max="100" value="85"></progress>
+                            <p class="text-sm font-medium leading-relaxed text-on-primary-container/80">Your oral health
+                                is above average. We detected minor plaque buildup in the molar region.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Latest Diagnosis -->
+                <div class="md:col-span-5 card bg-surface-container border border-outline-variant shadow-sm">
+                    <div class="card-body p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="font-headline font-extrabold text-on-surface text-lg">Latest AI
+                                    Diagnosis</h3>
+                                <p class="text-[10px] text-outline font-label tracking-wide uppercase">MAY 24, 2024 •
+                                    14:30</p>
+                            </div>
+                            <div class="badge badge-secondary font-black text-[10px] py-3 px-3">VERIFIED</div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <div class="relative group cursor-zoom-in w-full sm:w-32 aspect-square rounded-xl overflow-hidden border border-outline-variant">
+                                <img alt="Diagnostic scan"
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90"
+                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBtlhexqqhYryJOAvfwoEJW6CPye5m2Pm-ZL_VlHL4LSVf5qiR2vrQeIcXtwqPPkx_i6S8W5tA8FJf1EKYJlYk-Ny35EF1iyrLD3fftK86LXpTrwvNRC7taWBVCiqevbmAutb-A31zna-HKZOxaFTqhuxjlOxpsXCvLPOpF-ggkpIHaO9S0KL7gCGXb9ZYoSJJZE733-jvlEOH8LQ_cCMprgBgzacVk64OMTPlcyhshQ9TIoznJUsgBue352KHJ6JbJsbf_tr1XAdO"/>
+                                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                    <span class="material-symbols-outlined text-white">zoom_in</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex flex-col justify-center space-y-4">
+                                <div class="space-y-1">
+                                    <p class="text-[10px] font-bold text-outline uppercase tracking-tighter">PRIMARY
+                                        FINDING</p>
+                                    <p class="text-base font-bold text-on-surface leading-tight">Minor enamel erosion on
+                                        tooth #14</p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="avatar-group -space-x-3 rtl:space-x-reverse">
+                                        <div class="avatar border-surface-container w-6 h-6">
+                                            <div class="bg-surface-container-highest text-[10px] flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-[10px] scale-75 text-accent">drive_ai</span>
+                                            </div>
+                                        </div>
+                                        <div class="avatar border-surface-container w-6 h-6">
+                                            <div class="bg-primary text-on-primary text-[8px] font-bold flex items-center justify-center">
+                                                DH
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-medium text-outline italic">Validated by Dr. Henderson</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions mt-6">
+                            <button class="btn btn-outline btn-sm w-full font-bold text-primary hover:bg-primary-container/20 border-outline-variant hover:border-primary transition-all">
+                                View Detailed Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reminders -->
+                <div class="md:col-span-3 card bg-surface-container-low border border-outline-variant shadow-sm">
+                    <div class="card-body p-6">
+                        <h3 class="font-headline font-extrabold text-on-surface mb-4">Reminders</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary shadow-sm flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">calendar_month</span>
+                                </div>
+                                <div class="space-y-0.5">
+                                    <p class="text-sm font-bold text-on-surface">Professional Cleaning</p>
+                                    <p class="text-[10px] text-outline font-medium">JUNE 12, 10:00 AM</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 opacity-40">
+                                <div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-outline shadow-sm flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">pill</span>
+                                </div>
+                                <div class="space-y-0.5">
+                                    <p class="text-sm font-bold text-on-surface">Antibiotic Course</p>
+                                    <p class="text-[10px] text-outline font-medium uppercase">Completed May 15</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-auto pt-6">
+                            <div class="p-4 bg-surface-container-highest/30 rounded-xl border-l-4 border-accent shadow-sm">
+                                <p class="text-[10px] font-black text-accent uppercase mb-1 tracking-wider">PRO TIP</p>
+                                <p class="text-[11px] text-on-surface/70 italic leading-relaxed">Next scan recommended
+                                    in 14 days for trend tracking.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart Section -->
+                <div class="md:col-span-8 card bg-surface-container border border-outline-variant shadow-sm overflow-hidden">
+                    <div class="card-body p-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 gap-4">
+                            <div>
+                                <h3 class="font-headline font-extrabold text-xl text-on-surface">Health by Dental
+                                    Zone</h3>
+                                <p class="text-sm text-outline font-label">AI distribution analysis across all
+                                    quadrants</p>
+                            </div>
+                            <div class="join border border-outline-variant p-1 bg-surface-container-low rounded-lg">
+                                <button class="btn btn-xs join-item btn-ghost text-[10px] h-7 font-bold text-primary bg-surface-container-highest shadow-sm">
+                                    MONTHLY
+                                </button>
+                                <button class="btn btn-xs join-item btn-ghost text-[10px] h-7 font-bold text-outline">
+                                    YEARLY
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-10">
+                            <div class="flex flex-col items-center gap-6">
+                                <div class="radial-progress text-primary font-black font-headline text-lg"
+                                     role="progressbar" style="--value:90; --size:6rem; --thickness: 8px;">90%
+                                </div>
+                                <span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Incisors</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-6">
+                                <div class="radial-progress text-secondary font-black font-headline text-lg"
+                                     role="progressbar" style="--value:75; --size:6rem; --thickness: 8px;">75%
+                                </div>
+                                <span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Molars</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-6">
+                                <div class="radial-progress text-info font-black font-headline text-lg"
+                                     role="progressbar" style="--value:85; --size:6rem; --thickness: 8px;">85%
+                                </div>
+                                <span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Canines</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-6">
+                                <div class="radial-progress text-accent font-black font-headline text-lg"
+                                     role="progressbar" style="--value:80; --size:6rem; --thickness: 8px;">80%
+                                </div>
+                                <span class="badge badge-ghost bg-surface-container-highest text-on-surface/70 border-none text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Premolars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- CTA Action -->
+                <div class="md:col-span-4 h-full">
+                    <button class="card w-full h-full min-h-[220px] bg-gradient-to-br from-secondary-container to-primary-container text-white shadow-xl hover:shadow-2xl transition-all duration-300 group">
+                        <div class="card-body items-start text-left p-8 justify-between relative overflow-hidden">
+                            <div class="absolute -bottom-8 -right-8 opacity-10 group-hover:scale-125 transition-transform">
+                                <span class="material-symbols-outlined text-[180px]">biotech</span>
+                            </div>
+                            <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md group-hover:bg-white/20 transition-all border border-white/10">
+                                <span class="material-symbols-outlined text-white text-3xl"
+                                      style="font-variation-settings: 'FILL' 1;">biotech</span>
+                            </div>
+                            <div class="space-y-2 relative z-10">
+                                <h2 class="card-title text-2xl font-black font-headline leading-tight text-white">Nuevo
+                                    Análisis de IA</h2>
+                                <p class="text-white/80 text-xs font-medium max-w-[200px]">Suba una foto o radiografía
+                                    para un diagnóstico instantáneo asistido por IA</p>
+                            </div>
+                            <div class="flex items-center gap-2 font-black text-sm uppercase tracking-widest mt-4 text-white">
+                                <span>Get Started</span>
+                                <span class="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 <!-- Footer -->
 <footer class="footer footer-center p-8 bg-surface-container-low text-outline border-t border-outline-variant mt-20">
-<div class="max-w-6xl w-full flex flex-col md:flex-row justify-between items-center gap-6">
-<aside class="text-left">
-<p class="text-[10px] uppercase tracking-[0.2em] font-medium max-w-sm">
-                    © 2024 Dentis AI Clinical Systems. All AI diagnostics require professional dental verification.
-                </p>
-</aside>
-<nav class="flex flex-wrap justify-center gap-6">
-<a class="link link-hover text-[10px] font-black uppercase tracking-widest hover:text-primary">Medical Disclaimer</a>
-<a class="link link-hover text-[10px] font-black uppercase tracking-widest hover:text-primary">Privacy Policy</a>
-<a class="link link-hover text-[10px] font-black uppercase tracking-widest underline decoration-primary underline-offset-4 decoration-2">Terms of Service</a>
-</nav>
-</div>
+    <div class="max-w-6xl w-full flex flex-col md:flex-row justify-between items-center gap-6">
+        <aside class="text-left">
+            <p class="text-[10px] uppercase tracking-[0.2em] font-medium max-w-sm">
+                © 2024 Dentis AI Clinical Systems. All AI diagnostics require professional dental verification.
+            </p>
+        </aside>
+        <nav class="flex flex-wrap justify-center gap-6">
+            <a class="link link-hover text-[10px] font-black uppercase tracking-widest hover:text-primary">Medical
+                Disclaimer</a>
+            <a class="link link-hover text-[10px] font-black uppercase tracking-widest hover:text-primary">Privacy
+                Policy</a>
+            <a class="link link-hover text-[10px] font-black uppercase tracking-widest underline decoration-primary underline-offset-4 decoration-2">Terms
+                of Service</a>
+        </nav>
+    </div>
 </footer>
-</body></html>
+</body>
+</html>

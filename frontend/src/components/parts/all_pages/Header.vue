@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import {useRoute} from 'vue-router'
 
 const route = useRoute()
 
@@ -16,9 +16,15 @@ function navLinkClass(routeName) {
   <!-- Navbar -->
   <header class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8">
     <div class="flex-1">
-      <a class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">Dentis
-        AI</a>
+      <router-link :to="{name: 'Landing'}"
+                   class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">
+        Dentis
+        AI
+      </router-link>
       <div class="hidden lg:flex ml-10 space-x-2">
+        <router-link :to="{name: 'Landing'}" :class="navLinkClass('Landing')">
+          Landing
+        </router-link>
         <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
           Dashboard
         </router-link>

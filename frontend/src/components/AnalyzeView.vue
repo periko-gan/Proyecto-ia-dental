@@ -12,6 +12,7 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
     <!-- TopNavBar (Shared Component) -->
     <Header/>
 
+    <!-- Sidebar -->
     <Aside/>
 
     <!-- Main Content Canvas -->

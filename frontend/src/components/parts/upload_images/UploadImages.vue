@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png'])
@@ -65,7 +65,7 @@ function validateFiles(files) {
     validFiles.push(file)
   }
 
-  return { validFiles, errors }
+  return {validFiles, errors}
 }
 
 function setInputFiles(files) {
@@ -80,9 +80,9 @@ function setInputFiles(files) {
   fileInputRef.value.files = transfer.files
 }
 
-function processIncomingFiles(rawFiles, options = { syncInput: true, source: 'input' }) {
+function processIncomingFiles(rawFiles, options = {syncInput: true, source: 'input'}) {
   const files = Array.from(rawFiles ?? [])
-  const { validFiles, errors } = validateFiles(files)
+  const {validFiles, errors} = validateFiles(files)
 
   validationErrors.value = errors
 
@@ -98,13 +98,13 @@ function processIncomingFiles(rawFiles, options = { syncInput: true, source: 'in
 }
 
 function onFileChange(event) {
-  processIncomingFiles(event.target?.files, { syncInput: true, source: 'input' })
+  processIncomingFiles(event.target?.files, {syncInput: true, source: 'input'})
 }
 
 function onDrop(event) {
   dragDepth.value = 0
   isDragging.value = false
-  processIncomingFiles(event.dataTransfer?.files, { syncInput: false, source: 'drop' })
+  processIncomingFiles(event.dataTransfer?.files, {syncInput: false, source: 'drop'})
 }
 
 function removeDroppedFile(index) {
@@ -122,20 +122,20 @@ function formatFileSize(bytes) {
 
 <template>
   <div
-    class="border-2 border-dashed border-outline-variant bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-surface-container-lowest hover:border-primary cursor-pointer min-h-[350px]"
-    :class="{ 'border-primary bg-surface-container-lowest': isDragging }"
-    @dragenter.prevent="onDragEnter"
-    @dragover.prevent="onDragOver"
-    @dragleave.prevent="onDragLeave"
-    @drop.prevent="onDrop"
+      class="border-2 border-dashed border-outline-variant bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-surface-container-lowest hover:border-primary cursor-pointer min-h-[350px]"
+      :class="{ 'border-primary bg-surface-container-lowest': isDragging }"
+      @dragenter.prevent="onDragEnter"
+      @dragover.prevent="onDragOver"
+      @dragleave.prevent="onDragLeave"
+      @drop.prevent="onDrop"
   >
     <!-- Upload Prompt -->
     <div class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
-<!--      <div-->
-<!--          class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">-->
-<!--                  <span class="material-symbols-outlined text-primary text-4xl"-->
-<!--                        data-icon="cloud_upload">cloud_upload</span>-->
-<!--      </div>-->
+      <!--      <div-->
+      <!--          class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">-->
+      <!--                  <span class="material-symbols-outlined text-primary text-4xl"-->
+      <!--                        data-icon="cloud_upload">cloud_upload</span>-->
+      <!--      </div>-->
       <div class="space-y-2">
         <h4 class="text-xl font-bold text-on-surface font-headline">Drag & Drop clinical media</h4>
         <p class="text-on-surface-variant text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per
@@ -144,12 +144,12 @@ function formatFileSize(bytes) {
       <!-- DaisyUI File Input -->
       <div class="form-control w-full">
         <input
-          ref="fileInputRef"
-          class="file-input file-input-bordered file-input-primary w-full shadow-sm"
-          type="file"
-          accept=".dcm,.dicom,image/jpeg,image/png"
-          multiple
-          @change="onFileChange"
+            ref="fileInputRef"
+            class="file-input file-input-bordered file-input-primary w-full shadow-sm"
+            type="file"
+            accept=".dcm,.dicom,image/jpeg,image/png"
+            multiple
+            @change="onFileChange"
         />
       </div>
 
@@ -163,9 +163,9 @@ function formatFileSize(bytes) {
         <p class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Archivos arrastrados</p>
         <ul class="space-y-2">
           <li
-            v-for="(file, index) in droppedFiles"
-            :key="`${file.name}-${file.lastModified}`"
-            class="mx-auto w-full flex items-center justify-between gap-2 bg-base-100 border border-base-200 rounded-lg px-3 py-2"
+              v-for="(file, index) in droppedFiles"
+              :key="`${file.name}-${file.lastModified}`"
+              class="mx-auto w-full flex items-center justify-between gap-2 bg-base-100 border border-base-200 rounded-lg px-3 py-2"
           >
             <div class="min-w-0 text-left">
               <p class="truncate text-sm font-medium">{{ file.name }}</p>

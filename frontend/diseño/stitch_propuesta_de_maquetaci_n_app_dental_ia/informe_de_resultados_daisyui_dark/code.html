@@ -1,378 +1,434 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Dentis AI - Analysis Results (Dark Mode)</title>
-<!-- Tailwind and DaisyUI -->
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.css" rel="stylesheet" type="text/css"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#3b82f6",
-              "secondary": "#06b6d4",
-              "surface": "#0f172a",
-              "on-surface": "#f8fafc",
-              "on-surface-variant": "#94a3b8",
-              "outline-variant": "#334155",
-              "error": "#ef4444",
-              "tertiary-container": "#15803d",
-              "surface-container-high": "#1e293b",
-              "surface-container-low": "#0f172a",
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dentis AI - Analysis Results (Dark Mode)</title>
+    <!-- Tailwind and DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@500;700;800&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b82f6",
+                        "secondary": "#06b6d4",
+                        "surface": "#0f172a",
+                        "on-surface": "#f8fafc",
+                        "on-surface-variant": "#94a3b8",
+                        "outline-variant": "#334155",
+                        "error": "#ef4444",
+                        "tertiary-container": "#15803d",
+                        "surface-container-high": "#1e293b",
+                        "surface-container-low": "#0f172a",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
             },
-            fontFamily: {
-              "headline": ["Manrope"],
-              "body": ["Inter"],
-              "label": ["Inter"]
+            daisyui: {
+                themes: [{
+                    dark: {
+                        ...require("daisyui/src/theming/themes")["dark"],
+                        "primary": "#3b82f6",
+                        "secondary": "#06b6d4",
+                        "accent": "#22d3ee",
+                        "neutral": "#1e293b",
+                        "base-100": "#0f172a",
+                        "base-200": "#1e293b",
+                        "base-300": "#334155",
+                        "info": "#60a5fa",
+                        "success": "#22c55e",
+                        "warning": "#f59e0b",
+                        "error": "#ef4444",
+                    },
+                }],
             },
-            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-          },
-        },
-        daisyui: {
-          themes: [{
-            dark: {
-              ...require("daisyui/src/theming/themes")["dark"],
-              "primary": "#3b82f6",
-              "secondary": "#06b6d4",
-              "accent": "#22d3ee",
-              "neutral": "#1e293b",
-              "base-100": "#0f172a",
-              "base-200": "#1e293b",
-              "base-300": "#334155",
-              "info": "#60a5fa",
-              "success": "#22c55e",
-              "warning": "#f59e0b",
-              "error": "#ef4444",
-            },
-          }],
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .glass-panel {
             backdrop-filter: blur(12px);
             background: rgba(15, 23, 42, 0.7);
         }
+
         .scan-line {
             height: 2px;
             background: linear-gradient(90deg, transparent, #22d3ee, transparent);
             box-shadow: 0 0 15px #22d3ee;
             animation: scan 3s ease-in-out infinite;
         }
+
         @keyframes scan {
-            0%, 100% { transform: translateY(-100px); opacity: 0; }
-            50% { transform: translateY(100px); opacity: 1; }
+            0%, 100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(100px);
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body class="bg-surface font-body text-on-surface">
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-<div class="navbar px-6 min-h-[64px]">
-<div class="flex-1">
-<span class="text-xl font-black text-primary font-headline tracking-tight">Dentis AI</span>
-<nav class="hidden md:flex gap-6 ml-10">
-<a class="text-slate-400 hover:text-primary transition-colors font-headline font-bold text-sm" href="#">Dashboard</a>
-<a class="text-primary border-b-2 border-primary pb-1 font-headline font-bold text-sm" href="#">Analyze</a>
-<a class="text-slate-400 hover:text-primary transition-colors font-headline font-bold text-sm" href="#">History</a>
-</nav>
-</div>
-<div class="flex-none gap-2">
-<div class="form-control hidden sm:block">
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 scale-75">search</span>
-<input class="input input-sm input-bordered pl-10 w-64 bg-slate-800 border-slate-700 rounded-md text-slate-200" placeholder="Search findings..." type="text"/>
-</div>
-</div>
-<button class="btn btn-ghost btn-circle text-slate-400">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="dropdown dropdown-end">
-<div class="btn btn-ghost btn-circle avatar" role="button" tabindex="0">
-<div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc5OWjRQLZpTu4o5nkAPXT84e0qQJQKYsiAlZhdZxrMxzszrf15PYMO7Eowl8M5zv6WfJ-b7MZUqG3_l305aEGZ7y-ZA3IY5LsnIksh2r1s3vi1UR5JVD852YUPnukCqBGlKYHArVrCpskyohvuBnyM4Qnn-KSY2cBcMkAeFx1hVSqVOb3kNHM5DxmCFjvs_autRBotXit7Chi4gEw0RS-FBHmqr3efPvgWWoNSJN_H27a9qd-TY6Qtd2_v3i41Yqn7JkRYij7BvLp"/>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="navbar px-6 min-h-[64px]">
+        <div class="flex-1">
+            <span class="text-xl font-black text-primary font-headline tracking-tight">Dentis AI</span>
+            <nav class="hidden md:flex gap-6 ml-10">
+                <a class="text-slate-400 hover:text-primary transition-colors font-headline font-bold text-sm" href="#">Dashboard</a>
+                <a class="text-primary border-b-2 border-primary pb-1 font-headline font-bold text-sm"
+                   href="#">Analyze</a>
+                <a class="text-slate-400 hover:text-primary transition-colors font-headline font-bold text-sm" href="#">History</a>
+            </nav>
+        </div>
+        <div class="flex-none gap-2">
+            <div class="form-control hidden sm:block">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 scale-75">search</span>
+                    <input class="input input-sm input-bordered pl-10 w-64 bg-slate-800 border-slate-700 rounded-md text-slate-200"
+                           placeholder="Search findings..." type="text"/>
+                </div>
+            </div>
+            <button class="btn btn-ghost btn-circle text-slate-400">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div class="dropdown dropdown-end">
+                <div class="btn btn-ghost btn-circle avatar" role="button" tabindex="0">
+                    <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img alt="User profile"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc5OWjRQLZpTu4o5nkAPXT84e0qQJQKYsiAlZhdZxrMxzszrf15PYMO7Eowl8M5zv6WfJ-b7MZUqG3_l305aEGZ7y-ZA3IY5LsnIksh2r1s3vi1UR5JVD852YUPnukCqBGlKYHArVrCpskyohvuBnyM4Qnn-KSY2cBcMkAeFx1hVSqVOb3kNHM5DxmCFjvs_autRBotXit7Chi4gEw0RS-FBHmqr3efPvgWWoNSJN_H27a9qd-TY6Qtd2_v3i41Yqn7JkRYij7BvLp"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
 <!-- SideNavBar -->
 <aside class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col bg-slate-900 border-r border-slate-800 pt-20 z-40">
-<div class="flex flex-col h-full py-8 gap-2 px-4">
-<div class="flex items-center gap-3 mb-8 px-2">
-<div class="avatar placeholder">
-<div class="bg-primary/20 text-primary rounded-lg w-10">
-<span class="material-symbols-outlined">clinical_notes</span>
-</div>
-</div>
-<div>
-<p class="text-sm font-bold font-headline text-slate-200">Dr. Henderson</p>
-<p class="text-[10px] text-slate-500 uppercase tracking-widest">Dental Surgeon</p>
-</div>
-</div>
-<ul class="menu menu-md p-0 space-y-1">
-<li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
-<li><a class="flex items-center gap-3 bg-primary/10 text-primary font-bold"><span class="material-symbols-outlined">clinical_notes</span> Analyze</a></li>
-<li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span class="material-symbols-outlined">history</span> History</a></li>
-<li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span class="material-symbols-outlined">settings</span> Settings</a></li>
-</ul>
-<button class="btn btn-primary btn-sm mt-6 mx-2 font-bold shadow-lg shadow-primary/20 normal-case">
+    <div class="flex flex-col h-full py-8 gap-2 px-4">
+        <div class="flex items-center gap-3 mb-8 px-2">
+            <div class="avatar placeholder">
+                <div class="bg-primary/20 text-primary rounded-lg w-10">
+                    <span class="material-symbols-outlined">clinical_notes</span>
+                </div>
+            </div>
+            <div>
+                <p class="text-sm font-bold font-headline text-slate-200">Dr. Henderson</p>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest">Dental Surgeon</p>
+            </div>
+        </div>
+        <ul class="menu menu-md p-0 space-y-1">
+            <li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span
+                    class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
+            <li><a class="flex items-center gap-3 bg-primary/10 text-primary font-bold"><span
+                    class="material-symbols-outlined">clinical_notes</span> Analyze</a></li>
+            <li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span
+                    class="material-symbols-outlined">history</span> History</a></li>
+            <li><a class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 font-medium"><span
+                    class="material-symbols-outlined">settings</span> Settings</a></li>
+        </ul>
+        <button class="btn btn-primary btn-sm mt-6 mx-2 font-bold shadow-lg shadow-primary/20 normal-case">
             New Scan
         </button>
-<div class="mt-auto">
-<ul class="menu menu-md p-0">
-<li><a class="text-slate-500 hover:text-slate-300 text-sm"><span class="material-symbols-outlined">help</span> Support</a></li>
-<li><a class="text-slate-500 hover:text-slate-300 text-sm"><span class="material-symbols-outlined">logout</span> Sign Out</a></li>
-</ul>
-</div>
-</div>
+        <div class="mt-auto">
+            <ul class="menu menu-md p-0">
+                <li><a class="text-slate-500 hover:text-slate-300 text-sm"><span
+                        class="material-symbols-outlined">help</span> Support</a></li>
+                <li><a class="text-slate-500 hover:text-slate-300 text-sm"><span class="material-symbols-outlined">logout</span>
+                    Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
 </aside>
 <!-- Main Content Canvas -->
 <main class="md:ml-64 pt-20 px-8 pb-12 min-h-screen bg-surface">
-<div class="max-w-7xl mx-auto py-8">
-<!-- Header Section -->
-<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-<div>
-<div class="text-xs breadcrumbs text-slate-500 mb-2 p-0">
-<ul>
-<li>Analysis</li>
-<li class="text-primary font-semibold">Report #AX-9021</li>
-</ul>
-</div>
-<h1 class="text-4xl font-headline font-extrabold text-slate-100 tracking-tight">AI Diagnostic Report</h1>
-<p class="text-on-surface-variant mt-1">Patient: Elena Rodriguez • Scan Date: Oct 24, 2024</p>
-</div>
-<div class="flex gap-3">
-<button class="btn btn-outline btn-sm border-slate-700 text-slate-300 hover:bg-slate-800 font-bold normal-case">
-<span class="material-symbols-outlined text-sm">share</span> Share
+    <div class="max-w-7xl mx-auto py-8">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+            <div>
+                <div class="text-xs breadcrumbs text-slate-500 mb-2 p-0">
+                    <ul>
+                        <li>Analysis</li>
+                        <li class="text-primary font-semibold">Report #AX-9021</li>
+                    </ul>
+                </div>
+                <h1 class="text-4xl font-headline font-extrabold text-slate-100 tracking-tight">AI Diagnostic
+                    Report</h1>
+                <p class="text-on-surface-variant mt-1">Patient: Elena Rodriguez • Scan Date: Oct 24, 2024</p>
+            </div>
+            <div class="flex gap-3">
+                <button class="btn btn-outline btn-sm border-slate-700 text-slate-300 hover:bg-slate-800 font-bold normal-case">
+                    <span class="material-symbols-outlined text-sm">share</span> Share
                 </button>
-<button class="btn btn-primary btn-sm font-bold normal-case">
-<span class="material-symbols-outlined text-sm">picture_as_pdf</span> Download Informe PDF
+                <button class="btn btn-primary btn-sm font-bold normal-case">
+                    <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Download Informe PDF
                 </button>
-</div>
-</div>
-<!-- Stats Overview -->
-<div class="stats shadow-xl w-full bg-slate-800/50 mb-8 border border-slate-700 backdrop-blur-sm">
-<div class="stat">
-<div class="stat-figure text-error">
-<span class="material-symbols-outlined text-3xl">priority_high</span>
-</div>
-<div class="stat-title text-slate-400 font-medium">Critical Issues</div>
-<div class="stat-value text-error">1</div>
-<div class="stat-desc text-slate-500">Requires immediate action</div>
-</div>
-<div class="stat">
-<div class="stat-figure text-warning">
-<span class="material-symbols-outlined text-3xl">visibility</span>
-</div>
-<div class="stat-title text-slate-400 font-medium">Follow-ups</div>
-<div class="stat-value text-warning">1</div>
-<div class="stat-desc text-slate-500">21% increase from last scan</div>
-</div>
-<div class="stat">
-<div class="stat-figure text-success">
-<span class="material-symbols-outlined text-3xl">check_circle</span>
-</div>
-<div class="stat-title text-slate-400 font-medium">Overall Health</div>
-<div class="stat-value text-success">88%</div>
-<div class="stat-desc text-slate-500">Above patient average</div>
-</div>
-</div>
-<!-- Analysis Layout -->
-<div class="grid grid-cols-12 gap-6">
-<!-- Left: Visualizer -->
-<div class="col-span-12 lg:col-span-8 space-y-6">
-<div class="card bg-black overflow-hidden shadow-2xl relative group border border-slate-800">
-<!-- AI Visualizer Toolbar -->
-<div class="absolute top-4 left-4 z-10 flex gap-2">
-<div class="badge badge-primary gap-2 p-3 font-bold text-[10px] tracking-wider border-none bg-primary/90 backdrop-blur-md">
-<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+            </div>
+        </div>
+        <!-- Stats Overview -->
+        <div class="stats shadow-xl w-full bg-slate-800/50 mb-8 border border-slate-700 backdrop-blur-sm">
+            <div class="stat">
+                <div class="stat-figure text-error">
+                    <span class="material-symbols-outlined text-3xl">priority_high</span>
+                </div>
+                <div class="stat-title text-slate-400 font-medium">Critical Issues</div>
+                <div class="stat-value text-error">1</div>
+                <div class="stat-desc text-slate-500">Requires immediate action</div>
+            </div>
+            <div class="stat">
+                <div class="stat-figure text-warning">
+                    <span class="material-symbols-outlined text-3xl">visibility</span>
+                </div>
+                <div class="stat-title text-slate-400 font-medium">Follow-ups</div>
+                <div class="stat-value text-warning">1</div>
+                <div class="stat-desc text-slate-500">21% increase from last scan</div>
+            </div>
+            <div class="stat">
+                <div class="stat-figure text-success">
+                    <span class="material-symbols-outlined text-3xl">check_circle</span>
+                </div>
+                <div class="stat-title text-slate-400 font-medium">Overall Health</div>
+                <div class="stat-value text-success">88%</div>
+                <div class="stat-desc text-slate-500">Above patient average</div>
+            </div>
+        </div>
+        <!-- Analysis Layout -->
+        <div class="grid grid-cols-12 gap-6">
+            <!-- Left: Visualizer -->
+            <div class="col-span-12 lg:col-span-8 space-y-6">
+                <div class="card bg-black overflow-hidden shadow-2xl relative group border border-slate-800">
+                    <!-- AI Visualizer Toolbar -->
+                    <div class="absolute top-4 left-4 z-10 flex gap-2">
+                        <div class="badge badge-primary gap-2 p-3 font-bold text-[10px] tracking-wider border-none bg-primary/90 backdrop-blur-md">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
                             AI VISION ACTIVE
                         </div>
-</div>
-<div class="absolute top-4 right-4 z-10 flex gap-2">
-<button class="btn btn-circle btn-sm bg-slate-900/50 border-slate-700 text-white hover:bg-slate-700">
-<span class="material-symbols-outlined text-lg">zoom_in</span>
-</button>
-<button class="btn btn-circle btn-sm bg-slate-900/50 border-slate-700 text-white hover:bg-slate-700">
-<span class="material-symbols-outlined text-lg">layers</span>
-</button>
-</div>
-<!-- Main Image with Hotspots -->
-<div class="aspect-[16/10] relative flex items-center justify-center bg-slate-900">
-<img alt="Clinical dental X-ray" class="w-full h-full object-cover opacity-60 mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEXf34UgRNFGqb6Vc9yeb-ySBpcKcd5i3YjYQ00PKVS2O1sYFdg6mu22F-aK2B086Dgha46TK9oNF9PcNO-RsrkikrnqSVFjcICU5fx07pm1y56KDcU_Sgw-B5CuJy8TrVZbC3X-Aff9hxwF9P9qGlGo_RvCNBCeTB-NO5gEpbFZCFa3J3KzvpsIZOtrgirS2XaP_Ck9yzHuA0KkZ8_-ujWOd8I_106X9iGP2zk05gz3kLxz2jdIiGfJsP7EuXMW8QmAdEb2HmDr9H"/>
-<div class="absolute inset-0 pointer-events-none overflow-hidden">
-<div class="scan-line absolute w-full"></div>
-</div>
-<!-- Hotspots with increased visibility for dark mode -->
-<div class="absolute top-[42%] left-[32%] w-16 h-16 border-2 border-error rounded-sm ring-4 ring-error/30 bg-error/5 backdrop-blur-[1px]">
-<span class="absolute -top-7 -left-1 badge badge-error text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">CARIES (94%)</span>
-</div>
-<div class="absolute top-[55%] left-[65%] w-24 h-12 border-2 border-warning rounded-sm ring-4 ring-warning/30 bg-warning/5 backdrop-blur-[1px]">
-<span class="absolute -top-7 -left-1 badge badge-warning text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">PLACA (78%)</span>
-</div>
-<div class="absolute top-[38%] left-[15%] w-12 h-14 border-2 border-success/80 rounded-sm bg-success/5 backdrop-blur-[1px]">
-<span class="absolute -top-7 -left-1 badge badge-success text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">OPTIMAL</span>
-</div>
-</div>
-<!-- Caption bar -->
-<div class="p-4 bg-slate-900 flex flex-wrap justify-between items-center border-t border-slate-800">
-<p class="text-xs text-slate-500 font-medium">Digital Panoramic Radiograph • Layer: AI Enhanced Contrast</p>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-error shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span><span class="text-[10px] font-bold text-slate-400">CRÍTICO</span></div>
-<div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-warning shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span><span class="text-[10px] font-bold text-slate-400">SEGUIMIENTO</span></div>
-<div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-success shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span><span class="text-[10px] font-bold text-slate-400">ÓPTIMO</span></div>
-</div>
-</div>
-</div>
-<!-- AI Recommendations -->
-<div class="space-y-4">
-<div class="flex items-center gap-2 px-2">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-<h3 class="text-lg font-headline font-extrabold text-slate-200">AI Treatment Recommendations</h3>
-</div>
-<div class="collapse collapse-arrow bg-slate-800/40 border border-slate-700 shadow-sm rounded-xl">
-<input checked="checked" name="recommendations-accordion" type="radio"/>
-<div class="collapse-title flex items-center gap-4 py-4">
-<div class="w-10 h-10 shrink-0 bg-blue-900/30 text-blue-400 rounded-full flex items-center justify-center border border-blue-800/50">
-<span class="material-symbols-outlined">calendar_month</span>
-</div>
-<div>
-<h4 class="font-bold text-slate-100">Agendar Intervención</h4>
-<p class="text-[11px] text-slate-500">Molar 16 • Prioridad Alta</p>
-</div>
-</div>
-<div class="collapse-content px-16 pb-6">
-<p class="text-sm text-slate-400 leading-relaxed">Se recomienda tratamiento para la caries detectada en el cuadrante superior izquierdo en un plazo de 14 días para prevenir afectación pulpar. El análisis de densidad sugiere una cavidad de grado II.</p>
-<div class="mt-4 flex gap-2">
-<button class="btn btn-xs btn-primary normal-case font-bold">Book Procedure</button>
-<button class="btn btn-xs btn-ghost normal-case font-bold text-slate-400 hover:text-white">Patient Notes</button>
-</div>
-</div>
-</div>
-<div class="collapse collapse-arrow bg-slate-800/40 border border-slate-700 shadow-sm rounded-xl">
-<input name="recommendations-accordion" type="radio"/>
-<div class="collapse-title flex items-center gap-4 py-4">
-<div class="w-10 h-10 shrink-0 bg-cyan-900/30 text-cyan-400 rounded-full flex items-center justify-center border border-cyan-800/50">
-<span class="material-symbols-outlined">brush</span>
-</div>
-<div>
-<h4 class="font-bold text-slate-100">Ajuste de Higiene</h4>
-<p class="text-[11px] text-slate-500">Zona Cervical • Preventivo</p>
-</div>
-</div>
-<div class="collapse-content px-16 pb-6">
-<p class="text-sm text-slate-400 leading-relaxed">Implementar cepillado interdental y uso de hilo dental reforzado en zonas de acumulación de placa. Se sugiere profilaxis profesional en la próxima visita rutinaria.</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Right: Findings Panel -->
-<div class="col-span-12 lg:col-span-4 space-y-6">
-<div class="card bg-slate-900 rounded-xl shadow-xl border border-slate-800 h-full">
-<div class="card-body p-6">
-<div class="flex items-center justify-between mb-6">
-<h3 class="text-lg font-headline font-extrabold text-slate-100 tracking-tight">Hallazgos Detectados</h3>
-<div class="badge badge-slate-700 font-bold text-[10px] text-slate-300">3 TOTAL</div>
-</div>
-<div class="space-y-4">
-<!-- Finding: Critical -->
-<div class="card bg-slate-800/50 border-l-4 border-error rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
-<div class="p-4">
-<div class="flex justify-between items-start mb-2">
-<div>
-<h4 class="font-bold text-slate-100 text-sm">Caries Detectada</h4>
-<p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">Molar 16 • Superior Izq</p>
-</div>
-<div class="badge badge-error badge-sm font-black text-[10px] text-white">CRÍTICO</div>
-</div>
-<div class="mt-4">
-<div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-<span>Confianza IA</span>
-<span class="text-error">94%</span>
-</div>
-<progress class="progress progress-error w-full h-1.5 bg-slate-700" max="100" value="94"></progress>
-</div>
-</div>
-</div>
-<!-- Finding: Warning -->
-<div class="card bg-slate-800/50 border-l-4 border-warning rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
-<div class="p-4">
-<div class="flex justify-between items-start mb-2">
-<div>
-<h4 class="font-bold text-slate-100 text-sm">Acumulación de Placa</h4>
-<p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">Zona Cervical • General</p>
-</div>
-<div class="badge badge-warning badge-sm font-black text-[10px] text-white">SEGUIMIENTO</div>
-</div>
-<div class="mt-4">
-<div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-<span>Confianza IA</span>
-<span class="text-warning">78%</span>
-</div>
-<progress class="progress progress-warning w-full h-1.5 bg-slate-700" max="100" value="78"></progress>
-</div>
-</div>
-</div>
-<!-- Finding: Optimal -->
-<div class="card bg-slate-800/50 border-l-4 border-success rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
-<div class="p-4">
-<div class="flex justify-between items-start mb-2">
-<div>
-<h4 class="font-bold text-slate-100 text-sm">Integridad Ósea</h4>
-<p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">Densidad Mandibular</p>
-</div>
-<div class="badge badge-success badge-sm font-black text-[10px] text-white">ÓPTIMO</div>
-</div>
-<div class="mt-4">
-<div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
-<span>Confianza IA</span>
-<span class="text-success">98%</span>
-</div>
-<progress class="progress progress-success w-full h-1.5 bg-slate-700" max="100" value="98"></progress>
-</div>
-</div>
-</div>
-</div>
-<!-- Data Transparency Info -->
-<div class="mt-auto pt-10">
-<div class="alert bg-slate-800/80 border-slate-700 p-4 rounded-xl">
-<div>
-<div class="flex items-center gap-2 text-primary mb-1">
-<span class="material-symbols-outlined text-sm">shield</span>
-<span class="text-[10px] font-bold uppercase tracking-widest">Medical Accuracy</span>
-</div>
-<p class="text-[11px] leading-relaxed text-slate-500 italic">
-                                        Este análisis ha sido procesado por el motor Dentis AI v4.2. Los hallazgos presentados son sugerencias de diagnóstico y requieren validación profesional.
+                    </div>
+                    <div class="absolute top-4 right-4 z-10 flex gap-2">
+                        <button class="btn btn-circle btn-sm bg-slate-900/50 border-slate-700 text-white hover:bg-slate-700">
+                            <span class="material-symbols-outlined text-lg">zoom_in</span>
+                        </button>
+                        <button class="btn btn-circle btn-sm bg-slate-900/50 border-slate-700 text-white hover:bg-slate-700">
+                            <span class="material-symbols-outlined text-lg">layers</span>
+                        </button>
+                    </div>
+                    <!-- Main Image with Hotspots -->
+                    <div class="aspect-[16/10] relative flex items-center justify-center bg-slate-900">
+                        <img alt="Clinical dental X-ray" class="w-full h-full object-cover opacity-60 mix-blend-screen"
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEXf34UgRNFGqb6Vc9yeb-ySBpcKcd5i3YjYQ00PKVS2O1sYFdg6mu22F-aK2B086Dgha46TK9oNF9PcNO-RsrkikrnqSVFjcICU5fx07pm1y56KDcU_Sgw-B5CuJy8TrVZbC3X-Aff9hxwF9P9qGlGo_RvCNBCeTB-NO5gEpbFZCFa3J3KzvpsIZOtrgirS2XaP_Ck9yzHuA0KkZ8_-ujWOd8I_106X9iGP2zk05gz3kLxz2jdIiGfJsP7EuXMW8QmAdEb2HmDr9H"/>
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                            <div class="scan-line absolute w-full"></div>
+                        </div>
+                        <!-- Hotspots with increased visibility for dark mode -->
+                        <div class="absolute top-[42%] left-[32%] w-16 h-16 border-2 border-error rounded-sm ring-4 ring-error/30 bg-error/5 backdrop-blur-[1px]">
+                            <span class="absolute -top-7 -left-1 badge badge-error text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">CARIES (94%)</span>
+                        </div>
+                        <div class="absolute top-[55%] left-[65%] w-24 h-12 border-2 border-warning rounded-sm ring-4 ring-warning/30 bg-warning/5 backdrop-blur-[1px]">
+                            <span class="absolute -top-7 -left-1 badge badge-warning text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">PLACA (78%)</span>
+                        </div>
+                        <div class="absolute top-[38%] left-[15%] w-12 h-14 border-2 border-success/80 rounded-sm bg-success/5 backdrop-blur-[1px]">
+                            <span class="absolute -top-7 -left-1 badge badge-success text-white text-[10px] font-bold h-5 rounded-none border-none shadow-lg">OPTIMAL</span>
+                        </div>
+                    </div>
+                    <!-- Caption bar -->
+                    <div class="p-4 bg-slate-900 flex flex-wrap justify-between items-center border-t border-slate-800">
+                        <p class="text-xs text-slate-500 font-medium">Digital Panoramic Radiograph • Layer: AI Enhanced
+                            Contrast</p>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-error shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span><span
+                                    class="text-[10px] font-bold text-slate-400">CRÍTICO</span></div>
+                            <div class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-warning shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span><span
+                                    class="text-[10px] font-bold text-slate-400">SEGUIMIENTO</span></div>
+                            <div class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-success shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span><span
+                                    class="text-[10px] font-bold text-slate-400">ÓPTIMO</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AI Recommendations -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2 px-2">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        <h3 class="text-lg font-headline font-extrabold text-slate-200">AI Treatment
+                            Recommendations</h3>
+                    </div>
+                    <div class="collapse collapse-arrow bg-slate-800/40 border border-slate-700 shadow-sm rounded-xl">
+                        <input checked="checked" name="recommendations-accordion" type="radio"/>
+                        <div class="collapse-title flex items-center gap-4 py-4">
+                            <div class="w-10 h-10 shrink-0 bg-blue-900/30 text-blue-400 rounded-full flex items-center justify-center border border-blue-800/50">
+                                <span class="material-symbols-outlined">calendar_month</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Agendar Intervención</h4>
+                                <p class="text-[11px] text-slate-500">Molar 16 • Prioridad Alta</p>
+                            </div>
+                        </div>
+                        <div class="collapse-content px-16 pb-6">
+                            <p class="text-sm text-slate-400 leading-relaxed">Se recomienda tratamiento para la caries
+                                detectada en el cuadrante superior izquierdo en un plazo de 14 días para prevenir
+                                afectación pulpar. El análisis de densidad sugiere una cavidad de grado II.</p>
+                            <div class="mt-4 flex gap-2">
+                                <button class="btn btn-xs btn-primary normal-case font-bold">Book Procedure</button>
+                                <button class="btn btn-xs btn-ghost normal-case font-bold text-slate-400 hover:text-white">
+                                    Patient Notes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapse-arrow bg-slate-800/40 border border-slate-700 shadow-sm rounded-xl">
+                        <input name="recommendations-accordion" type="radio"/>
+                        <div class="collapse-title flex items-center gap-4 py-4">
+                            <div class="w-10 h-10 shrink-0 bg-cyan-900/30 text-cyan-400 rounded-full flex items-center justify-center border border-cyan-800/50">
+                                <span class="material-symbols-outlined">brush</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-100">Ajuste de Higiene</h4>
+                                <p class="text-[11px] text-slate-500">Zona Cervical • Preventivo</p>
+                            </div>
+                        </div>
+                        <div class="collapse-content px-16 pb-6">
+                            <p class="text-sm text-slate-400 leading-relaxed">Implementar cepillado interdental y uso de
+                                hilo dental reforzado en zonas de acumulación de placa. Se sugiere profilaxis
+                                profesional en la próxima visita rutinaria.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right: Findings Panel -->
+            <div class="col-span-12 lg:col-span-4 space-y-6">
+                <div class="card bg-slate-900 rounded-xl shadow-xl border border-slate-800 h-full">
+                    <div class="card-body p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-headline font-extrabold text-slate-100 tracking-tight">Hallazgos
+                                Detectados</h3>
+                            <div class="badge badge-slate-700 font-bold text-[10px] text-slate-300">3 TOTAL</div>
+                        </div>
+                        <div class="space-y-4">
+                            <!-- Finding: Critical -->
+                            <div class="card bg-slate-800/50 border-l-4 border-error rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-100 text-sm">Caries Detectada</h4>
+                                            <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">
+                                                Molar 16 • Superior Izq</p>
+                                        </div>
+                                        <div class="badge badge-error badge-sm font-black text-[10px] text-white">
+                                            CRÍTICO
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                                            <span>Confianza IA</span>
+                                            <span class="text-error">94%</span>
+                                        </div>
+                                        <progress class="progress progress-error w-full h-1.5 bg-slate-700" max="100"
+                                                  value="94"></progress>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Finding: Warning -->
+                            <div class="card bg-slate-800/50 border-l-4 border-warning rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-100 text-sm">Acumulación de Placa</h4>
+                                            <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">
+                                                Zona Cervical • General</p>
+                                        </div>
+                                        <div class="badge badge-warning badge-sm font-black text-[10px] text-white">
+                                            SEGUIMIENTO
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                                            <span>Confianza IA</span>
+                                            <span class="text-warning">78%</span>
+                                        </div>
+                                        <progress class="progress progress-warning w-full h-1.5 bg-slate-700" max="100"
+                                                  value="78"></progress>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Finding: Optimal -->
+                            <div class="card bg-slate-800/50 border-l-4 border-success rounded-lg shadow-sm hover:bg-slate-800 transition-all cursor-pointer">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-slate-100 text-sm">Integridad Ósea</h4>
+                                            <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">
+                                                Densidad Mandibular</p>
+                                        </div>
+                                        <div class="badge badge-success badge-sm font-black text-[10px] text-white">
+                                            ÓPTIMO
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="flex justify-between text-[10px] font-bold text-slate-500 mb-1">
+                                            <span>Confianza IA</span>
+                                            <span class="text-success">98%</span>
+                                        </div>
+                                        <progress class="progress progress-success w-full h-1.5 bg-slate-700" max="100"
+                                                  value="98"></progress>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Data Transparency Info -->
+                        <div class="mt-auto pt-10">
+                            <div class="alert bg-slate-800/80 border-slate-700 p-4 rounded-xl">
+                                <div>
+                                    <div class="flex items-center gap-2 text-primary mb-1">
+                                        <span class="material-symbols-outlined text-sm">shield</span>
+                                        <span class="text-[10px] font-bold uppercase tracking-widest">Medical Accuracy</span>
+                                    </div>
+                                    <p class="text-[11px] leading-relaxed text-slate-500 italic">
+                                        Este análisis ha sido procesado por el motor Dentis AI v4.2. Los hallazgos
+                                        presentados son sugerencias de diagnóstico y requieren validación profesional.
                                     </p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- Footer -->
 <footer class="footer items-center p-6 bg-slate-900 text-slate-500 border-t border-slate-800 md:ml-64 md:w-[calc(100%-16rem)]">
-<aside class="items-center grid-flow-col">
-<p class="text-[10px] uppercase tracking-widest">© 2024 Dentis AI Clinical Systems. All AI diagnostics require professional verification.</p>
-</aside>
-<nav class="grid-flow-col gap-6 md:place-self-center md:justify-self-end">
-<a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Medical Disclaimer</a>
-<a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Privacy Policy</a>
-<a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Terms of Service</a>
-</nav>
+    <aside class="items-center grid-flow-col">
+        <p class="text-[10px] uppercase tracking-widest">© 2024 Dentis AI Clinical Systems. All AI diagnostics require
+            professional verification.</p>
+    </aside>
+    <nav class="grid-flow-col gap-6 md:place-self-center md:justify-self-end">
+        <a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Medical
+            Disclaimer</a>
+        <a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Privacy
+            Policy</a>
+        <a class="text-[10px] uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Terms of
+            Service</a>
+    </nav>
 </footer>
-</body></html>
+</body>
+</html>

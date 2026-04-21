@@ -5,7 +5,6 @@ import Aside from "@/components/parts/all_pages/Aside.vue";
 import Footer from "@/components/parts/all_pages/Footer.vue";
 import ImageAnalyzed from "@/components/parts/diagnostic/ImageAnalyzed.vue";
 import DentalProblems from "@/components/parts/diagnostic/DentalProblems.vue";
-
 </script>
 
 <template>

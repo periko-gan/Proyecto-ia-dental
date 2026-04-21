@@ -62,8 +62,8 @@ La configuracion activa usa el plugin oficial de Vite para Tailwind v4:
 
 - `vite.config.js` con `@tailwindcss/vite`
 - `src/style.css` con:
-  - `@import 'tailwindcss';`
-  - `@plugin "daisyui";`
+    - `@import 'tailwindcss';`
+    - `@plugin "daisyui";`
 - `src/main.js` importa `./style.css`
 
 En Tailwind v4 no es necesario `tailwindcss init -p`.
@@ -106,7 +106,8 @@ docker compose logs -f
 docker compose down
 ```
 
-Si el puerto `80` ya esta ocupado en tu maquina, cambia temporalmente el mapeo en `docker-compose.yml` a `8080:80` y abre `http://localhost:8080`.
+Si el puerto `80` ya esta ocupado en tu maquina, cambia temporalmente el mapeo en `docker-compose.yml` a `8080:80` y
+abre `http://localhost:8080`.
 
 ## Problemas comunes
 
