@@ -1,5 +1,15 @@
 <script setup>
+import {useRoute} from 'vue-router'
 
+const route = useRoute()
+
+function navLinkClass(routeName) {
+  const baseClass = 'text-slate-500 hover:text-blue-700'
+  const activeClass = 'active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-noness'
+  const inactiveClass = 'text-slate-500 border-transparent hover:text-blue-600'
+
+  return `${baseClass} ${route.name === routeName ? activeClass : inactiveClass}`
+}
 </script>
 
 <template>
@@ -22,23 +32,22 @@
     <nav class="p-6">
       <ul class="menu menu-md w-full p-0 gap-1">
         <li>
-          <router-link :to="{name: 'Dashboard'}"
-                       class="active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-none">
+          <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">Dashboard</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{name: 'Analyze'}" class="text-slate-500 hover:text-blue-700">
+          <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
             <span class="material-symbols-outlined">Analyze</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{name: 'Diagnostic'}" class="text-slate-500 hover:text-blue-700">
+          <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
             <span class="material-symbols-outlined">Diagnostic</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{name: 'Evolution'}" class="text-slate-500 hover:text-blue-700">
+          <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
             <span class="material-symbols-outlined">Evolution</span>
           </router-link>
         </li>

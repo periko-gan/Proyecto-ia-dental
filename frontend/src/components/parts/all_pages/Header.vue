@@ -1,5 +1,15 @@
 <script setup>
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+
+function navLinkClass(routeName) {
+  const baseClass = 'btn btn-ghost btn-sm font-bold rounded-none border-b-2'
+  const activeClass = 'text-blue-700 border-blue-700'
+  const inactiveClass = 'text-slate-500 border-transparent hover:text-blue-600'
+
+  return `${baseClass} ${route.name === routeName ? activeClass : inactiveClass}`
+}
 </script>
 
 <template>
@@ -9,18 +19,17 @@
       <a class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">Dentis
         AI</a>
       <div class="hidden lg:flex ml-10 space-x-2">
-        <router-link :to="{name: 'Dashboard'}"
-                     class="btn btn-ghost btn-sm text-blue-700 font-bold border-b-2 border-blue-700 rounded-none">
+        <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
           Dashboard
         </router-link>
-        <router-link :to="{name: 'Analyze'}" class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">
+        <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
           Analyze
         </router-link>
-        <router-link :to="{name: 'Diagnostic'}"
-                     class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">Diagnostic
+        <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
+          Diagnostic
         </router-link>
-        <router-link :to="{name: 'Evolution'}"
-                     class="btn btn-ghost btn-sm text-slate-500 hover:text-blue-600 font-bold">Evolution
+        <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
+          Evolution
         </router-link>
       </div>
     </div>
