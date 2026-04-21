@@ -94,7 +94,7 @@ docker compose up --build -d
 Abrir en navegador:
 
 ```text
-http://localhost:80
+http://localhost:8080
 ```
 
 Comandos utiles:
