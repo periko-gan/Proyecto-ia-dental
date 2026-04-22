@@ -1,17 +1,29 @@
 <script setup>
+import {computed} from 'vue'
 
-import Header from "@/components/parts/all_pages/Header.vue";
-import Footer from "@/components/parts/all_pages/Footer.vue";
-import Aside from "@/components/parts/all_pages/Aside.vue";
+// Recibe el contexto de pagina para reutilizar el mismo formulario en login y registro.
+const props = defineProps({
+  page: {
+    type: String,
+    default: 'register',
+  },
+})
+
+const isLogin = computed(() => props.page === 'login')
+// Textos reactivos para evitar duplicar plantillas entre ambas vistas.
+const formTitle = computed(() => (isLogin.value ? 'Welcome Back' : 'Create Professional Account'))
+const formSubtitle = computed(() => (
+  isLogin.value
+    ? 'Please enter your credentials to continue.'
+    : 'Please provide your clinical credentials to begin.'
+))
+const submitLabel = computed(() => (isLogin.value ? 'Log In' : 'Sign Up'))
+const switchText = computed(() => (isLogin.value ? "Don't have an account?" : 'Already have an account?'))
+const switchLabel = computed(() => (isLogin.value ? 'Register' : 'Log in'))
+const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
 </script>
 
 <template>
-<!--  <div class="bg-surface text-on-surface selection:bg-secondary-container/30">-->
-  <div class="bg-surface font-body text-on-surface">
-
-    <Header/>
-
-    <Aside/>
 
     <main class="">
 <!--    <section class="hidden md:flex w-1/2 relative overflow-hidden bg-primary items-center justify-center p-12">-->
@@ -52,12 +64,12 @@ import Aside from "@/components/parts/all_pages/Aside.vue";
             </div>
             <span class="text-2xl font-extrabold tracking-tighter text-primary">DentaVision AI</span>
           </div>
-          <h2 class="text-3xl font-bold text-on-surface mb-2">Create Professional Account</h2>
-          <p class="text-on-surface-variant text-sm">Please provide your clinical credentials to begin.</p>
+          <h2 class="text-3xl font-bold text-on-surface mb-2">{{ formTitle }}</h2>
+          <p class="text-on-surface-variant text-sm">{{ formSubtitle }}</p>
         </div>
         <form class="space-y-5">
           <div class="grid grid-cols-1 gap-5">
-            <div class="group">
+            <div v-if="!isLogin" class="group">
               <label class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Full Name</label>
               <input class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary" placeholder="Dr. Jane Smith" type="text"/>
             </div>
@@ -101,24 +113,22 @@ import Aside from "@/components/parts/all_pages/Aside.vue";
           </div>
           <div class="pt-4">
             <button class="w-full bg-primary text-on-primary py-4 px-6 rounded-lg font-bold clinical-shadow hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 group" type="submit">
-              Sign Up
+              {{ submitLabel }}
               <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
             </button>
           </div>
         </form>
         <div class="mt-8 pt-8 border-t border-outline-variant/15 text-center">
           <p class="text-sm text-on-surface-variant">
-            Already have an account?
-            <a class="text-secondary font-bold hover:text-on-secondary-container transition-colors ml-1" href="#">Log in</a>
+            {{ switchText }}
+            <router-link :to="{ name: switchRouteName }" class="text-secondary font-bold hover:text-on-secondary-container transition-colors ml-1">{{ switchLabel }}</router-link>
           </p>
         </div>
       </div>
     </section>
   </main>
 
-    <Footer/>
 
-  </div>
 </template>
 
 <style scoped>

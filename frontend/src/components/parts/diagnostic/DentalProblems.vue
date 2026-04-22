@@ -1,5 +1,5 @@
 <script setup>
-
+// Panel lateral del reporte con hallazgos y niveles de severidad simulados.
 </script>
 
 <template>

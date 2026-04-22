@@ -3,6 +3,7 @@ import {useRoute} from 'vue-router'
 
 const route = useRoute()
 
+// Aplica estilo activo/inactivo a cada opcion del sidebar en funcion de la ruta.
 function navLinkClass(routeName) {
   const baseClass = 'text-slate-500 hover:text-blue-700'
   const activeClass = 'active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-noness'
@@ -52,8 +53,13 @@ function navLinkClass(routeName) {
           </router-link>
         </li>
         <li>
-          <router-link :to="{name: 'Formulario'}" :class="navLinkClass('Formulario')">
-            <span class="material-symbols-outlined">Formulario</span>
+          <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
+            <span class="material-symbols-outlined">Login</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
+            <span class="material-symbols-outlined">Register</span>
           </router-link>
         </li>
       </ul>

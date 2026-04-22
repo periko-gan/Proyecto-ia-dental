@@ -1,4 +1,5 @@
 <script setup>
+// Landing page publica con propuesta de valor, secciones informativas y CTA.
 import Header from "@/components/parts/all_pages/Header.vue";
 import Footer from "@/components/parts/all_pages/Footer.vue";
 </script>

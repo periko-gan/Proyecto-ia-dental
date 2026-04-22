@@ -3,6 +3,7 @@ import {useRoute} from 'vue-router'
 
 const route = useRoute()
 
+// Calcula clases de navegacion segun la ruta activa actual.
 function navLinkClass(routeName) {
   const baseClass = 'btn btn-ghost btn-sm font-bold rounded-none border-b-2'
   const activeClass = 'text-blue-700 border-blue-700'
@@ -37,8 +38,11 @@ function navLinkClass(routeName) {
         <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
           Evolution
         </router-link>
-        <router-link :to="{name: 'Formulario'}" :class="navLinkClass('Formulario')">
-          Formulario
+        <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
+          Login
+        </router-link>
+        <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
+          Register
         </router-link>
       </div>
     </div>

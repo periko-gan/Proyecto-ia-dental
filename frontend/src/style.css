@@ -1,9 +1,11 @@
 @import 'tailwindcss';
 
+/* Estilos globales: integra Tailwind, DaisyUI y tokens del tema propio. */
 @plugin 'daisyui';
 @import './styles/themes/theme.css';
 
 @layer base {
+    /* Configura color-scheme para que controles nativos respeten light/dark. */
     :root,
     [data-theme='light'] {
         color-scheme: light;

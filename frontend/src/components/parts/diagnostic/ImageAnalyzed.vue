@@ -1,5 +1,5 @@
 <script setup>
-
+// Visualizador de imagen con hotspots de IA y recomendaciones de tratamiento.
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup>
+// Vista de analisis: integra layout comun y el modulo de carga/validacion de imagenes.
 
 import Header from '@/components/parts/all_pages/Header.vue'
 import Aside from "@/components/parts/all_pages/Aside.vue";

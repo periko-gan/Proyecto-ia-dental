@@ -1,4 +1,5 @@
 <script setup>
+// Pie global con disclaimer clinico y enlaces legales.
 
 import Aside from "@/components/parts/all_pages/Aside.vue";
 </script>

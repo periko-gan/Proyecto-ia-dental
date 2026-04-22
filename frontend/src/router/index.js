@@ -5,8 +5,10 @@ import DashboardView from '@/components/DashboardView.vue'
 import DiagnosticView from "@/components/DiagnosticView.vue";
 import EvolutionView from "@/components/EvolutionView.vue";
 import LandingView from "@/components/LandingView.vue";
-import FormularioView from "@/components/FormularioView.vue";
+import LoginView from "@/components/LoginView.vue";
+import RegisterView from "@/components/RegisterView.vue";
 
+// Mapa principal de navegación de la SPA.
 const routes = [
     {
         path: '/',
@@ -34,9 +36,14 @@ const routes = [
         component: EvolutionView,
     },
     {
-        path: '/formulario',
-        name: 'Formulario',
-        component: FormularioView,
+        path: '/login',
+        name: 'Login',
+        component: LoginView,
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: RegisterView,
     },
     {
         path: '/:pathMatch(.*)*',
@@ -45,6 +52,7 @@ const routes = [
 ]
 
 const router = createRouter({
+    // Usa el BASE_URL de Vite para soportar despliegues en subrutas.
     history: createWebHistory(import.meta.env.BASE_URL),
     routes,
 })

@@ -1,5 +1,6 @@
 :root,
 [data-theme='light'] {
+    /* Paleta base para el tema claro consumida por utilidades y componentes. */
     --on-secondary-fixed: #001f25;
     --surface-container-lowest: #ffffff;
     --tertiary-fixed: #83fc8e;
@@ -50,6 +51,7 @@
 }
 
 [data-theme='dark'] {
+    /* Paleta equivalente para modo oscuro, manteniendo los mismos tokens. */
     --on-secondary-fixed: #001f25;
     --surface-container-lowest: #0b0e14;
     --tertiary-fixed: #83fc8e;

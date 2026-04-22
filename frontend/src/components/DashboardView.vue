@@ -1,4 +1,5 @@
 <script setup>
+// Vista principal del panel clinico con resumen de estado, metricas y accesos rapidos.
 
 import Header from '@/components/parts/all_pages/Header.vue'
 import Aside from '@/components/parts/all_pages/Aside.vue'

@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 
+// Restricciones de carga permitidas por el flujo clinico.
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png'])
 const allowedExtensions = new Set(['dcm', 'dicom', 'jpg', 'jpeg', 'png'])
@@ -48,6 +49,7 @@ function isAllowedType(file) {
 }
 
 function validateFiles(files) {
+  // Filtra archivos no validos y acumula mensajes para mostrarlos en UI.
   const validFiles = []
   const errors = []
 
@@ -81,6 +83,7 @@ function setInputFiles(files) {
 }
 
 function processIncomingFiles(rawFiles, options = {syncInput: true, source: 'input'}) {
+  // Unifica el procesamiento para input manual y drag & drop.
   const files = Array.from(rawFiles ?? [])
   const {validFiles, errors} = validateFiles(files)
 
