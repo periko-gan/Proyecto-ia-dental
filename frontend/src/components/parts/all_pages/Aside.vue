@@ -51,6 +51,11 @@ function navLinkClass(routeName) {
             <span class="material-symbols-outlined">Evolution</span>
           </router-link>
         </li>
+        <li>
+          <router-link :to="{name: 'Formulario'}" :class="navLinkClass('Formulario')">
+            <span class="material-symbols-outlined">Formulario</span>
+          </router-link>
+        </li>
       </ul>
     </nav>
 

@@ -37,6 +37,9 @@ function navLinkClass(routeName) {
         <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
           Evolution
         </router-link>
+        <router-link :to="{name: 'Formulario'}" :class="navLinkClass('Formulario')">
+          Formulario
+        </router-link>
       </div>
     </div>
     <div class="flex-none gap-2">

@@ -5,6 +5,7 @@ import DashboardView from '@/components/DashboardView.vue'
 import DiagnosticView from "@/components/DiagnosticView.vue";
 import EvolutionView from "@/components/EvolutionView.vue";
 import LandingView from "@/components/LandingView.vue";
+import FormularioView from "@/components/FormularioView.vue";
 
 const routes = [
     {
@@ -31,6 +32,11 @@ const routes = [
         path: '/evolution',
         name: 'Evolution',
         component: EvolutionView,
+    },
+    {
+        path: '/formulario',
+        name: 'Formulario',
+        component: FormularioView,
     },
     {
         path: '/:pathMatch(.*)*',

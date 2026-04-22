@@ -20,10 +20,10 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
           <div class="lg:col-span-7 space-y-8">
             <div
                 class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-secondary font-bold text-[0.6875rem] uppercase tracking-[0.1em] rounded-full border border-secondary/20">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
-</span>
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+                </span>
               Next-Gen Clinical Intelligence
             </div>
             <h1 class="font-headline text-5xl lg:text-7xl font-extrabold text-primary leading-[1.1] tracking-tight">
