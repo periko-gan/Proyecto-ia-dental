@@ -24,25 +24,25 @@ function navLinkClass(routeName) {
       </router-link>
       <div class="hidden lg:flex ml-10 space-x-2">
         <router-link :to="{name: 'Landing'}" :class="navLinkClass('Landing')">
-          Landing
+          Inicio
         </router-link>
         <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
-          Dashboard
+          Panel
         </router-link>
         <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
-          Analyze
+          Analizar
         </router-link>
         <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
-          Diagnostic
+          Diagnóstico
         </router-link>
         <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
-          Evolution
+          Evolución
         </router-link>
         <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
-          Login
+          Iniciar sesión
         </router-link>
         <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
-          Register
+          Registro
         </router-link>
       </div>
     </div>
@@ -51,7 +51,7 @@ function navLinkClass(routeName) {
           <span
               class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
         <input class="input input-sm input-bordered bg-slate-50 pl-9 w-48 focus:outline-blue-600"
-               placeholder="Search diagnostics..." type="text"/>
+               placeholder="Buscar diagnósticos..." type="text"/>
       </div>
       <button class="btn btn-ghost btn-circle btn-sm">
         <div class="indicator">
@@ -62,15 +62,15 @@ function navLinkClass(routeName) {
       <div class="dropdown dropdown-end ml-2">
         <div class="btn btn-ghost btn-circle avatar border border-slate-200" role="button" tabindex="0">
           <div class="w-8 rounded-full">
-            <img alt="User profile"
+            <img alt="Perfil de usuario"
                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9xbAbyQCpcxRzZfqtzqLxPKaDAq2C0CKQok4nfj2JCMt4JeQUjiy2O0XNWTRAzTj5O_RhvmGWyalpU1UuUSJKkITid8KHsaNDdb-kjqkJ_zUEdSKyJljfZxXHaoBo6OYr6tgsV9Vqg7Q3CjPAVYs2QB9rMqc2hcQBUQ6OEaF1_KpN8P9nCbOd31M9v6cx1dzAQMLRDU5ZXuZz_m5UlOdRylWBH-CEE_dIhDMBRxEkYULmlM22TsEvZbHc799hltrcMLtFk0pn9IYt"/>
           </div>
         </div>
         <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-slate-100"
             tabindex="0">
-          <li><a>Profile</a></li>
-          <li><a>Settings</a></li>
-          <li><a class="text-error font-bold">Logout</a></li>
+          <li><a>Perfil</a></li>
+          <li><a>Configuración</a></li>
+          <li><a class="text-error font-bold">Cerrar sesión</a></li>
         </ul>
       </div>
     </div>

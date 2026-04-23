@@ -10,15 +10,9 @@
 <div id="app"></div>
 <script type="module" src="/src/main.js"></script>
 <script>
-    // Detecta preferencia de tema del sistema y la aplica
-    if (localStorage.getItem('theme') === 'dark' ||
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-        document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.setAttribute('data-theme', 'light');
-    }
+    // Fuerza el tema claro como valor base de la aplicación.
+    document.documentElement.classList.remove('dark');
+    document.documentElement.setAttribute('data-theme', 'light');
 </script>
 </body>
 </html>

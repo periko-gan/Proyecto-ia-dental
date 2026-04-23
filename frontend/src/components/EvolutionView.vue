@@ -58,7 +58,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                 </div>
                 <div class="flex items-center gap-2 text-[11px] font-bold text-secondary uppercase tracking-wider">
                   <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-                  AI Predictive Engine
+                  Motor predictivo de IA
                 </div>
               </div>
               <div class="p-6 h-64 flex items-end justify-between gap-3 bg-slate-50/30">
@@ -155,7 +155,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                 <tr class="bg-base-100 text-[11px] uppercase tracking-widest text-slate-500 border-b border-base-200">
                   <th class="py-4">Procedimiento</th>
                   <th class="py-4">Personal Médico</th>
-                  <th class="py-4">Fecha &amp; Score</th>
+                  <th class="py-4">Fecha y puntuacion</th>
                   <th class="py-4">Estado AI</th>
                   <th class="py-4 text-right">Acciones</th>
                 </tr>
@@ -167,7 +167,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                     <div class="flex items-center gap-3">
                       <div class="avatar">
                         <div class="mask mask-squircle w-12 h-12 bg-base-200">
-                          <img alt="Scan"
+                          <img alt="Escaneo"
                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKgigzjoiQqElNKDqpOpDaeLPOM7rleU_6Uk-c9mYeJ4x6wLgVOBnrmc8APVJb7hFScpveAjGYlFKVqqA0wE6ESXjB1RCbrb19KVq8uAaX5phFpKNIwfg5EVL-gRq40NIx7hcnjsPrabhsen7U-AWfSBDaTVpam4wBe_NvjCFCBhp1No_FGXbbzVDalrUB659fpwHoZcxFLbga7kyb9YpA2fZjeOTf7qEPf0KmGCEu5sX6bTq2r4A8Te9TbGqbZCus3hP2srx7vzRe"/>
                         </div>
                       </div>
@@ -186,7 +186,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                   <td>
                     <div class="flex flex-col">
                       <span class="text-xs font-bold text-neutral">14 Jun, 2024</span>
-                      <span class="text-[10px] font-extrabold text-secondary mt-1">SCORE: 82/100</span>
+                      <span class="text-[10px] font-extrabold text-secondary mt-1">PUNTUACION: 82/100</span>
                     </div>
                   </td>
                   <td><span class="badge badge-success badge-sm text-white font-bold">ESTABLE</span></td>
@@ -205,7 +205,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                     <div class="flex items-center gap-3">
                       <div class="avatar">
                         <div class="mask mask-squircle w-12 h-12 bg-base-200 grayscale opacity-40">
-                          <img alt="Prophylaxis"
+                          <img alt="Profilaxis"
                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQVkPN0gAFlDDuTtU2qYMocTIrQ6K3HL2x1RRapr4pMGkOHDzotrkO2snOab_BbIN-ZbtwSRqJy7qr3jja-nMFRhLLVyVONV2DM2D8LI2eKEt2qAWs0cMkn7vS-TDqkhH9z2LztlzYSWapHNOsGv_M57SV3a3K8qIJsB6c2vctUTHmWdNOFyt2ChucHg_JZZ0gOIkRIxrMngotnbFiJ8qnku3gpGv80KPgZhSCEcoUgAYHZUcByuLTcba7pU9KvIqcJQ7LxvKJCYm"/>
                         </div>
                       </div>
@@ -239,7 +239,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                     <div class="flex items-center gap-3">
                       <div class="avatar">
                         <div class="mask mask-squircle w-12 h-12 bg-error/10">
-                          <img alt="Emergency"
+                          <img alt="Emergencia"
                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4TLailUnD4rKpG2WbgfmbvyL6yBkvrPI8_0cIN-9HaQ3UNls8KgXmCtPia-AE54QJFo-t9ZQf3K-CKSUcPfEvCjpYU8ql40IM_3qaVp3Q2BQYWGgWiCmIO3m6VlyGBuuBQRMajcLjD2cyhAw5Id-93zN4J_34d7oiQ6hCKbaSEt4fpwxZOz5LoaZzULltZ6_WHnaTpowRvVyrRY7SnPMv312Bt0-wxQUoWX-MAxb-1s44K4HUg9PYjZwRZYi54I2jC5mCTZ8flfox"/>
                         </div>
                       </div>
@@ -258,7 +258,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                   <td>
                     <div class="flex flex-col">
                       <span class="text-xs font-bold text-neutral">12 Ene, 2024</span>
-                      <span class="text-[10px] font-extrabold text-error mt-1">SCORE: 68/100</span>
+                      <span class="text-[10px] font-extrabold text-error mt-1">PUNTUACION: 68/100</span>
                     </div>
                   </td>
                   <td><span class="badge badge-error badge-sm text-white font-bold">ALERTA</span></td>

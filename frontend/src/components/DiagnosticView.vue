@@ -23,19 +23,20 @@ import DentalProblems from "@/components/parts/diagnostic/DentalProblems.vue";
           <div>
             <div class="text-xs breadcrumbs text-slate-400 mb-2 p-0">
               <ul>
-                <li>Analysis</li>
-                <li class="text-primary font-semibold">Report #AX-9021</li>
+                <li>Analisis</li>
+                <li class="text-primary font-semibold">Informe #AX-9021</li>
               </ul>
             </div>
-            <h1 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">AI Diagnostic Report</h1>
-            <p class="text-on-surface-variant mt-1">Patient: Elena Rodriguez • Scan Date: Oct 24, 2024</p>
+            <h1 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">Informe diagnóstico de
+              IA</h1>
+            <p class="text-on-surface-variant mt-1">Paciente: Elena Rodriguez • Fecha de escaneo: 24 oct., 2024</p>
           </div>
           <div class="flex gap-3">
             <button class="btn btn-outline btn-sm border-outline-variant text-on-surface font-bold normal-case">
-              <span class="material-symbols-outlined text-sm">share</span> Share
+              <span class="material-symbols-outlined text-sm">share</span> Compartir
             </button>
             <button class="btn btn-primary btn-sm font-bold normal-case">
-              <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Download Informe PDF
+              <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Descargar informe PDF
             </button>
           </div>
         </div>
@@ -45,25 +46,25 @@ import DentalProblems from "@/components/parts/diagnostic/DentalProblems.vue";
             <div class="stat-figure text-error">
               <span class="material-symbols-outlined text-3xl">priority_high</span>
             </div>
-            <div class="stat-title text-slate-500 font-medium">Critical Issues</div>
+            <div class="stat-title text-slate-500 font-medium">Problemas críticos</div>
             <div class="stat-value text-error">1</div>
-            <div class="stat-desc">Requires immediate action</div>
+            <div class="stat-desc">Requiere acción inmediata</div>
           </div>
           <div class="stat">
             <div class="stat-figure text-warning">
               <span class="material-symbols-outlined text-3xl">visibility</span>
             </div>
-            <div class="stat-title text-slate-500 font-medium">Follow-ups</div>
+            <div class="stat-title text-slate-500 font-medium">Seguimientos</div>
             <div class="stat-value text-warning">1</div>
-            <div class="stat-desc">21% increase from last scan</div>
+            <div class="stat-desc">21% de aumento desde el último escaneo</div>
           </div>
           <div class="stat">
             <div class="stat-figure text-success">
               <span class="material-symbols-outlined text-3xl">check_circle</span>
             </div>
-            <div class="stat-title text-slate-500 font-medium">Overall Health</div>
+            <div class="stat-title text-slate-500 font-medium">Salud general</div>
             <div class="stat-value text-success">88%</div>
-            <div class="stat-desc">Above patient average</div>
+            <div class="stat-desc">Por encima del promedio del paciente</div>
           </div>
         </div>
         <!-- Analysis Layout -->

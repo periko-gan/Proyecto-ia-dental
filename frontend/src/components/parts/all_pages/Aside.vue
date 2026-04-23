@@ -26,7 +26,7 @@ function navLinkClass(routeName) {
         </div>
         <div>
           <p class="text-xs font-bold text-on-surface">Dr. Henderson</p>
-          <p class="text-[10px] text-slate-500 uppercase tracking-wider">Dental Surgeon</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider">Cirujano dental</p>
         </div>
       </div>
     </div>
@@ -34,32 +34,32 @@ function navLinkClass(routeName) {
       <ul class="menu menu-md w-full p-0 gap-1">
         <li>
           <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
-            <span class="material-symbols-outlined">Dashboard</span>
+            <span class="material-symbols-outlined">Panel</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
-            <span class="material-symbols-outlined">Analyze</span>
+            <span class="material-symbols-outlined">Analizar</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
-            <span class="material-symbols-outlined">Diagnostic</span>
+            <span class="material-symbols-outlined">Diagnóstico</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
-            <span class="material-symbols-outlined">Evolution</span>
+            <span class="material-symbols-outlined">Evolución</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
-            <span class="material-symbols-outlined">Login</span>
+            <span class="material-symbols-outlined">Acceso</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
-            <span class="material-symbols-outlined">Register</span>
+            <span class="material-symbols-outlined">Registro</span>
           </router-link>
         </li>
       </ul>

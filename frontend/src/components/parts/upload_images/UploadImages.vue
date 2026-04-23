@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 
-// Restricciones de carga permitidas por el flujo clinico.
+// Restricciones de carga permitidas por el flujo clínico.
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png'])
 const allowedExtensions = new Set(['dcm', 'dicom', 'jpg', 'jpeg', 'png'])
@@ -140,9 +140,9 @@ function formatFileSize(bytes) {
       <!--                        data-icon="cloud_upload">cloud_upload</span>-->
       <!--      </div>-->
       <div class="space-y-2">
-        <h4 class="text-xl font-bold text-on-surface font-headline">Drag & Drop clinical media</h4>
-        <p class="text-on-surface-variant text-sm">Support for DICOM, JPEG, and PNG files. Max 25MB per
-          file.</p>
+        <h4 class="text-xl font-bold text-on-surface font-headline">Arrastra y suelta material clínico</h4>
+        <p class="text-on-surface-variant text-sm">Compatible con archivos DICOM, JPEG y PNG. Maximo 25 MB por
+          archivo.</p>
       </div>
       <!-- DaisyUI File Input -->
       <div class="form-control w-full">
@@ -181,7 +181,7 @@ function formatFileSize(bytes) {
 
       <button class="btn btn-primary btn-wide font-bold gap-2" type="button" @click="openFilePicker">
         <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
-        Browse Files
+        Seleccionar archivos
       </button>
     </div>
   </div>

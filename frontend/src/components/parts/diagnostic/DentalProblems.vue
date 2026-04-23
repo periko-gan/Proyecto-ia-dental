@@ -83,7 +83,7 @@
             <div>
               <div class="flex items-center gap-2 text-primary mb-1">
                 <span class="material-symbols-outlined text-sm">shield</span>
-                <span class="text-[10px] font-bold uppercase tracking-widest">Medical Accuracy</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest">Precisión médica</span>
               </div>
               <p class="text-[11px] leading-relaxed text-slate-500 italic">
                 Este análisis ha sido procesado por el motor Dentis AI v4.2. Los hallazgos presentados son

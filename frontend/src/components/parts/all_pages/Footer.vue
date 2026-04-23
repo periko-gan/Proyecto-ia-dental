@@ -1,5 +1,5 @@
 <script setup>
-// Pie global con disclaimer clinico y enlaces legales.
+// Pie global con disclaimer clínico y enlaces legales.
 
 import Aside from "@/components/parts/all_pages/Aside.vue";
 </script>
@@ -10,14 +10,15 @@ import Aside from "@/components/parts/all_pages/Aside.vue";
     <div class="max-w-6xl w-full flex flex-col md:flex-row justify-between items-center gap-6">
       <aside class="text-left">
         <p class="text-[10px] uppercase tracking-[0.2em] font-medium max-w-lg">
-          © 2024 Dentis AI Clinical Systems. All AI diagnostics require professional dental verification.
+          © 2024 Sistemas Clínicos Dentis AI. Todos los diagnósticos de IA requieren verificación profesional
+          odontológica.
         </p>
       </aside>
       <nav class="flex flex-wrap justify-center gap-6">
-        <a class="link link-hover text-[10px] font-black uppercase tracking-widest">Medical Disclaimer</a>
-        <a class="link link-hover text-[10px] font-black uppercase tracking-widest">Privacy Policy</a>
-        <a class="link link-hover text-[10px] font-black uppercase tracking-widest underline decoration-blue-500 underline-offset-4 decoration-2">Terms
-          of Service</a>
+        <a class="link link-hover text-[10px] font-black uppercase tracking-widest">Aviso médico</a>
+        <a class="link link-hover text-[10px] font-black uppercase tracking-widest">Política de privacidad</a>
+        <a class="link link-hover text-[10px] font-black uppercase tracking-widest underline decoration-blue-500 underline-offset-4 decoration-2">Términos
+          del servicio</a>
       </nav>
     </div>
   </footer>
