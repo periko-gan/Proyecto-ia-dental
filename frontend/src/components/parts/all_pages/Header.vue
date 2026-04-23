@@ -19,8 +19,7 @@ function navLinkClass(routeName) {
     <div class="flex-1">
       <router-link :to="{name: 'Landing'}"
                    class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">
-        Dentis
-        AI
+        Dentis AI
       </router-link>
       <div class="hidden lg:flex ml-10 space-x-2">
         <router-link :to="{name: 'Landing'}" :class="navLinkClass('Landing')">

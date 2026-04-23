@@ -34,7 +34,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
               <span class="material-symbols-outlined text-white" data-icon="dentistry"
                     style="font-variation-settings: 'FILL' 1;">dentistry</span>
             </div>
-            <span class="text-2xl font-extrabold tracking-tighter text-primary">DentaVision AI</span>
+            <span class="text-2xl font-extrabold tracking-tighter text-primary">Dentis AI</span>
           </div>
           <h2 class="text-3xl font-bold text-on-surface mb-2">{{ formTitle }}</h2>
           <p class="text-on-surface-variant text-sm">{{ formSubtitle }}</p>
@@ -51,11 +51,11 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
             </div>
             <div class="group">
               <label
-                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Correo
-                electrónico</label>
+                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">
+                Correo electrónico</label>
               <input
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                  placeholder="profesional@clínica.com" type="email"/>
+                  placeholder="Correo electrónico" type="email"/>
             </div>
             <div class="group">
               <label
@@ -82,8 +82,6 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
                 class="w-full bg-primary text-white text-on-primary py-4 px-6 rounded-lg font-bold clinical-shadow hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
                 type="submit">
               {{ submitLabel }}
-              <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform"
-                    data-icon="arrow_forward">arrow_forward</span>
             </button>
           </div>
         </form>

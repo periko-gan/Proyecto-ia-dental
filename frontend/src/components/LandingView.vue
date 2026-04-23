@@ -37,7 +37,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
             </p>
             <div class="flex flex-wrap gap-4">
               <button
-                  class="bg-primary text-on-primary px-8 py-4 rounded-md font-bold text-lg active:scale-95 transform transition-transform duration-150 shadow-[0_10px_25px_rgba(0,63,135,0.25)] flex items-center gap-2">
+                  class="bg-primary text-white text-on-primary px-8 py-4 rounded-md font-bold text-lg active:scale-95 transform transition-transform duration-150 shadow-[0_10px_25px_rgba(0,63,135,0.25)] flex items-center gap-2">
                 Solicitar demo
                 <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
               </button>
@@ -214,7 +214,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                 <span class="material-symbols-outlined text-secondary" data-icon="star" data-weight="fill"
                       style="font-variation-settings: 'FILL' 1;">star</span>
               </div>
-              <p class="font-headline text-2xl lg:text-3xl text-primary font-medium leading-snug mb-8 italic">
+              <p class="font-headline text-2xl lg:text-3xl text-white font-medium leading-snug mb-8 italic">
                 "Dentis AI ha transformado la forma en que comunico hallazgos a mis pacientes. El análisis
                 automatizado aporta rigor técnico y evidencia visual que genera confianza inmediata. Ya no es solo
                 mi opinión: son datos clínicos verificados."
@@ -226,8 +226,8 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmrNQFpbGqJaw0caD0DcKS95Ks0hzY4aPhh9JZEdTbZKDa7QcKu0xdGcbWLirWDnXJrVU9ZhBl8fSb_BmO5TAQqQleytQHDIdGHQXunkjQI7zxxj4FYJ2NdlaZW6f4ppKKhnhIsyGAD5TIosOSTybTQEvI6leVoOPWkKZF1dKgEchbu6OsYXdiLLVPEmDJ9hz0jvz-hWZ5QuYdD5tVHpOKNCQzKEruH9647Y16rB5iKfMPkwQeI88mXrzqQNzXgxRkTMSj9AhwrKv2"/>
                 </div>
                 <div>
-                  <h5 class="font-headline font-bold text-primary">Dr. Julian Reed, DDS</h5>
-                  <p class="text-sm text-on-surface-variant font-medium">Jefe de Cirugía Oral, Metro Dental
+                  <h5 class="font-headline font-bold text-white">Dr. Julian Reed, DDS</h5>
+                  <p class="text-sm  text-white text-on-surface-variant font-medium">Jefe de Cirugía Oral, Metro Dental
                     Specialists</p>
                 </div>
               </div>

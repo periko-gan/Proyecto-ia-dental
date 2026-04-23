@@ -1,21 +1,9 @@
 version: '3.8'
 
+# Definición de la red interna para la comunicación entre contenedores
 networks:
-  data_network:
+  ia_dental_net:
     driver: bridge
-
-# Definición de volúmenes para persistencia de datos
-volumes:
-  zookeeper_data:
-    driver: local
-  kafka_data:
-    driver: local
-  nodered_data:
-    driver: local
-  elasticsearch_data:
-    driver: local
-  grafana_data:
-    driver: local
 
 services:
   # ==========================================
@@ -30,9 +18,10 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     volumes:
-      - zookeeper_data:/var/lib/zookeeper/data
+      # Docker creará ./data/zookeeper automáticamente
+      - ./data/zookeeper:/var/lib/zookeeper/data
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -54,9 +43,10 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
     volumes:
-      - kafka_data:/var/lib/kafka/data
+      # Docker creará ./data/kafka automáticamente
+      - ./data/kafka:/var/lib/kafka/data
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -72,9 +62,10 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - nodered_data:/data
+      # Docker creará ./data/nodered automáticamente
+      - ./data/nodered:/data
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -94,9 +85,10 @@ services:
     ports:
       - "9200:9200"
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      # Docker creará ./data/elasticsearch automáticamente
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -112,8 +104,11 @@ services:
       - LS_JAVA_OPTS="-Xmx1G -Xms1G"
     ports:
       - "5044:5044"
+    volumes:
+      # Carpeta preparada para que metas tus archivos .conf de Logstash
+      - ./data/logstash_pipeline:/usr/share/logstash/pipeline
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -130,7 +125,7 @@ services:
     ports:
       - "5601:5601"
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:
@@ -148,9 +143,10 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - grafana_data:/var/lib/grafana
+      # Docker creará ./data/grafana automáticamente
+      - ./data/grafana:/var/lib/grafana
     networks:
-      - data_network
+      - ia_dental_net
     deploy:
       resources:
         limits:

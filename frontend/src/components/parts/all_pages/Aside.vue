@@ -54,7 +54,7 @@ function navLinkClass(routeName) {
         </li>
         <li>
           <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
-            <span class="material-symbols-outlined">Acceso</span>
+            <span class="material-symbols-outlined">Iniciar sesión</span>
           </router-link>
         </li>
         <li>
