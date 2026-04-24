@@ -16,12 +16,14 @@ function navLinkClass(routeName) {
 <template>
   <!-- Navbar -->
   <header class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8">
-    <div class="flex-1">
+<!--    <div class="flex-1">-->
+<!--    logo-->
       <router-link :to="{name: 'Landing'}"
                    class="btn btn-ghost text-xl font-black text-blue-900 font-headline normal-case tracking-tight px-0">
         Dentis AI
       </router-link>
-      <div class="hidden lg:flex ml-10 space-x-2">
+
+      <nav class="hidden lg:flex ml-10 space-x-2">
         <router-link :to="{name: 'Landing'}" :class="navLinkClass('Landing')">
           Inicio
         </router-link>
@@ -43,21 +45,23 @@ function navLinkClass(routeName) {
         <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
           Registro
         </router-link>
-      </div>
-    </div>
+      </nav>
+
+<!--    </div>-->
+
     <div class="flex-none gap-2">
-      <div class="hidden sm:flex form-control relative">
-          <span
-              class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
-        <input class="input input-sm input-bordered bg-slate-50 pl-9 w-48 focus:outline-blue-600"
-               placeholder="Buscar diagnósticos..." type="text"/>
-      </div>
-      <button class="btn btn-ghost btn-circle btn-sm">
-        <div class="indicator">
-          <span class="material-symbols-outlined text-slate-600">notifications</span>
-          <span class="badge badge-xs badge-primary indicator-item"></span>
-        </div>
-      </button>
+<!--      <div class="hidden sm:flex form-control relative">-->
+<!--          <span-->
+<!--              class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>-->
+<!--        <input class="input input-sm input-bordered bg-slate-50 pl-9 w-48 focus:outline-blue-600"-->
+<!--               placeholder="Buscar diagnósticos..." type="text"/>-->
+<!--      </div>-->
+<!--      <button class="btn btn-ghost btn-circle btn-sm ">-->
+<!--        <div class="indicator">-->
+<!--          <span class="material-symbols-outlined text-slate-600">notifications</span>-->
+<!--          <span class="badge badge-xs badge-primary indicator-item"></span>-->
+<!--        </div>-->
+<!--      </button>-->
       <div class="dropdown dropdown-end ml-2">
         <div class="btn btn-ghost btn-circle avatar border border-slate-200" role="button" tabindex="0">
           <div class="w-8 rounded-full">

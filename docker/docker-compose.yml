@@ -1,9 +1,5 @@
 version: '3.8'
 
-# Definición de la red interna para la comunicación entre contenedores
-networks:
-  ia_dental_net:
-    driver: bridge
 
 services:
   # ==========================================
@@ -101,7 +97,7 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      - LS_JAVA_OPTS="-Xmx1G -Xms1G"
+      - LS_JAVA_OPTS="-Xmx1G -Xms1G
     ports:
       - "5044:5044"
     volumes:
@@ -122,6 +118,8 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.apm.enabled=false
+      - xpack.fleet.enabled=false
     ports:
       - "5601:5601"
     networks:
@@ -152,3 +150,8 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+
+# Definición de la red interna para la comunicación entre contenedores
+networks:
+  ia_dental_net:
+    driver: bridge
