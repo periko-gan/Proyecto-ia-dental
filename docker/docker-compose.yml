@@ -13,8 +13,9 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     volumes:
-      # Docker creará ./data/zookeeper automáticamente
-      - ./data/zookeeper:/var/lib/zookeeper/data
+      # Volúmenes nombrados para mantener estado de ZK entre reinicios
+      - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_log:/var/lib/zookeeper/log
     networks:
       - ia_dental_net
     healthcheck:
@@ -48,8 +49,8 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: -Xms1g -Xmx1g
     volumes:
-      # Docker creará ./data/kafka automáticamente
-      - ./data/kafka:/var/lib/kafka/data
+      # Volumen nombrado para persistencia del broker
+      - kafka_data:/var/lib/kafka/data
     networks:
       - ia_dental_net
     healthcheck:
@@ -74,7 +75,7 @@ services:
     ports:
       - "8085:8080"
     environment:
-      KAFKA_CLUSTERS_0_NAME: ia-dental-kafka
+#      KAFKA_CLUSTERS_0_NAME: ia-dental-kafka
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
     networks:
@@ -199,6 +200,15 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+
+# Volúmenes nombrados para persistencia de Kafka/Zookeeper
+volumes:
+  zookeeper_data:
+    name: ia_dental_zookeeper_data
+  zookeeper_log:
+    name: ia_dental_zookeeper_log
+  kafka_data:
+    name: ia_dental_kafka_data
 
 # Definición de la red interna para la comunicación entre contenedores
 networks:
