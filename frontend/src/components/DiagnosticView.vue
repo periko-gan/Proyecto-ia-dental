@@ -12,7 +12,7 @@ import DentalProblems from "@/components/parts/diagnostic/DentalProblems.vue";
 
   <div class="bg-surface font-body text-on-surface">
     <!-- TopNavBar -->
-    <Header/>
+<!--    <Header/>-->
     <!-- SideNavBar -->
     <Aside/>
     <!-- Main Content Canvas -->

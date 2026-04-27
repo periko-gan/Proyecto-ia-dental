@@ -5,7 +5,7 @@ services:
   # ==========================================
   zookeeper:
     image: confluentinc/cp-zookeeper:7.7.0
-    container_name: zookeeper
+    container_name: zookeeper_proyecto
     restart: unless-stopped
     ports:
       - "2181:2181"

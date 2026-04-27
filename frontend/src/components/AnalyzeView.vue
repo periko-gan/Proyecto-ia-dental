@@ -11,7 +11,7 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
 
   <div class="bg-surface font-body text-on-surface antialiased">
     <!-- TopNavBar (Shared Component) -->
-    <Header/>
+<!--    <Header/>-->
 
     <!-- Sidebar -->
     <Aside/>
@@ -88,80 +88,80 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
         </div>
       </section>
       <!-- Right Side Panel: Visual Guide -->
-      <aside
-          class="w-full lg:w-[400px] bg-slate-50 dark:bg-slate-900 border-l border-slate-200/50 p-8 space-y-8 lg:min-h-screen">
-        <div class="space-y-2">
-          <span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Guía de protocolo</span>
-          <h4 class="font-headline text-2xl font-extrabold text-blue-900">Guía visual clínica</h4>
-          <p class="text-sm text-on-surface-variant">Asegura un análisis de alta fidelidad siguiendo estos
-            protocolos de captura.</p>
-        </div>
-        <!-- DaisyUI Steps -->
-        <div class="mt-8">
-          <ul class="steps steps-vertical w-full space-y-8">
-            <li class="step step-primary" data-content="✓">
-              <div class="text-left w-full pl-4">
-                <div class="flex justify-between items-center mb-3">
-                  <h5 class="text-sm font-bold text-blue-900">Iluminación óptima</h5>
-                </div>
-                <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">
-                  <img class="w-full h-full object-cover" data-alt="bright clinical lighting setup"
-                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>
-                  <div
-                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">
-                    Luz neutra suave
-                  </div>
-                </div>
-                <p class="text-[11px] text-on-surface-variant leading-relaxed">Evita el flash directo sobre superficies
-                  brillantes. Usa fuentes secundarias de luz blanca difusa.</p>
-              </div>
-            </li>
-            <li class="step">
-              <div class="text-left w-full pl-4">
-                <div class="flex justify-between items-center mb-3">
-                  <h5 class="text-sm font-bold text-blue-900">Ángulo correcto</h5>
-                </div>
-                <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">
-                  <img class="w-full h-full object-cover" data-alt="side view macro photography of dental models"
-                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>
-                  <div
-                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">
-                    Vista ortogonal
-                  </div>
-                </div>
-                <p class="text-[11px] text-on-surface-variant leading-relaxed">Captura imágenes perpendiculares a la
-                  superficie dental. Mantiene el plano oclusal horizontal.</p>
-              </div>
-            </li>
-            <li class="step">
-              <div class="text-left w-full pl-4">
-                <div class="flex justify-between items-center mb-3">
-                  <h5 class="text-sm font-bold text-blue-900">Calibración de enfoque</h5>
-                </div>
-                <div class="alert bg-white/50 border-slate-200 p-3 rounded-lg flex items-center gap-4">
-                  <span class="material-symbols-outlined text-primary text-2xl" data-icon="center_focus_weak">center_focus_weak</span>
-                  <p class="text-[11px] text-on-surface-variant">La IA requiere un mínimo de 300 DPI. Usa
-                    bloqueo de enfoque óptico.</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <!-- Support Module / DaisyUI Alert Style -->
-        <div class="card bg-primary text-primary-content shadow-xl mt-8">
-          <div class="card-body p-6 gap-4">
-            <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Verificación profesional</p>
-            <p class="text-sm font-medium leading-relaxed">Los resultados de IA son orientativos. Siempre
-              contrástalos con exámenes clínicos táctiles.</p>
-            <div class="card-actions">
-              <button
-                  class="btn btn-block btn-sm btn-neutral bg-white text-primary border-none hover:bg-slate-100 font-bold uppercase tracking-tight">
-                Solicitar revisión manual
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
+<!--      <aside-->
+<!--          class="w-full lg:w-[400px] bg-slate-50 dark:bg-slate-900 border-l border-slate-200/50 p-8 space-y-8 lg:min-h-screen">-->
+<!--        <div class="space-y-2">-->
+<!--          <span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Guía de protocolo</span>-->
+<!--          <h4 class="font-headline text-2xl font-extrabold text-blue-900">Guía visual clínica</h4>-->
+<!--          <p class="text-sm text-on-surface-variant">Asegura un análisis de alta fidelidad siguiendo estos-->
+<!--            protocolos de captura.</p>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; DaisyUI Steps &ndash;&gt;-->
+<!--        <div class="mt-8">-->
+<!--          <ul class="steps steps-vertical w-full space-y-8">-->
+<!--            <li class="step step-primary" data-content="✓">-->
+<!--              <div class="text-left w-full pl-4">-->
+<!--                <div class="flex justify-between items-center mb-3">-->
+<!--                  <h5 class="text-sm font-bold text-blue-900">Iluminación óptima</h5>-->
+<!--                </div>-->
+<!--                <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">-->
+<!--                  <img class="w-full h-full object-cover" data-alt="bright clinical lighting setup"-->
+<!--                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYRDCzIwcyNHwte-xRrMqAIP5HWcLdPrJjVRLqV-HbJKP4_Hz_z6-rIVc2HkAqJawLWbmwUxqh9jRz32O5zxEeTHAwM9FAbZ4l4UjIOfxK0JyyRLR-DrzQCgpQx0BGyW4kO5pLVa-EusF7u6tTySIywxiHfqZgHIfPxoIoxsWWRJtU1P3jtI_-wohvP7ZO4GUx5g9yvD33s71qh1vvMULPuhuSwZObf2N0ONr9kXpkQ867WaOKd0K30On1N1NO3VUelUAnZcClF3KC"/>-->
+<!--                  <div-->
+<!--                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">-->
+<!--                    Luz neutra suave-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <p class="text-[11px] text-on-surface-variant leading-relaxed">Evita el flash directo sobre superficies-->
+<!--                  brillantes. Usa fuentes secundarias de luz blanca difusa.</p>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li class="step">-->
+<!--              <div class="text-left w-full pl-4">-->
+<!--                <div class="flex justify-between items-center mb-3">-->
+<!--                  <h5 class="text-sm font-bold text-blue-900">Ángulo correcto</h5>-->
+<!--                </div>-->
+<!--                <div class="relative h-32 rounded-lg overflow-hidden shadow-sm mb-3">-->
+<!--                  <img class="w-full h-full object-cover" data-alt="side view macro photography of dental models"-->
+<!--                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNiCvKzHNUdRE0SDToBoiq0uv3Igb9XjSlBQXFYzCJ-s-t10M4r8blCDW0fjBpCnQHCOzb3Vd18n_d8eq5S74LF_A46jvnjh7xmLA_ak_WVPPLmfpHchVFek7EY4f6Yy6Loxi3isbpba7r4pZts4QSJEl4NKGnTnOd-02-biXcK0rVgBc52ZKupMsMDtPvKmz6NCjvZe0z1A0a0WkGwy0VsOA9ooYbYQMRNTXMe3SvERE-ygm37stTyfQs_bEq43EC9j3TfTwcHaCj"/>-->
+<!--                  <div-->
+<!--                      class="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] text-white font-bold uppercase">-->
+<!--                    Vista ortogonal-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <p class="text-[11px] text-on-surface-variant leading-relaxed">Captura imágenes perpendiculares a la-->
+<!--                  superficie dental. Mantiene el plano oclusal horizontal.</p>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--            <li class="step">-->
+<!--              <div class="text-left w-full pl-4">-->
+<!--                <div class="flex justify-between items-center mb-3">-->
+<!--                  <h5 class="text-sm font-bold text-blue-900">Calibración de enfoque</h5>-->
+<!--                </div>-->
+<!--                <div class="alert bg-white/50 border-slate-200 p-3 rounded-lg flex items-center gap-4">-->
+<!--                  <span class="material-symbols-outlined text-primary text-2xl" data-icon="center_focus_weak">center_focus_weak</span>-->
+<!--                  <p class="text-[11px] text-on-surface-variant">La IA requiere un mínimo de 300 DPI. Usa-->
+<!--                    bloqueo de enfoque óptico.</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Support Module / DaisyUI Alert Style &ndash;&gt;-->
+<!--        <div class="card bg-primary text-primary-content shadow-xl mt-8">-->
+<!--          <div class="card-body p-6 gap-4">-->
+<!--            <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Verificación profesional</p>-->
+<!--            <p class="text-sm font-medium leading-relaxed">Los resultados de IA son orientativos. Siempre-->
+<!--              contrástalos con exámenes clínicos táctiles.</p>-->
+<!--            <div class="card-actions">-->
+<!--              <button-->
+<!--                  class="btn btn-block btn-sm btn-neutral bg-white text-primary border-none hover:bg-slate-100 font-bold uppercase tracking-tight">-->
+<!--                Solicitar revisión manual-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </aside>-->
     </main>
     <!-- Footer (Shared Component) -->
     <Footer/>

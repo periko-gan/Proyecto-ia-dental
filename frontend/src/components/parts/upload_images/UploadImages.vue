@@ -49,7 +49,7 @@ function isAllowedType(file) {
 }
 
 function validateFiles(files) {
-  // Filtra archivos no validos y acumula mensajes para mostrarlos en UI.
+  // Filtra archivos no válidos y acumula mensajes para mostrarlos en UI.
   const validFiles = []
   const errors = []
 
@@ -179,10 +179,10 @@ function formatFileSize(bytes) {
         </ul>
       </div>
 
-      <button class="btn btn-primary btn-wide font-bold gap-2" type="button" @click="openFilePicker">
-        <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
-        Seleccionar archivos
-      </button>
+<!--      <button class="btn btn-primary btn-wide font-bold gap-2" type="button" @click="openFilePicker">-->
+<!--        <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>-->
+<!--        Seleccionar archivos-->
+<!--      </button>-->
     </div>
   </div>
 </template>
