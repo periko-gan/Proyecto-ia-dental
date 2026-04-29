@@ -37,6 +37,12 @@ class Settings(BaseSettings):
 
     log_level: str = "INFO"
 
+    events_enabled: bool = True
+    events_transport: str = "log"
+    kafka_enabled: bool = False
+    kafka_bootstrap_servers: str = "localhost:9092"
+    kafka_topic_analysis_events: str = "analysis-events"
+
     auth_jwt_secret: str = "change-this-secret-in-production"
     auth_jwt_algorithm: str = "HS256"
     auth_access_token_expire_minutes: int = 60 * 24

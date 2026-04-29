@@ -10,6 +10,7 @@ from src.api.context import AppContext
 from src.api.schema import schema
 from src.config.mongodb import mongo_manager
 from src.config.settings import get_settings
+from src.events.publishers import LogEventPublisher, NullEventPublisher
 from src.persistence.repository import AnalysisRepository
 from src.persistence.user_repository import UserRepository
 from src.services.analysis_service import AnalysisService
@@ -82,7 +83,25 @@ def create_app() -> FastAPI:
 
         upload_service = UploadService(settings)
         inference_service = InferenceService(settings, model_loader)
-        analysis_service = AnalysisService(settings, upload_service, inference_service, repository)
+
+        if not settings.events_enabled:
+            event_publisher = NullEventPublisher()
+        elif settings.events_transport.lower() == "log":
+            event_publisher = LogEventPublisher()
+        else:
+            logger.warning(
+                "Transporte de eventos no soportado en esta fase: %s. Se deshabilitan eventos.",
+                settings.events_transport,
+            )
+            event_publisher = NullEventPublisher()
+
+        analysis_service = AnalysisService(
+            settings,
+            upload_service,
+            inference_service,
+            repository,
+            event_publisher=event_publisher,
+        )
         password_service = PasswordService()
         token_service = TokenService(settings)
         auth_service = AuthService(user_repository, password_service, token_service)

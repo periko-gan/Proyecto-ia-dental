@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from src.config.settings import Settings
+from src.domain.exceptions import InferenceError
+from src.events.publishers import EventPublisher
 from src.persistence.models import AnalysisRecord, AnalysisStatus, DetectionRecord
 from src.services.analysis_service import AnalysisService
 
@@ -43,6 +46,21 @@ class FakeInferenceService:
                 label="caries 92",
             )
         ], 15.3
+
+
+class FakeInferenceServiceFail:
+    model_version = "best.pt"
+
+    async def run_inference(self, _image_path: Path) -> tuple[list[DetectionRecord], float]:
+        raise RuntimeError("inference boom")
+
+
+class FakeEventPublisher(EventPublisher):
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, dict[str, Any]]] = []
+
+    async def publish(self, event_name: str, payload: dict[str, Any]) -> None:
+        self.calls.append((event_name, payload))
 
 
 class FakeRepository:
@@ -84,11 +102,13 @@ class FakeRepository:
 async def test_analysis_service_upload_and_analyze_smoke() -> None:
     settings = Settings()
     repository = FakeRepository()
+    event_publisher = FakeEventPublisher()
     service = AnalysisService(
         settings=settings,
         upload_service=FakeUploadService(),
         inference_service=FakeInferenceService(),
         repository=repository,
+        event_publisher=event_publisher,
     )
 
     result = await service.upload_and_analyze(upload=object(), user_id="user-1")
@@ -98,3 +118,25 @@ async def test_analysis_service_upload_and_analyze_smoke() -> None:
     assert result.status == AnalysisStatus.COMPLETED
     assert result.model_version == "best.pt"
     assert len(result.detections) == 1
+    assert [name for name, _ in event_publisher.calls] == ["analysis.uploaded", "analysis.completed"]
+
+
+@pytest.mark.asyncio
+async def test_analysis_service_upload_and_analyze_publishes_failed_event() -> None:
+    settings = Settings()
+    repository = FakeRepository()
+    event_publisher = FakeEventPublisher()
+    service = AnalysisService(
+        settings=settings,
+        upload_service=FakeUploadService(),
+        inference_service=FakeInferenceServiceFail(),
+        repository=repository,
+        event_publisher=event_publisher,
+    )
+
+    with pytest.raises(InferenceError):
+        await service.upload_and_analyze(upload=object(), user_id="user-1")
+
+    assert repository.created is not None
+    assert repository.created.status == AnalysisStatus.FAILED
+    assert [name for name, _ in event_publisher.calls] == ["analysis.uploaded", "analysis.failed"]
