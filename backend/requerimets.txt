@@ -1,0 +1,10 @@
+fastapi>=0.115.0
+strawberry-graphql[fastapi]>=0.275.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.9.0
+pydantic-settings>=2.6.0
+motor>=3.6.0
+python-multipart>=0.0.9
+ultralytics>=8.4.32
+pillow>=10.4.0
+pymongo>=4.9.0
