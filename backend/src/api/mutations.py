@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import strawberry
-from strawberry.file_uploads import Upload
 from strawberry.types import Info
 
 from src.api.context import AppContext
@@ -21,14 +20,16 @@ class Mutation:
         user, token = await info.context.auth_service.login_user(email=email, password=password)
         return AuthPayload(access_token=token, token_type="Bearer", user=to_graphql_user(user))
 
-    @strawberry.mutation(description="Sube una radiografia, ejecuta inferencia y guarda el analisis asociado al usuario autenticado.")
-    async def upload_radiography(self, info: Info[AppContext, None], file: Upload) -> UploadResponse:
+    @strawberry.mutation(description="Sube una radiografia en base64, ejecuta inferencia y guarda el analisis asociado al usuario autenticado.")
+    async def upload_radiography(self, info: Info[AppContext, None], file_base64: str, file_name: str, mime_type: str) -> UploadResponse:
         if info.context.current_user is None:
             raise AuthenticationError("Autenticacion requerida")
 
         try:
             record = await info.context.analysis_service.upload_and_analyze(
-                upload=file,
+                file_base64=file_base64,
+                file_name=file_name,
+                mime_type=mime_type,
                 user_id=info.context.current_user.user_id,
             )
             return UploadResponse(

@@ -50,7 +50,10 @@ def create_app() -> FastAPI:
             current_user=current_user,
         )
 
-    graphql_app = GraphQLRouter(schema, context_getter=get_context)
+    graphql_app = GraphQLRouter(
+        schema, 
+        context_getter=get_context,
+    )
     app.include_router(graphql_app, prefix="/graphql")
 
     @app.get("/health")

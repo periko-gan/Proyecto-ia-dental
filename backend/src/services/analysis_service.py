@@ -3,8 +3,6 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import logging
 
-from strawberry.file_uploads import Upload
-
 from src.config.settings import Settings
 from src.domain.exceptions import InferenceError
 from src.events.publishers import EventPublisher, NullEventPublisher
@@ -38,8 +36,8 @@ class AnalysisService:
         except Exception:
             logger.exception("No se pudo publicar evento %s", event_name)
 
-    async def upload_and_analyze(self, upload: Upload, user_id: str) -> AnalysisRecord:
-        stored_file = await self._upload_service.save_upload(upload)
+    async def upload_and_analyze(self, file_base64: str, file_name: str, mime_type: str, user_id: str) -> AnalysisRecord:
+        stored_file = await self._upload_service.save_upload(file_base64, file_name, mime_type)
         await self._safe_publish(
             "analysis.uploaded",
             {

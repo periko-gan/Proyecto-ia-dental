@@ -1,4 +1,10 @@
 # =========================
+# Docker - Datos en tiempo de ejecucion
+# =========================
+docker/data/
+!docker/data/logstash_pipeline/
+
+# =========================
 # PhpStorm (JetBrains IDEs)
 # =========================
 .idea/

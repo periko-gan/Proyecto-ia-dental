@@ -23,7 +23,7 @@ class FakeStoredUpload:
 
 
 class FakeUploadService:
-    async def save_upload(self, _upload: object) -> FakeStoredUpload:
+    async def save_upload(self, _file_base64: str, _file_name: str, _mime_type: str) -> FakeStoredUpload:
         return FakeStoredUpload(
             analysis_id="analysis-1",
             file_name="rx.png",
@@ -111,7 +111,7 @@ async def test_analysis_service_upload_and_analyze_smoke() -> None:
         event_publisher=event_publisher,
     )
 
-    result = await service.upload_and_analyze(upload=object(), user_id="user-1")
+    result = await service.upload_and_analyze(file_base64="dGVzdA==", file_name="rx.png", mime_type="image/png", user_id="user-1")
 
     assert result.analysis_id == "analysis-1"
     assert result.user_id == "user-1"
@@ -135,7 +135,7 @@ async def test_analysis_service_upload_and_analyze_publishes_failed_event() -> N
     )
 
     with pytest.raises(InferenceError):
-        await service.upload_and_analyze(upload=object(), user_id="user-1")
+        await service.upload_and_analyze(file_base64="dGVzdA==", file_name="rx.png", mime_type="image/png", user_id="user-1")
 
     assert repository.created is not None
     assert repository.created.status == AnalysisStatus.FAILED

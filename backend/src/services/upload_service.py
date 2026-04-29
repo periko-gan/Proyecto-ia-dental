@@ -1,10 +1,9 @@
 from __future__ import annotations
 
+import base64
 from dataclasses import dataclass
 from pathlib import Path
 from uuid import uuid4
-
-from strawberry.file_uploads import Upload
 
 from src.config.settings import Settings
 from src.domain.exceptions import ValidationError
@@ -23,14 +22,14 @@ class UploadService:
     def __init__(self, settings: Settings) -> None:
         self._settings = settings
 
-    async def save_upload(self, upload: Upload) -> StoredUpload:
-        file_name = upload.filename or "radiography"
-        mime_type = upload.content_type or "application/octet-stream"
-
+    async def save_upload(self, file_base64: str, file_name: str, mime_type: str) -> StoredUpload:
         if mime_type not in self._settings.allowed_mime_types:
             raise ValidationError(f"Tipo de archivo no permitido: {mime_type}")
 
-        content = await upload.read()
+        try:
+            content = base64.b64decode(file_base64)
+        except Exception as exc:
+            raise ValidationError("El archivo base64 no es valido") from exc
         file_size_bytes = len(content)
 
         if file_size_bytes == 0:
