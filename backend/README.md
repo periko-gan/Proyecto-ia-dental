@@ -30,3 +30,17 @@ La configuracion por defecto de `.env` ya apunta a `mongodb://localhost:27017` y
 ## Endpoints
 - `GET /health`
 - `POST /graphql` (GraphQL)
+
+## Eventos (inicio Fase 2)
+- El flujo de analisis publica eventos de dominio:
+   - `analysis.uploaded`
+   - `analysis.completed`
+   - `analysis.failed`
+- Por defecto se emiten como logs estructurados (`DENTAL_AI_EVENTS_TRANSPORT=log`).
+- Puedes desactivarlos con `DENTAL_AI_EVENTS_ENABLED=false`.
+- Puedes activar Kafka con:
+   - `DENTAL_AI_EVENTS_TRANSPORT=kafka`
+   - `DENTAL_AI_KAFKA_ENABLED=true`
+   - `DENTAL_AI_KAFKA_BOOTSTRAP_SERVERS=localhost:9092`
+   - `DENTAL_AI_KAFKA_TOPIC_ANALYSIS_EVENTS=analysis-events`
+- Si Kafka no inicia o falla, el backend hace fallback seguro a transporte `log`.
