@@ -44,7 +44,8 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
             <div v-if="!isLogin" class="group">
               <label
                   class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Nombre
-                completo</label>
+                completo
+              </label>
               <input
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
                   placeholder="Dra. Maria Perez" type="text"/>
@@ -70,13 +71,13 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
               </div>
             </div>
           </div>
-          <div class="flex items-center gap-3 pt-2">
-            <input class="rounded-sm border-outline-variant text-primary focus:ring-primary h-4 w-4" id="terms"
-                   type="checkbox"/>
-            <label class="text-xs text-on-surface-variant" for="terms">Acepto los <a
-                class="text-primary font-semibold hover:underline" href="#">Términos del servicio</a> y los <a
-                class="text-primary font-semibold hover:underline" href="#">Protocolos de datos clínicos</a>.</label>
-          </div>
+          <!--          <div class="flex items-center gap-3 pt-2">-->
+          <!--            <input class="rounded-sm border-outline-variant text-primary focus:ring-primary h-4 w-4" id="terms"-->
+          <!--                   type="checkbox"/>-->
+          <!--            <label class="text-xs text-on-surface-variant" for="terms">Acepto los <a-->
+          <!--                class="text-primary font-semibold hover:underline" href="#">Términos del servicio</a> y los <a-->
+          <!--                class="text-primary font-semibold hover:underline" href="#">Protocolos de datos clínicos</a>.</label>-->
+          <!--          </div>-->
           <div class="pt-4">
             <button
                 class="w-full bg-primary text-white text-on-primary py-4 px-6 rounded-lg font-bold clinical-shadow hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"

@@ -141,8 +141,7 @@ function formatFileSize(bytes) {
       <!--      </div>-->
       <div class="space-y-2">
         <h4 class="text-xl font-bold text-on-surface font-headline">Arrastra y suelta material clínico</h4>
-        <p class="text-on-surface-variant text-sm">Compatible con archivos JPG, JPEG y PNG. Maximo 25 MB por
-          archivo.</p>
+        <p class="text-on-surface-variant text-sm">Compatible con archivos JPG, JPEG y PNG.</p>
       </div>
       <!-- DaisyUI File Input -->
       <div class="form-control w-full">
