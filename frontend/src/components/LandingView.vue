@@ -237,7 +237,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
       </section>
       <!-- CTA Section -->
       <section class="py-24 bg-primary text-on-primary">
-        <div class="max-w-7xl mx-auto px-8 text-center">
+        <div class="max-w-7xl mx-auto px-8 text-center text-white">
           <h2 class="font-headline text-4xl lg:text-5xl font-bold mb-6">¿Listo para mejorar tu flujo clínico?</h2>
           <p class="text-on-primary/80 text-xl mb-12 max-w-2xl mx-auto">Únete a más de 1.200 clínicas en todo el mundo
             que confían en Dentis AI por su precisión diagnóstica.</p>

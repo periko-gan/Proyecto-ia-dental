@@ -3,7 +3,7 @@ import {useRoute} from 'vue-router'
 
 const route = useRoute()
 
-// Aplica estilo activo/inactivo a cada opcion del sidebar en funcion de la ruta.
+// Aplica estilo activo/inactivo a cada opción del sidebar en función de la ruta.
 function navLinkClass(routeName) {
   const baseClass = 'text-slate-500 hover:text-blue-700'
   const activeClass = 'active bg-blue-50 text-blue-700 font-bold border-r-4 border-blue-700 rounded-noness'
@@ -15,12 +15,13 @@ function navLinkClass(routeName) {
 
 <template>
   <aside
-      class="w-64 h-full  fixed top-20 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all">
+      class="w-50 h-full  fixed top-0 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all">
     <div class="px-6 py-6 border-t border-slate-200/50">
       <div class="flex items-center gap-3 mb-6">
         <div class="avatar">
           <div class="w-10 rounded-full">
-            <img data-alt="professional portrait of a male dental surgeon"
+            <img alt="Retrato profesional de un cirujano dental"
+                 data-alt="professional portrait of a male dental surgeon"
                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6U4FRC9SmbBNDhZ-tJESgi2UgtW6a-5oylEeWZ1RlnjLegnAFSgs8wYqSAxuMHu9Pemhqne9uOWzjdJUt7yuJ7YmmONlaRKA31C4M8XEBqLX5-R9CLi_tjsn0barAhAp1W_nrctT5LeEMcHrUI4hhPYbeFQMdKkAOFopPQpv6lksBTGlOfe6qVuhvfRlxXmB7s3AnVhpz6o1SNg54GdxjccpXVSVO2b-e3zihYyfB-B0QW06vswwq9CXOIKWlyMqgYGqpFpGZcVOg"/>
           </div>
         </div>
@@ -34,34 +35,40 @@ function navLinkClass(routeName) {
       <ul class="menu menu-md w-full p-0 gap-1">
         <li>
           <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
-            <span class="material-symbols-outlined">Panel</span>
+            <span class="uppercase">dashboard</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
-            <span class="material-symbols-outlined">Analizar</span>
+            <span class="uppercase">analytics</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
-            <span class="material-symbols-outlined">Diagnóstico</span>
+            <span class="uppercase">Diagnostic</span>
           </router-link>
         </li>
         <li>
           <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
-            <span class="material-symbols-outlined">Evolución</span>
+            <span class="uppercase">Evolution</span>
           </router-link>
         </li>
+<!--        <li>-->
+<!--          <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">-->
+<!--            <span class="uppercase">Iniciar sesión</span>-->
+<!--          </router-link>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">-->
+<!--            <span class="uppercase">Registro</span>-->
+<!--          </router-link>-->
+<!--        </li>-->
         <li>
-          <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
-            <span class="material-symbols-outlined">Iniciar sesión</span>
+          <router-link :to="{name: 'Landing'}" :class="navLinkClass('Salir')">
+            <span class="uppercase">logout</span>
           </router-link>
         </li>
-        <li>
-          <router-link :to="{name: 'Register'}" :class="navLinkClass('Register')">
-            <span class="material-symbols-outlined">Registro</span>
-          </router-link>
-        </li>
+
       </ul>
     </nav>
 

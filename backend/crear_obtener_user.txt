@@ -1,0 +1,45 @@
+registrar usuario
+mutation RegisterUser {
+  registerUser(email: "pepe@pepan.com", password: "12345678") {
+    userId
+    email
+    role
+    isActive
+    createdAt
+  }
+  loginUser(email: "pepe@pepan.com", password: "12345678") {
+    accessToken
+    user {
+      createdAt
+      email
+      isActive
+      role
+      userId
+    }
+  }
+}
+
+Obtener usuario
+mutation LoginUser {
+  loginUser(email: "pepe@pepa.com", password: "12345678") {
+    accessToken
+    user {
+      createdAt
+      email
+      isActive
+      role
+      userId
+    }
+  }
+}
+
+Query Me
+query Yo {
+  me {
+    createdAt
+    email
+    isActive
+    role
+    userId
+  }
+}

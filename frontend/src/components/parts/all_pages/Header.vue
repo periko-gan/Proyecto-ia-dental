@@ -27,18 +27,18 @@ function navLinkClass(routeName) {
         <router-link :to="{name: 'Landing'}" :class="navLinkClass('Landing')">
           Inicio
         </router-link>
-        <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">
-          Panel
-        </router-link>
-        <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">
-          Analizar
-        </router-link>
-        <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">
-          Diagnóstico
-        </router-link>
-        <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
-          Evolución
-        </router-link>
+<!--        <router-link :to="{name: 'Dashboard'}" :class="navLinkClass('Dashboard')">-->
+<!--          Panel-->
+<!--        </router-link>-->
+<!--        <router-link :to="{name: 'Analyze'}" :class="navLinkClass('Analyze')">-->
+<!--          Analizar-->
+<!--        </router-link>-->
+<!--        <router-link :to="{name: 'Diagnostic'}" :class="navLinkClass('Diagnostic')">-->
+<!--          Diagnóstico-->
+<!--        </router-link>-->
+<!--        <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">-->
+<!--          Evolución-->
+<!--        </router-link>-->
         <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">
           Iniciar sesión
         </router-link>
@@ -62,20 +62,20 @@ function navLinkClass(routeName) {
 <!--          <span class="badge badge-xs badge-primary indicator-item"></span>-->
 <!--        </div>-->
 <!--      </button>-->
-      <div class="dropdown dropdown-end ml-2">
-        <div class="btn btn-ghost btn-circle avatar border border-slate-200" role="button" tabindex="0">
-          <div class="w-8 rounded-full">
-            <img alt="Perfil de usuario"
-                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9xbAbyQCpcxRzZfqtzqLxPKaDAq2C0CKQok4nfj2JCMt4JeQUjiy2O0XNWTRAzTj5O_RhvmGWyalpU1UuUSJKkITid8KHsaNDdb-kjqkJ_zUEdSKyJljfZxXHaoBo6OYr6tgsV9Vqg7Q3CjPAVYs2QB9rMqc2hcQBUQ6OEaF1_KpN8P9nCbOd31M9v6cx1dzAQMLRDU5ZXuZz_m5UlOdRylWBH-CEE_dIhDMBRxEkYULmlM22TsEvZbHc799hltrcMLtFk0pn9IYt"/>
-          </div>
-        </div>
-        <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-slate-100"
-            tabindex="0">
-          <li><a>Perfil</a></li>
-          <li><a>Configuración</a></li>
-          <li><a class="text-error font-bold">Cerrar sesión</a></li>
-        </ul>
-      </div>
+<!--      <div class="dropdown dropdown-end ml-2">-->
+<!--        <div class="btn btn-ghost btn-circle avatar border border-slate-200" role="button" tabindex="0">-->
+<!--          <div class="w-8 rounded-full">-->
+<!--            <img alt="Perfil de usuario"-->
+<!--                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9xbAbyQCpcxRzZfqtzqLxPKaDAq2C0CKQok4nfj2JCMt4JeQUjiy2O0XNWTRAzTj5O_RhvmGWyalpU1UuUSJKkITid8KHsaNDdb-kjqkJ_zUEdSKyJljfZxXHaoBo6OYr6tgsV9Vqg7Q3CjPAVYs2QB9rMqc2hcQBUQ6OEaF1_KpN8P9nCbOd31M9v6cx1dzAQMLRDU5ZXuZz_m5UlOdRylWBH-CEE_dIhDMBRxEkYULmlM22TsEvZbHc799hltrcMLtFk0pn9IYt"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-slate-100"-->
+<!--            tabindex="0">-->
+<!--          <li><a>Perfil</a></li>-->
+<!--          <li><a>Configuración</a></li>-->
+<!--          <li><a class="text-error font-bold">Cerrar sesión</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </div>
   </header>
 </template>

@@ -10,7 +10,7 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
   <div class="bg-slate-50 font-body text-on-surface">
 
     <!-- Header -->
-    <Header/>
+<!--    <Header/>-->
 
     <!-- Sidebar -->
     <Aside/>

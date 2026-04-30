@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import sys
 from io import BytesIO
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -11,12 +12,18 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from tools.device_resolver import resolve_device
-
 
 def project_root() -> Path:
-    """Devuelve la raiz del proyecto (`entrenamiento ia`)."""
+    """Devuelve la raiz del proyecto (`entrenamiento ia pruebas`)."""
     return Path(__file__).resolve().parents[1]
+
+
+# Agregar raiz del proyecto al path para permitir imports de 'tools'
+_root = project_root()
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from tools.device_resolver import resolve_device
 
 
 def default_model_path() -> Path:

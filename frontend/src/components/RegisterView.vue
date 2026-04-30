@@ -13,7 +13,7 @@ import Formulario from "@/components/parts/Formulario.vue";
 
     <Header/>
 
-    <Aside/>
+<!--    <Aside/>-->
 
     <Formulario page="register"/>
 

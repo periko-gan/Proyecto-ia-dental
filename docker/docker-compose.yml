@@ -5,7 +5,7 @@ services:
   # ==========================================
   zookeeper:
     image: confluentinc/cp-zookeeper:7.7.0
-    container_name: zookeeper-server
+    container_name: zookeeper_proyecto
     restart: unless-stopped
     ports:
       - "2181:2181"
@@ -32,7 +32,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.7.0
-    container_name: kafka-server
+    container_name: kafka
     restart: unless-stopped
     depends_on:
       zookeeper:
@@ -67,7 +67,7 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
-    container_name: kafka-ui-server
+    container_name: kafka-ui
     restart: unless-stopped
     depends_on:
       kafka:
@@ -111,7 +111,7 @@ services:
   # ==========================================
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
-    container_name: elasticsearch-server
+    container_name: elasticsearch
     restart: unless-stopped
     environment:
       discovery.type: single-node
@@ -160,7 +160,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.11.0
-    container_name: kibana-server
+    container_name: kibana
     restart: unless-stopped
     depends_on:
       elasticsearch:
