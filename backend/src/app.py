@@ -4,6 +4,8 @@ import logging
 
 from fastapi import FastAPI
 from fastapi import Request
+# Añadido para CORS
+from starlette.middleware.cors import CORSMiddleware
 from strawberry.fastapi import GraphQLRouter
 
 from src.api.context import AppContext
@@ -34,6 +36,16 @@ def create_app() -> FastAPI:
         version="0.1.0",
         docs_url="/docs",
         redoc_url="/redoc",
+    )
+
+    # Habilitar CORS para permitir todas las solicitudes desde cualquier origen.
+    # Esto es intencionado para entornos de desarrollo; en producción restringir los orígenes.
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     async def get_context(request: Request) -> AppContext:
