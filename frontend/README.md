@@ -56,6 +56,34 @@ frontend/
     stores/
 ```
 
+## Flujo de autenticacion (registro y login)
+
+- Endpoint GraphQL usado por el frontend: `http://localhost:8000/graphql`
+- Vista de registro: `RegisterView` (usa `Formulario.vue`)
+- Logica de auth:
+  - `src/services/graphqlClient.js`
+  - `src/services/authService.js`
+  - `src/config/graphql.js`
+
+### Registro desde formulario
+
+Al enviar el formulario de registro se ejecuta una mutacion GraphQL que hace:
+
+1. `registerUser(email, password)`
+2. `loginUser(email, password)`
+
+Si el flujo termina correctamente:
+
+- Se guarda en `sessionStorage`:
+  - `accessToken`
+  - `user` (JSON con `userId`, `email`, `isActive`, `role`, sin `createdAt`)
+- Se redirige a la ruta `Dashboard` (`/dashboard`).
+
+### Variables opcionales
+
+- `VITE_GRAPHQL_ENDPOINT`: permite sobrescribir el endpoint GraphQL en entorno.
+- Si no se define, se usa `http://localhost:8000/graphql` por defecto.
+
 ## Tailwind CSS v4 + daisyUI
 
 La configuracion activa usa el plugin oficial de Vite para Tailwind v4:

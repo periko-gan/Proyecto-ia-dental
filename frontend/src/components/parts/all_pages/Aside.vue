@@ -1,7 +1,8 @@
 <script setup>
-import {useRoute} from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 // Aplica estilo activo/inactivo a cada opción del sidebar en función de la ruta.
 function navLinkClass(routeName) {
@@ -10,6 +11,12 @@ function navLinkClass(routeName) {
   const inactiveClass = 'text-slate-500 border-transparent hover:text-blue-600'
 
   return `${baseClass} ${route.name === routeName ? activeClass : inactiveClass}`
+}
+
+// Maneja el logout: limpia sessionStorage y redirige a la página principal
+function handleLogout() {
+  sessionStorage.clear()
+  router.push('/')
 }
 </script>
 
@@ -64,9 +71,9 @@ function navLinkClass(routeName) {
 <!--          </router-link>-->
 <!--        </li>-->
         <li>
-          <router-link :to="{name: 'Landing'}" :class="navLinkClass('Salir')">
+          <button @click="handleLogout" class="w-full text-left" :class="navLinkClass('Salir')">
             <span class="uppercase">logout</span>
-          </router-link>
+          </button>
         </li>
 
       </ul>

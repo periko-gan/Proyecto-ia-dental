@@ -1,5 +1,6 @@
 <script setup>
-import {computed} from 'vue'
+import { computed } from 'vue'
+import { useAuthForm } from '@/composables/useAuthForm'
 
 // Recibe el contexto de página para reutilizar el mismo formulario en login y registro.
 const props = defineProps({
@@ -9,18 +10,32 @@ const props = defineProps({
   },
 })
 
-const isLogin = computed(() => props.page === 'login')
-// Textos reactivos para evitar duplicar plantillas entre ambas vistas.
-const formTitle = computed(() => (isLogin.value ? 'Bienvenido de nuevo' : 'Crea tu cuenta profesional'))
-const formSubtitle = computed(() => (
-    isLogin.value
-        ? 'Introduce tus credenciales para continuar.'
-        : 'Proporciona tus credenciales clínicas para empezar.'
-))
-const submitLabel = computed(() => (isLogin.value ? 'Iniciar sesión' : 'Registrarse'))
-const switchText = computed(() => (isLogin.value ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'))
-const switchLabel = computed(() => (isLogin.value ? 'Regístrate' : 'Inicia sesión'))
-const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
+const {
+  isLogin,
+  fullName,
+  email,
+  password,
+  loading,
+  errorMessage,
+  emailError,
+  passwordError,
+  emailTouched,
+  passwordTouched,
+  passwordVisible,
+  formTitle,
+  formSubtitle,
+  submitLabel,
+  submitLabelLoading,
+  switchText,
+  switchLabel,
+  switchRouteName,
+  handleSubmit,
+  onEmailBlur,
+  onPasswordBlur,
+  onEmailInput,
+  onPasswordInput,
+  togglePasswordVisibility,
+} = useAuthForm(computed(() => props.page))
 </script>
 
 <template>
@@ -39,7 +54,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
           <h2 class="text-3xl font-bold text-on-surface mb-2">{{ formTitle }}</h2>
           <p class="text-on-surface-variant text-sm">{{ formSubtitle }}</p>
         </div>
-        <form class="space-y-5">
+        <form class="space-y-5" @submit.prevent="handleSubmit">
           <div class="grid grid-cols-1 gap-5">
             <div v-if="!isLogin" class="group">
               <label
@@ -47,28 +62,34 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
                 completo
               </label>
               <input
+                  v-model="fullName"
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
                   placeholder="Dra. Maria Perez" type="text"/>
             </div>
             <div class="group">
               <label
                   class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">
-                Correo electrónico</label>
+                Correo electronico</label>
               <input
+                  v-model="email"
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                  placeholder="Correo electrónico" type="email"/>
+                  placeholder="Correo electronico" type="email" @blur="onEmailBlur" @input="onEmailInput"/>
+              <p v-if="emailTouched && emailError" class="mt-1 ml-1 text-sm text-error">{{ emailError }}</p>
             </div>
             <div class="group">
               <label
-                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Contraseña</label>
+                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Contrasena</label>
               <div class="relative">
                 <input
+                    v-model="password"
                     class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                    placeholder="••••••••" type="password"/>
+                    placeholder="••••••••" :type="passwordVisible ? 'text' : 'password'" @blur="onPasswordBlur" @input="onPasswordInput"/>
                 <span
                     class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-outline-variant hover:text-secondary transition-colors"
-                    data-icon="visibility">visibility</span>
+                    :data-icon="passwordVisible ? 'visibility_off' : 'visibility'"
+                    @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility_off' : 'visibility' }}</span>
               </div>
+              <p v-if="passwordTouched && passwordError" class="mt-1 ml-1 text-sm text-error">{{ passwordError }}</p>
             </div>
           </div>
           <!--          <div class="flex items-center gap-3 pt-2">-->
@@ -78,11 +99,13 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
           <!--                class="text-primary font-semibold hover:underline" href="#">Términos del servicio</a> y los <a-->
           <!--                class="text-primary font-semibold hover:underline" href="#">Protocolos de datos clínicos</a>.</label>-->
           <!--          </div>-->
+          <p v-if="errorMessage" class="text-sm text-error">{{ errorMessage }}</p>
           <div class="pt-4">
             <button
+                :disabled="loading"
                 class="w-full bg-primary text-white text-on-primary py-4 px-6 rounded-lg font-bold clinical-shadow hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
                 type="submit">
-              {{ submitLabel }}
+              {{ loading ? submitLabelLoading : submitLabel }}
             </button>
           </div>
         </form>

@@ -13,8 +13,6 @@ import Formulario from "@/components/parts/Formulario.vue";
 
     <Header/>
 
-    <Aside/>
-
     <Formulario page="login"/>
 
     <Footer/>
