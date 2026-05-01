@@ -1,5 +1,7 @@
 <script setup>
-import {computed} from 'vue'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { loginAndPersist, registerAndLogin } from '@/services/authService'
 
 // Recibe el contexto de página para reutilizar el mismo formulario en login y registro.
 const props = defineProps({
@@ -10,6 +12,14 @@ const props = defineProps({
 })
 
 const isLogin = computed(() => props.page === 'login')
+const router = useRouter()
+
+const fullName = ref('')
+const email = ref('')
+const password = ref('')
+const loading = ref(false)
+const errorMessage = ref('')
+
 // Textos reactivos para evitar duplicar plantillas entre ambas vistas.
 const formTitle = computed(() => (isLogin.value ? 'Bienvenido de nuevo' : 'Crea tu cuenta profesional'))
 const formSubtitle = computed(() => (
@@ -18,9 +28,33 @@ const formSubtitle = computed(() => (
         : 'Proporciona tus credenciales clínicas para empezar.'
 ))
 const submitLabel = computed(() => (isLogin.value ? 'Iniciar sesión' : 'Registrarse'))
+const submitLabelLoading = computed(() => (isLogin.value ? 'Iniciando sesion...' : 'Registrando...'))
 const switchText = computed(() => (isLogin.value ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'))
 const switchLabel = computed(() => (isLogin.value ? 'Regístrate' : 'Inicia sesión'))
 const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
+
+async function handleSubmit() {
+  errorMessage.value = ''
+
+  if (!email.value.trim() || !password.value.trim()) {
+    errorMessage.value = 'Debes completar correo y contraseña.'
+    return
+  }
+
+  loading.value = true
+  try {
+    if (isLogin.value) {
+      await loginAndPersist(email.value.trim(), password.value)
+    } else {
+      await registerAndLogin(email.value.trim(), password.value)
+    }
+    await router.push({ name: 'Dashboard' })
+  } catch (error) {
+    errorMessage.value = error?.message || 'No se pudo completar la operacion.'
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -39,7 +73,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
           <h2 class="text-3xl font-bold text-on-surface mb-2">{{ formTitle }}</h2>
           <p class="text-on-surface-variant text-sm">{{ formSubtitle }}</p>
         </div>
-        <form class="space-y-5">
+        <form class="space-y-5" @submit.prevent="handleSubmit">
           <div class="grid grid-cols-1 gap-5">
             <div v-if="!isLogin" class="group">
               <label
@@ -47,6 +81,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
                 completo
               </label>
               <input
+                  v-model="fullName"
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
                   placeholder="Dra. Maria Perez" type="text"/>
             </div>
@@ -55,6 +90,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
                   class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">
                 Correo electrónico</label>
               <input
+                  v-model="email"
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
                   placeholder="Correo electrónico" type="email"/>
             </div>
@@ -63,6 +99,7 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
                   class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Contraseña</label>
               <div class="relative">
                 <input
+                    v-model="password"
                     class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
                     placeholder="••••••••" type="password"/>
                 <span
@@ -78,11 +115,13 @@ const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
           <!--                class="text-primary font-semibold hover:underline" href="#">Términos del servicio</a> y los <a-->
           <!--                class="text-primary font-semibold hover:underline" href="#">Protocolos de datos clínicos</a>.</label>-->
           <!--          </div>-->
+          <p v-if="errorMessage" class="text-sm text-error">{{ errorMessage }}</p>
           <div class="pt-4">
             <button
+                :disabled="loading"
                 class="w-full bg-primary text-white text-on-primary py-4 px-6 rounded-lg font-bold clinical-shadow hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
                 type="submit">
-              {{ submitLabel }}
+              {{ loading ? submitLabelLoading : submitLabel }}
             </button>
           </div>
         </form>
