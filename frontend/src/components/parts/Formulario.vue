@@ -1,7 +1,6 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { loginAndPersist, registerAndLogin } from '@/services/authService'
+import { computed } from 'vue'
+import { useAuthForm } from '@/composables/useAuthForm'
 
 // Recibe el contexto de página para reutilizar el mismo formulario en login y registro.
 const props = defineProps({
@@ -11,50 +10,32 @@ const props = defineProps({
   },
 })
 
-const isLogin = computed(() => props.page === 'login')
-const router = useRouter()
-
-const fullName = ref('')
-const email = ref('')
-const password = ref('')
-const loading = ref(false)
-const errorMessage = ref('')
-
-// Textos reactivos para evitar duplicar plantillas entre ambas vistas.
-const formTitle = computed(() => (isLogin.value ? 'Bienvenido de nuevo' : 'Crea tu cuenta profesional'))
-const formSubtitle = computed(() => (
-    isLogin.value
-        ? 'Introduce tus credenciales para continuar.'
-        : 'Proporciona tus credenciales clínicas para empezar.'
-))
-const submitLabel = computed(() => (isLogin.value ? 'Iniciar sesión' : 'Registrarse'))
-const submitLabelLoading = computed(() => (isLogin.value ? 'Iniciando sesion...' : 'Registrando...'))
-const switchText = computed(() => (isLogin.value ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'))
-const switchLabel = computed(() => (isLogin.value ? 'Regístrate' : 'Inicia sesión'))
-const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
-
-async function handleSubmit() {
-  errorMessage.value = ''
-
-  if (!email.value.trim() || !password.value.trim()) {
-    errorMessage.value = 'Debes completar correo y contraseña.'
-    return
-  }
-
-  loading.value = true
-  try {
-    if (isLogin.value) {
-      await loginAndPersist(email.value.trim(), password.value)
-    } else {
-      await registerAndLogin(email.value.trim(), password.value)
-    }
-    await router.push({ name: 'Dashboard' })
-  } catch (error) {
-    errorMessage.value = error?.message || 'No se pudo completar la operacion.'
-  } finally {
-    loading.value = false
-  }
-}
+const {
+  isLogin,
+  fullName,
+  email,
+  password,
+  loading,
+  errorMessage,
+  emailError,
+  passwordError,
+  emailTouched,
+  passwordTouched,
+  passwordVisible,
+  formTitle,
+  formSubtitle,
+  submitLabel,
+  submitLabelLoading,
+  switchText,
+  switchLabel,
+  switchRouteName,
+  handleSubmit,
+  onEmailBlur,
+  onPasswordBlur,
+  onEmailInput,
+  onPasswordInput,
+  togglePasswordVisibility,
+} = useAuthForm(computed(() => props.page))
 </script>
 
 <template>
@@ -88,24 +69,27 @@ async function handleSubmit() {
             <div class="group">
               <label
                   class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">
-                Correo electrónico</label>
+                Correo electronico</label>
               <input
                   v-model="email"
                   class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                  placeholder="Correo electrónico" type="email"/>
+                  placeholder="Correo electronico" type="email" @blur="onEmailBlur" @input="onEmailInput"/>
+              <p v-if="emailTouched && emailError" class="mt-1 ml-1 text-sm text-error">{{ emailError }}</p>
             </div>
             <div class="group">
               <label
-                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Contraseña</label>
+                  class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary">Contrasena</label>
               <div class="relative">
                 <input
                     v-model="password"
                     class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                    placeholder="••••••••" type="password"/>
+                    placeholder="••••••••" :type="passwordVisible ? 'text' : 'password'" @blur="onPasswordBlur" @input="onPasswordInput"/>
                 <span
                     class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-outline-variant hover:text-secondary transition-colors"
-                    data-icon="visibility">visibility</span>
+                    :data-icon="passwordVisible ? 'visibility_off' : 'visibility'"
+                    @click="togglePasswordVisibility">{{ passwordVisible ? 'visibility_off' : 'visibility' }}</span>
               </div>
+              <p v-if="passwordTouched && passwordError" class="mt-1 ml-1 text-sm text-error">{{ passwordError }}</p>
             </div>
           </div>
           <!--          <div class="flex items-center gap-3 pt-2">-->

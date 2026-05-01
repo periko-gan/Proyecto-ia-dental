@@ -18,8 +18,11 @@ RUN pnpm install --frozen-lockfile
 # Copiar el resto del código fuente del proyecto
 COPY . .
 
+# Borrar dist y compilar la aplicación para producción
+RUN rm -rf dist && pnpm run build
+
 # Compilar la aplicación para producción (esto generará la carpeta /dist)
-RUN pnpm run build
+#RUN pnpm run build
 
 # ==========================================
 # Etapa 2: Servidor (Producción)

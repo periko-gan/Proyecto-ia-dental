@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { isAuthenticated } from '@/services/authService'
 
 import AnalyzeView from '@/components/AnalyzeView.vue'

@@ -101,6 +101,11 @@ export async function registerAndLogin(email, password) {
     throw new Error('No se pudo completar el login después del registro.');
   }
 
+  // Validar que el usuario está activo
+  if (!loginPayload.user.isActive) {
+    throw new Error('Credenciales invalidas');
+  }
+
   persistSession(loginPayload.accessToken, loginPayload.user);
   return data;
 }
@@ -111,6 +116,11 @@ export async function loginAndPersist(email, password) {
 
   if (!loginPayload?.accessToken || !loginPayload?.user) {
     throw new Error('Credenciales invalidas o respuesta incompleta.');
+  }
+
+  // Validar que el usuario está activo
+  if (!loginPayload.user.isActive) {
+    throw new Error('Credenciales invalidas');
   }
 
   persistSession(loginPayload.accessToken, loginPayload.user);
