@@ -30,11 +30,57 @@ mutation UploadRadiography($fileBase64: String!, $fileName: String!, $mimeType: 
 }
 `
 
+function escapeGraphQLString(value) {
+  return String(value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('"', '\\"')
+    .replaceAll('\n', '\\n')
+    .replaceAll('\r', '\\r')
+}
+
+function buildMutationPreview({ fileBase64, fileName, mimeType }) {
+  const previewBase64 = fileBase64.length > 120 ? `${fileBase64.slice(0, 120)}…` : fileBase64
+
+  return `mutation UploadRadiography {
+  uploadRadiography(
+    fileBase64: "${escapeGraphQLString(previewBase64)}"
+    fileName: "${escapeGraphQLString(fileName)}"
+    mimeType: "${escapeGraphQLString(mimeType)}"
+  ) {
+    success
+    message
+    analysis {
+      analysisId
+      status
+      fileName
+      mimeType
+      inferenceTimeMs
+      modelVersion
+      createdAt
+      detections {
+        bboxXyxy
+        classId
+        className
+        confidence
+        label
+      }
+      errorMessage
+      filePath
+      fileSizeBytes
+      updatedAt
+      userId
+    }
+  }
+}`
+}
+
 export async function uploadRadiography({ fileBase64, fileName, mimeType }) {
   console.log('📤 Iniciando envío de radiografía al backend...')
   console.log(`   📄 Archivo: ${fileName}`)
   console.log(`   🖼️  Tipo MIME: ${mimeType}`)
   console.log(`   📊 Tamaño base64: ${fileBase64.length} caracteres`)
+  console.log('🧩 Mutación GraphQL con valores reales:')
+  console.log(buildMutationPreview({ fileBase64, fileName, mimeType }))
 
   try {
     console.log('🔄 Enviando mutación GraphQL...')

@@ -1,6 +1,8 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { uploadRadiography } from '@/services/uploadRadiographyService'
 import imageStorageService from '@/services/imageStorageService'
+import { useDiagnosticAnalysis } from './useDiagnosticAnalysis'
 
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png'])
@@ -48,6 +50,9 @@ function readFileAsBase64(file) {
 }
 
 export function useUploadImagesQueue() {
+  const router = useRouter()
+  const { setAnalysis } = useDiagnosticAnalysis()
+
   const isDragging = ref(false)
   const dragDepth = ref(0)
   const fileInputRef = ref(null)
@@ -337,6 +342,8 @@ export function useUploadImagesQueue() {
           message: response?.message ?? '',
           analysisId: response?.analysis?.analysisId ?? null,
           status: response?.analysis?.status ?? null,
+          analysis: response?.analysis ?? null,
+          file: item,
         })
       }
 
@@ -354,6 +361,27 @@ export function useUploadImagesQueue() {
       if (allSucceeded) {
         sendSummaryMessage.value = `Se enviaron ${results.length} archivo(s) correctamente.`
         console.log(`🎉 ¡TODOS LOS ARCHIVOS SE ENVIARON EXITOSAMENTE!`)
+
+        // Guardar el análisis del primer resultado exitoso
+        const firstSuccessfulResult = results.find(r => r.success)
+        if (firstSuccessfulResult?.analysis) {
+          const mimeType = firstSuccessfulResult.file?.mimeType || 'image/jpeg'
+          const imageSrc = firstSuccessfulResult.file?.fileBase64
+            ? `data:${mimeType};base64,${firstSuccessfulResult.file.fileBase64}`
+            : ''
+
+          const imageData = {
+            fileName: firstSuccessfulResult.fileName,
+            mimeType,
+            imageSrc,
+          }
+          setAnalysis(firstSuccessfulResult.analysis, imageData)
+
+          // Redirigir a diagnóstico
+          console.log('🔄 Redirigiendo a /diagnostic...')
+          await router.push('/diagnostic')
+        }
+
         await clearAllFiles({ preserveSendState: true })
       } else {
         sendErrorMessage.value = 'Algunos archivos no pudieron enviarse. Revisa los resultados.'

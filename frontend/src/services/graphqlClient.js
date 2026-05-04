@@ -12,11 +12,14 @@ export async function postGraphQL(query, variables = {}) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
+  const operationPreview = String(query).trim();
+
   console.log(`
 🌐 SOLICITUD GraphQL
 ├─ Endpoint: ${GRAPHQL_ENDPOINT}
 ├─ Método: POST
 ├─ Headers:`, headers)
+  console.log('├─ Operación GraphQL completa:\n' + operationPreview)
   console.log('└─ Variables:', variables)
 
   const startTime = performance.now();
