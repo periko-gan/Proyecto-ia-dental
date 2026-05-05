@@ -44,6 +44,7 @@ class UploadService:
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_bytes(content)
 
+
         return StoredUpload(
             analysis_id=analysis_id,
             file_name=file_name,

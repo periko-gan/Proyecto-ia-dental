@@ -40,41 +40,41 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
             <UploadImages/>
           </div>
           <!-- Bento Grid Tools -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="card bg-surface-container-low border-l-4 border-secondary shadow-sm">
-              <div class="card-body p-5 flex-row items-center gap-4">
-                <div class="p-2 bg-secondary/10 rounded-lg">
-                  <span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-on-surface">Escaneo de precisión</p>
-                  <p class="text-[10px] text-on-surface-variant">Detección avanzada de caries activada</p>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-surface-container-low shadow-sm">
-              <div class="card-body p-5 flex-row items-center gap-4">
-                <div class="p-2 bg-slate-200 rounded-lg">
-                  <span class="material-symbols-outlined text-slate-600" data-icon="history">history</span>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-on-surface">Historial del paciente</p>
-                  <p class="text-[10px] text-on-surface-variant">Modo de comparación disponible</p>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-surface-container-low shadow-sm">
-              <div class="card-body p-5 flex-row items-center gap-4">
-                <div class="p-2 bg-slate-200 rounded-lg">
-                  <span class="material-symbols-outlined text-slate-600" data-icon="share">share</span>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-on-surface">Exportar datos</p>
-                  <p class="text-[10px] text-on-surface-variant">Sincronización en la nube con HCE activa</p>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">-->
+<!--            <div class="card bg-surface-container-low border-l-4 border-secondary shadow-sm">-->
+<!--              <div class="card-body p-5 flex-row items-center gap-4">-->
+<!--                <div class="p-2 bg-secondary/10 rounded-lg">-->
+<!--                  <span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <p class="text-xs font-bold text-on-surface">Escaneo de precisión</p>-->
+<!--                  <p class="text-[10px] text-on-surface-variant">Detección avanzada de caries activada</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="card bg-surface-container-low shadow-sm">-->
+<!--              <div class="card-body p-5 flex-row items-center gap-4">-->
+<!--                <div class="p-2 bg-slate-200 rounded-lg">-->
+<!--                  <span class="material-symbols-outlined text-slate-600" data-icon="history">history</span>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <p class="text-xs font-bold text-on-surface">Historial del paciente</p>-->
+<!--                  <p class="text-[10px] text-on-surface-variant">Modo de comparación disponible</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="card bg-surface-container-low shadow-sm">-->
+<!--              <div class="card-body p-5 flex-row items-center gap-4">-->
+<!--                <div class="p-2 bg-slate-200 rounded-lg">-->
+<!--                  <span class="material-symbols-outlined text-slate-600" data-icon="share">share</span>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <p class="text-xs font-bold text-on-surface">Exportar datos</p>-->
+<!--                  <p class="text-[10px] text-on-surface-variant">Sincronización en la nube con HCE activa</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
           <!-- AI Progress Alert (Hidden by default, shown for logic showcase) -->
           <div class="alert alert-info shadow-lg bg-blue-50 border-blue-100 hidden">
             <span class="material-symbols-outlined text-blue-600" data-icon="info">info</span>
