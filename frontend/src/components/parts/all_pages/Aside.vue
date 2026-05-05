@@ -13,9 +13,30 @@ function navLinkClass(routeName) {
   return `${baseClass} ${route.name === routeName ? activeClass : inactiveClass}`
 }
 
-// Maneja el logout: limpia sessionStorage y redirige a la página principal
-function handleLogout() {
+// Maneja el logout: limpia sessionStorage, IndexedDB y redirige a la página principal
+async function handleLogout() {
   sessionStorage.clear()
+  
+  try {
+    if (window.indexedDB) {
+      // Eliminar bases de datos explícitas de la aplicación
+      window.indexedDB.deleteDatabase('DentalAI-Images')
+      window.indexedDB.deleteDatabase('dental-ai-upload-queue')
+      
+      // Intentar eliminar cualquier otra si el navegador lo soporta
+      if (indexedDB.databases) {
+        const dbs = await indexedDB.databases()
+        dbs.forEach(db => {
+          if (db.name) {
+            window.indexedDB.deleteDatabase(db.name)
+          }
+        })
+      }
+    }
+  } catch (error) {
+    console.warn('Error limpiando IndexedDB en logout:', error)
+  }
+  
   router.push('/')
 }
 </script>
