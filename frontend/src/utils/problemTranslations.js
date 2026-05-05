@@ -170,7 +170,43 @@ export const severityConfig = {
   },
 };
 
+// Mapear problemas específicos a un color/tema (clase DaisyUI)
+export const problemColorMap = {
+  cavity: 'error',
+  caries: 'error',
+  decay: 'error',
+  filling: 'primary',
+  implant: 'success',
+  plaque: 'warning',
+  tartar: 'warning',
+  calculus: 'warning',
+  abscess: 'error',
+  fracture: 'error',
+  crown: 'primary',
+  restoration: 'primary',
+  periodontitis: 'warning',
+  gingivitis: 'warning',
+  normal: 'success',
+  healthy: 'success',
+}
+
 export function getProblemColor(problemInput) {
+  const raw = resolveProblemName(problemInput)
+  const normalized = normalizeProblemKey(raw)
+  return problemColorMap[normalized] || 'warning'
+}
+
+export function getProblemBorderClass(problemInput) {
+  const color = getProblemColor(problemInput)
+  return `border-${color} ring-${color}/20`
+}
+
+export function getProblemBadgeClass(problemInput) {
+  const color = getProblemColor(problemInput)
+  return `badge-${color}`
+}
+
+export function getProblemHexColor(problemInput) {
   const rawName = resolveProblemName(problemInput);
   const normalized = normalizeProblemKey(rawName);
 

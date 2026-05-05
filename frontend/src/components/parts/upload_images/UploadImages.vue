@@ -21,113 +21,18 @@ const {
   onFileChange,
   onDrop,
   removeDroppedFile,
-  prepareGraphQLPayload,
   sendQueuedFiles,
   formatFileSize,
-
-  // Almacenamiento local
-  storedImages,
-  totalStoredImages,
-  totalStoredSizeBytes,
-  downloadStoredImage,
-  deleteStoredImage,
-  clearAllStoredImages,
-  exportImageAsJSON,
 } = useUploadImagesQueue()
 
 
 async function handleSendFiles() {
   await sendQueuedFiles()
 }
-
-function handleDownload(image) {
-  downloadStoredImage(image)
-}
-
-async function handleDelete(imageId) {
-  if (confirm('¿Eliminar esta imagen del almacenamiento local?')) {
-    await deleteStoredImage(imageId)
-  }
-}
-
-async function handleClearAll() {
-  if (confirm('¿Eliminar TODAS las imágenes almacenadas?')) {
-    await clearAllStoredImages()
-  }
-}
-
-function handleExportJSON(image) {
-  exportImageAsJSON(image)
-}
 </script>
 
 <template>
   <div class="space-y-6">
-    <!-- Sección de Almacenamiento Local -->
-    <div v-if="totalStoredImages > 0" class="rounded-xl border border-info/30 bg-info/5 p-6 space-y-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-wide text-info">📁 Almacenamiento Local</p>
-          <p class="text-xs text-on-surface-variant mt-1">{{ totalStoredImages }} imagen(es) · {{ formatFileSize(totalStoredSizeBytes) }}</p>
-        </div>
-        <button
-            class="btn btn-error btn-xs"
-            type="button"
-            @click="handleClearAll"
-        >
-          Limpiar Todo
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div
-            v-for="image in storedImages"
-            :key="image.id"
-            class="rounded-lg border border-base-300 bg-base-100 p-3 flex items-center gap-3 hover:shadow-md transition-shadow"
-        >
-          <!-- Thumbnail -->
-          <div class="w-16 h-16 shrink-0 rounded bg-gray-100 overflow-hidden flex items-center justify-center">
-            <img
-                :src="'data:' + image.mimeType + ';base64,' + image.base64"
-                :alt="image.fileName"
-                class="w-full h-full object-cover"
-            />
-          </div>
-
-          <!-- Info -->
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-on-surface truncate">{{ image.fileName }}</p>
-            <p class="text-xs text-on-surface-variant">{{ formatFileSize(image.fileSize) }}</p>
-            <p class="text-xs text-on-surface-variant/70">{{ new Date(image.createdAt).toLocaleDateString() }}</p>
-          </div>
-
-          <!-- Acciones -->
-          <div class="flex gap-1 shrink-0">
-            <button
-                class="btn btn-ghost btn-xs btn-circle"
-                title="Descargar"
-                @click="handleDownload(image)"
-            >
-              <span class="material-symbols-outlined text-base">download</span>
-            </button>
-            <button
-                class="btn btn-ghost btn-xs btn-circle"
-                title="Exportar JSON"
-                @click="handleExportJSON(image)"
-            >
-              <span class="material-symbols-outlined text-base">description</span>
-            </button>
-            <button
-                class="btn btn-ghost btn-xs btn-circle text-error"
-                title="Eliminar"
-                @click="handleDelete(image.id)"
-            >
-              <span class="material-symbols-outlined text-base">delete</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Upload Prompt & Queue -->
     <div

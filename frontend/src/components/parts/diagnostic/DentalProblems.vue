@@ -1,35 +1,8 @@
 <script setup>
-import { computed } from 'vue'
-import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
-import { translateProblem, getProblemSeverity } from '@/utils/problemTranslations'
+import { useDentalProblems } from '@/composables/useDentalProblems'
+import { translateProblem } from '@/utils/problemTranslations'
 
-const { currentAnalysis } = useDiagnosticAnalysis()
-
-// Detecciones del análisis
-const detections = computed(() => {
-  return currentAnalysis.value?.detections || []
-})
-
-// Total de detecciones
-const totalDetections = computed(() => {
-  return detections.value.length
-})
-
-// Estadísticas por severidad
-const detectionStats = computed(() => {
-  const stats = {
-    critical: [],
-    warning: [],
-    success: [],
-  }
-
-  for (const detection of detections.value) {
-    const severity = getProblemSeverity(detection)
-    stats[severity].push(detection)
-  }
-
-  return stats
-})
+const { totalDetections, detectionStats } = useDentalProblems()
 
 </script>
 
@@ -51,8 +24,8 @@ const detectionStats = computed(() => {
                 <div class="flex justify-between items-start mb-2">
                   <div>
                     <h4 class="font-bold text-on-surface text-sm">{{ translateProblem(detection) }}</h4>
-                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId
-                      || 'Detectado por IA' }}</p>
+<!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
+<!--                      || 'Detectado por IA' }}</p>-->
                   </div>
                   <div class="badge badge-error badge-sm font-black text-[10px] text-white">CRÍTICO</div>
                 </div>
@@ -76,8 +49,8 @@ const detectionStats = computed(() => {
                 <div class="flex justify-between items-start mb-2">
                   <div>
                     <h4 class="font-bold text-on-surface text-sm">{{ translateProblem(detection) }}</h4>
-                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId
-                      || 'Detectado por IA' }}</p>
+<!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
+<!--                      || 'Detectado por IA' }}</p>-->
                   </div>
                   <div class="badge badge-warning badge-sm font-black text-[10px] text-white">SEGUIMIENTO</div>
                 </div>
@@ -101,8 +74,8 @@ const detectionStats = computed(() => {
                 <div class="flex justify-between items-start mb-2">
                   <div>
                     <h4 class="font-bold text-on-surface text-sm">{{ translateProblem(detection) }}</h4>
-                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId
-                      || 'Detectado por IA' }}</p>
+<!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
+<!--                      || 'Detectado por IA' }}</p>-->
                   </div>
                   <div class="badge badge-success badge-sm font-black text-[10px] text-white">ÓPTIMO</div>
                 </div>

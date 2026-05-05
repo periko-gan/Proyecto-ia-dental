@@ -1,7 +1,6 @@
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { uploadRadiography } from '@/services/uploadRadiographyService'
-import imageStorageService from '@/services/imageStorageService'
 import { useDiagnosticAnalysis } from './useDiagnosticAnalysis'
 
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
@@ -66,10 +65,6 @@ export function useUploadImagesQueue() {
   const sendSummaryMessage = ref('')
   const sendErrorMessage = ref('')
 
-  // Almacenamiento local
-  const storedImages = ref([])
-  const isLoadingStoredImages = ref(false)
-  const storageInitError = ref(null)
   const preparedGraphQLSummary = computed(() =>
     preparedGraphQLPayload.value.map((item) => ({
       fileName: item.fileName,
@@ -84,10 +79,7 @@ export function useUploadImagesQueue() {
   )
   const hasFiles = computed(() => droppedFiles.value.length > 0)
 
-  const totalStoredImages = computed(() => storedImages.value.length)
-  const totalStoredSizeBytes = computed(() =>
-    storedImages.value.reduce((sum, image) => sum + (image.fileSize || 0), 0),
-  )
+
 
   function openFilePicker() {
     fileInputRef.value?.click()
@@ -195,70 +187,7 @@ export function useUploadImagesQueue() {
      clearInputSelection()
    }
 
-  // ========== Funciones de Almacenamiento Local ==========
-
-  async function loadStoredImages() {
-    isLoadingStoredImages.value = true
-    try {
-      await imageStorageService.init()
-      const images = await imageStorageService.getAllImages()
-      storedImages.value = images
-      storageInitError.value = null
-    } catch (error) {
-      console.error('Error cargando imágenes almacenadas:', error)
-      storageInitError.value = error?.message || 'Error cargando almacenamiento'
-    } finally {
-      isLoadingStoredImages.value = false
-    }
-  }
-
-  async function saveImageToStorage(file, base64Content) {
-    try {
-      const savedImage = await imageStorageService.saveImage(file, base64Content)
-      storedImages.value.unshift(savedImage)
-      return savedImage
-    } catch (error) {
-      console.error('Error guardando imagen:', error)
-      throw error
-    }
-  }
-
-  async function deleteStoredImage(imageId) {
-    try {
-      await imageStorageService.deleteImage(imageId)
-      storedImages.value = storedImages.value.filter((img) => img.id !== imageId)
-    } catch (error) {
-      console.error('Error eliminando imagen:', error)
-      throw error
-    }
-  }
-
-  async function clearAllStoredImages() {
-    try {
-      await imageStorageService.clearAll()
-      storedImages.value = []
-    } catch (error) {
-      console.error('Error limpiando almacenamiento:', error)
-      throw error
-    }
-  }
-
-  function downloadStoredImage(image) {
-    try {
-      return imageStorageService.downloadImage(image)
-    } catch (error) {
-      console.error('Error descargando imagen:', error)
-      return false
-    }
-  }
-
-  function exportImageAsJSON(image) {
-    try {
-      imageStorageService.exportAsJSON(image)
-    } catch (error) {
-      console.error('Error exportando imagen:', error)
-    }
-  }
+  // No local storage: removed imageStorageService usage
 
   async function processIncomingFiles(rawFiles) {
     const files = Array.from(rawFiles ?? [])
@@ -271,15 +200,9 @@ export function useUploadImagesQueue() {
     sendSummaryMessage.value = ''
     sendErrorMessage.value = ''
 
-    // Guardar archivos en almacenamiento local mientras se añaden a la cola
-    for (const file of validFiles) {
-      try {
-        const base64Content = await readFileAsBase64(file)
-        await saveImageToStorage(file, base64Content)
-      } catch (error) {
-        console.warn(`Error guardando ${file.name} en almacenamiento local:`, error)
-      }
-    }
+    // Añadir archivos válidos a la cola (sin almacenamiento local)
+    // convertimos a entradas de cola y las combinamos
+    // validFiles son File objects
 
     const nextEntries = mergeFiles(droppedFiles.value, validFiles)
 
@@ -434,9 +357,7 @@ export function useUploadImagesQueue() {
      return `${(kb / 1024).toFixed(1)} MB`
    }
 
-   onMounted(() => {
-     loadStoredImages()
-   })
+    // no onMounted storage initialization required
 
    onBeforeUnmount(() => {
      for (const entry of droppedFiles.value) {
@@ -463,12 +384,7 @@ export function useUploadImagesQueue() {
      totalSizeBytes,
      hasFiles,
 
-     // Estado del almacenamiento local
-     storedImages,
-     isLoadingStoredImages,
-     storageInitError,
-     totalStoredImages,
-     totalStoredSizeBytes,
+      // (sin almacenamiento local)
 
      // Funciones de la cola
      openFilePicker,
@@ -483,13 +399,7 @@ export function useUploadImagesQueue() {
      sendQueuedFiles,
      formatFileSize,
 
-     // Funciones del almacenamiento
-     loadStoredImages,
-     saveImageToStorage,
-     deleteStoredImage,
-     clearAllStoredImages,
-     downloadStoredImage,
-     exportImageAsJSON,
+      // (sin funciones de almacenamiento local)
    }
  }
 
