@@ -67,6 +67,10 @@ def create_app() -> FastAPI:
         context_getter=get_context,
     )
     app.include_router(graphql_app, prefix="/graphql")
+    
+    # Servir las imágenes subidas como archivos estáticos
+    from fastapi.staticfiles import StaticFiles
+    app.mount("/uploads", StaticFiles(directory=settings.resolved_uploads_dir), name="uploads")
 
     @app.get("/health")
     async def health() -> dict[str, str]:

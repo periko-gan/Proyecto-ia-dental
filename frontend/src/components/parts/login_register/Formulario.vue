@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { useAuthForm } from '@/composables/useAuthForm'
+import { useAuthForm } from '@/composables/useAuthForm.js'
 
 // Recibe el contexto de página para reutilizar el mismo formulario en login y registro.
 const props = defineProps({

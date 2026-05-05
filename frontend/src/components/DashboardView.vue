@@ -4,6 +4,7 @@
 import Header from '@/components/parts/all_pages/Header.vue'
 import Aside from '@/components/parts/all_pages/Aside.vue'
 import Footer from "@/components/parts/all_pages/Footer.vue";
+import AllDiagnostics from '@/components/parts/dashboard/AllDiagnostics.vue';
 </script>
 
 <template>
@@ -19,9 +20,12 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
     <div class="flex pt-16 min-h-screen">
 
       <!-- Main Content -->
+
       <main class="flex-1 md:ml-64 p-6 md:p-10">
         <div class="max-w-6xl mx-auto">
           <!-- Header -->
+
+
           <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
             <div class="space-y-1">
               <span class="badge badge-secondary badge-outline font-bold tracking-widest text-[10px] h-auto py-1 px-3">RESUMEN CLÍNICO</span>
@@ -33,8 +37,14 @@ import Footer from "@/components/parts/all_pages/Footer.vue";
               <span class="text-xs font-bold text-slate-600 tracking-wider">MOTOR DE IA ACTIVO</span>
             </div>
           </div>
+
+          
+          <AllDiagnostics/>
+
+          
           <!-- Bento Grid -->
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
             <!-- Health Score Hero -->
             <div class="md:col-span-4 card bg-primary text-primary-content shadow-xl overflow-hidden group">
               <div

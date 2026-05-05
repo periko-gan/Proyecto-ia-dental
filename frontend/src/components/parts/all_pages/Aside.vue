@@ -55,11 +55,11 @@ function handleLogout() {
             <span class="uppercase">Diagnostic</span>
           </router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link :to="{name: 'Evolution'}" :class="navLinkClass('Evolution')">
             <span class="uppercase">Evolution</span>
           </router-link>
-        </li>
+        </li> -->
 <!--        <li>-->
 <!--          <router-link :to="{name: 'Login'}" :class="navLinkClass('Login')">-->
 <!--            <span class="uppercase">Iniciar sesión</span>-->

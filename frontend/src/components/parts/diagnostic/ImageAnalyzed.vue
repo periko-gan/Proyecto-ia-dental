@@ -1,9 +1,9 @@
 <script setup>
 import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
 import { useDentalProblems } from '@/composables/useDentalProblems'
-import { translateProblem, getProblemBorderClass, getProblemBadgeClass } from '@/utils/problemTranslations'
+import { translateProblem, getProblemBorderClass, getProblemBadgeClass, getProblemHexColor } from '@/utils/problemTranslations'
 
-const { currentAnalysis, imageUrl, calculateHotspotStyle, onImageLoad, formatConfidence } = useImageAnalyzed()
+const { currentAnalysis, imageUrl, imageRef, imageNaturalWidth, imageNaturalHeight, calculateHotspotStyle, onImageLoad, formatConfidence } = useImageAnalyzed()
 const { detections, detectionStats } = useDentalProblems()
 
 // Obtiene la clase de borde para un hotspot
@@ -30,35 +30,41 @@ const { detections, detectionStats } = useDentalProblems()
         </button>
       </div>
       <!-- Main Image with Hotspots -->
-      <div class="aspect-16/10 relative flex items-center justify-center bg-slate-950">
+      <div class="relative w-full h-[60vh] bg-slate-950 overflow-hidden">
+        
         <img
+            ref="imageRef"
             :alt="`Radiografía - ${currentAnalysis?.fileName || 'Análisis dental'}`"
             :src="imageUrl"
-            class="w-full h-full object-cover opacity-80"
+            class="absolute inset-0 w-full h-full object-fill opacity-80"
             @load="onImageLoad"
         />
-        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
           <div class="scan-line absolute w-full top-1/3"></div>
         </div>
+        
         <!-- Hotspots dinámicos basados en detecciones -->
         <template v-if="detections.length > 0">
           <div
               v-for="(detection, index) in detections"
               :key="`detection-${index}`"
-              class="absolute pointer-events-none border-2 ring-4"
+              class="absolute pointer-events-none border-2 ring-4 z-10"
               :class="getProblemBorderClass(detection)"
               :style="calculateHotspotStyle(detection.bboxXyxy)"
           >
             <span
-                :class="[getProblemBadgeClass(detection), 'absolute -top-7 -left-1 px-2 py-0.5 text-white text-[10px] font-bold h-auto rounded-none border-none whitespace-nowrap']"
+                :class="['absolute -top-7 -left-1 px-2 py-0.5 text-white text-[10px] font-bold h-auto rounded-none border-none whitespace-nowrap shadow-sm']"
+                :style="{ backgroundColor: getProblemHexColor(detection) }"
             >
               {{ translateProblem(detection) }} {{ formatConfidence(detection.confidence) }}%
+              <!-- <span class="ml-1 opacity-75 font-mono text-[8px]">(Raw: {{ detection.bboxXyxy.slice(0,2).map(n => Math.round(n)).join(',') }})</span> -->
             </span>
           </div>
         </template>
         <!-- Fallback si no hay detecciones -->
         <template v-else>
-          <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+          <div class="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
             <p class="text-white text-center text-sm">Cargando análisis...</p>
           </div>
         </template>
