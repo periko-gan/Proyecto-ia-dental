@@ -1,25 +1,28 @@
 <script setup>
 import { useDentalProblems } from '@/composables/useDentalProblems'
-import { translateProblem } from '@/utils/problemTranslations'
+import { translateProblem, getProblemHexColor } from '@/utils/problemTranslations'
 
-const { totalDetections, detectionStats } = useDentalProblems()
+const { totalDetections, detectionStats, toggleDetection, isDetectionEnabled } = useDentalProblems()
 
 </script>
 
 <template>
   <div class="col-span-12 lg:col-span-4 space-y-6">
-    <div class="card bg-white rounded-xl shadow-sm border border-slate-200 h-full">
-      <div class="card-body p-6">
-        <div class="flex items-center justify-between mb-6">
+    <div class="card bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col lg:h-[calc(60vh+55px)]">
+      <div class="card-body p-6 flex flex-col h-full overflow-hidden">
+        <div class="flex items-center justify-between mb-6 flex-shrink-0">
           <h3 class="text-lg font-headline font-extrabold text-on-surface tracking-tight">Hallazgos
             Detectados</h3>
           <div class="badge badge-neutral font-bold text-[10px]">{{ totalDetections }} TOTAL</div>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-4 overflow-y-auto flex-1 pr-2">
           <!-- Detecciones críticas -->
           <template v-for="(detection, index) in detectionStats.critical" :key="`critical-${index}`">
             <div
-                class="card bg-surface-container-low border-l-4 border-error rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer">
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }">
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
                   <div>
@@ -27,14 +30,21 @@ const { totalDetections, detectionStats } = useDentalProblems()
 <!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
 <!--                      || 'Detectado por IA' }}</p>-->
                   </div>
-                  <div class="badge badge-error badge-sm font-black text-[10px] text-white">CRÍTICO</div>
+                  <div 
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }">
+                    CRÍTICO
+                  </div>
                 </div>
                 <div class="mt-4">
                   <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-1">
                     <span>Confianza IA</span>
                     <span>{{ Math.round(detection.confidence * 100) }}%</span>
                   </div>
-                  <progress class="progress progress-error w-full h-1.5" :value="Math.round(detection.confidence * 100)"
+                  <progress 
+                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current" 
+                            :style="{ color: getProblemHexColor(detection) }"
+                            :value="Math.round(detection.confidence * 100)"
                             max="100"></progress>
                 </div>
               </div>
@@ -44,7 +54,10 @@ const { totalDetections, detectionStats } = useDentalProblems()
           <!-- Detecciones de seguimiento -->
           <template v-for="(detection, index) in detectionStats.warning" :key="`warning-${index}`">
             <div
-                class="card bg-surface-container-low border-l-4 border-warning rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer">
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }">
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
                   <div>
@@ -52,14 +65,21 @@ const { totalDetections, detectionStats } = useDentalProblems()
 <!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
 <!--                      || 'Detectado por IA' }}</p>-->
                   </div>
-                  <div class="badge badge-warning badge-sm font-black text-[10px] text-white">SEGUIMIENTO</div>
+                  <div 
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }">
+                    SEGUIMIENTO
+                  </div>
                 </div>
                 <div class="mt-4">
                   <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-1">
                     <span>Confianza IA</span>
                     <span>{{ Math.round(detection.confidence * 100) }}%</span>
                   </div>
-                  <progress class="progress progress-warning w-full h-1.5" :value="Math.round(detection.confidence * 100)"
+                  <progress 
+                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current" 
+                            :style="{ color: getProblemHexColor(detection) }"
+                            :value="Math.round(detection.confidence * 100)"
                             max="100"></progress>
                 </div>
               </div>
@@ -69,7 +89,10 @@ const { totalDetections, detectionStats } = useDentalProblems()
           <!-- Detecciones óptimas -->
           <template v-for="(detection, index) in detectionStats.success" :key="`success-${index}`">
             <div
-                class="card bg-surface-container-low border-l-4 border-success rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer">
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }">
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
                   <div>
@@ -77,14 +100,21 @@ const { totalDetections, detectionStats } = useDentalProblems()
 <!--                    <p class="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{{ detection.classId-->
 <!--                      || 'Detectado por IA' }}</p>-->
                   </div>
-                  <div class="badge badge-success badge-sm font-black text-[10px] text-white">ÓPTIMO</div>
+                  <div 
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }">
+                    ÓPTIMO
+                  </div>
                 </div>
                 <div class="mt-4">
                   <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-1">
                     <span>Confianza IA</span>
                     <span>{{ Math.round(detection.confidence * 100) }}%</span>
                   </div>
-                  <progress class="progress progress-success w-full h-1.5" :value="Math.round(detection.confidence * 100)"
+                  <progress 
+                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current" 
+                            :style="{ color: getProblemHexColor(detection) }"
+                            :value="Math.round(detection.confidence * 100)"
                             max="100"></progress>
                 </div>
               </div>
@@ -99,7 +129,7 @@ const { totalDetections, detectionStats } = useDentalProblems()
           </template>
         </div>
         <!-- Data Transparency Info -->
-        <div class="mt-auto pt-10">
+        <div class="mt-4 pt-4 border-t border-slate-100 flex-shrink-0">
           <div class="alert bg-slate-50 border-none p-4 rounded-xl">
             <div>
               <div class="flex items-center gap-2 text-primary mb-1">
@@ -119,5 +149,15 @@ const { totalDetections, detectionStats } = useDentalProblems()
 </template>
 
 <style scoped>
-
+/* Scrollbar personalizado */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
 </style>

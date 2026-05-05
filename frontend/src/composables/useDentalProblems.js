@@ -1,10 +1,15 @@
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
 import { getProblemSeverity } from '@/utils/problemTranslations'
 
-export function useDentalProblems() {
-  const { currentAnalysis } = useDiagnosticAnalysis()
+const disabledDetections = ref(new Set())
+const { currentAnalysis } = useDiagnosticAnalysis()
 
+watch(currentAnalysis, () => {
+  disabledDetections.value = new Set()
+})
+
+export function useDentalProblems() {
   // Detecciones del análisis
   const detections = computed(() => {
     return currentAnalysis.value?.detections || []
@@ -13,6 +18,25 @@ export function useDentalProblems() {
   // Total de detecciones
   const totalDetections = computed(() => {
     return detections.value.length
+  })
+
+  const toggleDetection = (detection) => {
+    const newSet = new Set(disabledDetections.value)
+    if (newSet.has(detection)) {
+      newSet.delete(detection)
+    } else {
+      newSet.add(detection)
+    }
+    disabledDetections.value = newSet
+  }
+
+  const isDetectionEnabled = (detection) => {
+    return !disabledDetections.value.has(detection)
+  }
+
+  // Active detections only (for ImageAnalyzed)
+  const activeDetections = computed(() => {
+    return detections.value.filter(d => isDetectionEnabled(d))
   })
 
   // Estadísticas por severidad
@@ -33,7 +57,10 @@ export function useDentalProblems() {
 
   return {
     detections,
+    activeDetections,
     totalDetections,
-    detectionStats
+    detectionStats,
+    toggleDetection,
+    isDetectionEnabled
   }
 }
