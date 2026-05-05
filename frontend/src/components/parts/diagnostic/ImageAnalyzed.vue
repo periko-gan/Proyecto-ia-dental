@@ -1,10 +1,13 @@
 <script setup>
+import { ref } from 'vue'
 import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
 import { useDentalProblems } from '@/composables/useDentalProblems'
 import { translateProblem, getProblemBorderClass, getProblemBadgeClass, getProblemHexColor } from '@/utils/problemTranslations'
 
 const { currentAnalysis, imageUrl, imageRef, imageNaturalWidth, imageNaturalHeight, calculateHotspotStyle, onImageLoad, formatConfidence } = useImageAnalyzed()
-const { detections, detectionStats } = useDentalProblems()
+const { detections, activeDetections, detectionStats } = useDentalProblems()
+
+const isZoomed = ref(false)
 
 // Obtiene la clase de borde para un hotspot
 // getProblemBorderClass/getProblemBadgeClass proporcionan las clases CSS por tipo de problema
@@ -22,12 +25,12 @@ const { detections, detectionStats } = useDentalProblems()
         </div>
       </div>
       <div class="absolute top-4 right-4 z-10 flex gap-2">
-        <button class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
+        <button @click="isZoomed = true" class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
           <span class="material-symbols-outlined text-lg">zoom_in</span>
         </button>
-        <button class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
+        <!-- <button class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
           <span class="material-symbols-outlined text-lg">layers</span>
-        </button>
+        </button> -->
       </div>
       <!-- Main Image with Hotspots -->
       <div class="relative w-full h-[60vh] bg-slate-950 overflow-hidden">
@@ -47,11 +50,13 @@ const { detections, detectionStats } = useDentalProblems()
         <!-- Hotspots dinámicos basados en detecciones -->
         <template v-if="detections.length > 0">
           <div
-              v-for="(detection, index) in detections"
+              v-for="(detection, index) in activeDetections"
               :key="`detection-${index}`"
-              class="absolute pointer-events-none border-2 ring-4 z-10"
-              :class="getProblemBorderClass(detection)"
-              :style="calculateHotspotStyle(detection.bboxXyxy)"
+              class="absolute pointer-events-none border-2 z-10"
+              :style="{
+                borderColor: getProblemHexColor(detection),
+                ...calculateHotspotStyle(detection.bboxXyxy)
+              }"
           >
             <span
                 :class="['absolute -top-7 -left-1 px-2 py-0.5 text-white text-[10px] font-bold h-auto rounded-none border-none whitespace-nowrap shadow-sm']"
@@ -96,7 +101,46 @@ const { detections, detectionStats } = useDentalProblems()
         </div>
       </div>
     </div>
-    <!-- ... resto del componente ... -->
+    
+    <!-- Zoom Modal -->
+    <div v-if="isZoomed" @click.self="isZoomed = false" class="fixed inset-0 z-[100] bg-slate-950/95 flex items-center justify-center backdrop-blur-sm p-4">
+      <button @click="isZoomed = false" class="absolute top-6 right-6 btn btn-circle glass text-white hover:bg-error hover:text-white z-[110]">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+
+      <div 
+        class="relative w-full max-w-[90vw] max-h-[90vh]"
+        :style="{ 
+          aspectRatio: imageNaturalWidth && imageNaturalHeight ? `${imageNaturalWidth} / ${imageNaturalHeight}` : 'auto',
+          margin: 'auto'
+        }"
+      >
+        <img
+            :alt="`Radiografía Zoom - ${currentAnalysis?.fileName || 'Análisis dental'}`"
+            :src="imageUrl"
+            class="w-full h-full object-contain pointer-events-none"
+        />
+        
+        <template v-if="detections.length > 0">
+          <div
+              v-for="(detection, index) in activeDetections"
+              :key="`zoomed-detection-${index}`"
+              class="absolute pointer-events-none border-[3px] z-10"
+              :style="{
+                borderColor: getProblemHexColor(detection),
+                ...calculateHotspotStyle(detection.bboxXyxy)
+              }"
+          >
+            <span
+                :class="['absolute -top-8 -left-1 px-3 py-1 text-white text-sm font-bold h-auto rounded-none border-none whitespace-nowrap shadow-md']"
+                :style="{ backgroundColor: getProblemHexColor(detection) }"
+            >
+              {{ translateProblem(detection) }} {{ formatConfidence(detection.confidence) }}%
+            </span>
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
