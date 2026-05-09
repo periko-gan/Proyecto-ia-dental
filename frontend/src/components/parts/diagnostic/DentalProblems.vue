@@ -2,7 +2,12 @@
 import { useDentalProblems } from '@/composables/useDentalProblems'
 import { translateProblem, getProblemHexColor } from '@/utils/problemTranslations'
 
-const { totalDetections, detectionStats, toggleDetection, isDetectionEnabled } = useDentalProblems()
+const {
+  totalDetections,
+  detectionStats,
+  toggleDetection,
+  isDetectionEnabled
+} = useDentalProblems()
 
 </script>
 
