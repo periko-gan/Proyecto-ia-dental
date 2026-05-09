@@ -1,5 +1,6 @@
 <script setup>
 import {useRoute, useRouter} from 'vue-router'
+
 import logo from '@/assets/img/logo01.png'
 
 const route = useRoute()
