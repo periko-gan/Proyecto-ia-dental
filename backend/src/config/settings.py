@@ -24,7 +24,8 @@ class Settings(BaseSettings):
     mongo_analyses_collection: str = "analyses"
     mongo_users_collection: str = "users"
 
-    model_path: str = "../entrenamiento ia pruebas/best.pt"
+#     model_path: str = "../entrenamiento ia pruebas/best.pt"
+    model_path: str = "../entrenamiento ia/runs/train/dental_nofreeze_suave_yolo26m/weights/best.pt"
     model_version: str = "best.pt"
     model_device: str = "auto"
     model_warmup_on_startup: bool = True

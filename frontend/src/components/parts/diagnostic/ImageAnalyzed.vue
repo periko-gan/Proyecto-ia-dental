@@ -4,8 +4,21 @@ import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
 import { useDentalProblems } from '@/composables/useDentalProblems'
 import { translateProblem, getProblemBorderClass, getProblemBadgeClass, getProblemHexColor } from '@/utils/problemTranslations'
 
-const { currentAnalysis, imageUrl, imageRef, imageNaturalWidth, imageNaturalHeight, calculateHotspotStyle, onImageLoad, formatConfidence } = useImageAnalyzed()
-const { detections, activeDetections, detectionStats } = useDentalProblems()
+const {
+  currentAnalysis,
+  imageUrl,
+  imageRef,
+  imageNaturalWidth,
+  imageNaturalHeight,
+  calculateHotspotStyle,
+  onImageLoad,
+  formatConfidence
+} = useImageAnalyzed()
+const {
+  detections,
+  activeDetections,
+  detectionStats
+} = useDentalProblems()
 
 const isZoomed = ref(false)
 

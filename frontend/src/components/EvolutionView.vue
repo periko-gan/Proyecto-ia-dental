@@ -1,7 +1,6 @@
 <script setup>
 // Vista de evolucion: muestra tendencia temporal, comparativas y cronologia de escaneos.
 
-import Header from "@/components/parts/all_pages/Header.vue";
 import Aside from "@/components/parts/all_pages/Aside.vue";
 import Footer from "@/components/parts/all_pages/Footer.vue";
 </script>

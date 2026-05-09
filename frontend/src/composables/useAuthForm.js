@@ -24,24 +24,24 @@ export function useAuthForm(page) {
   const formSubtitle = computed(() => (
     isLogin.value
       ? 'Introduce tus credenciales para continuar.'
-      : 'Proporciona tus credenciales clinicas para empezar.'
+      : 'Proporciona tus credenciales clínicas para empezar.'
   ))
-  const submitLabel = computed(() => (isLogin.value ? 'Iniciar sesion' : 'Registrarse'))
-  const submitLabelLoading = computed(() => (isLogin.value ? 'Iniciando sesion...' : 'Registrando...'))
+  const submitLabel = computed(() => (isLogin.value ? 'Iniciar sesión' : 'Registrarse'))
+  const submitLabelLoading = computed(() => (isLogin.value ? 'Iniciando sesión...' : 'Registrando...'))
   const switchText = computed(() => (isLogin.value ? 'No tienes una cuenta?' : 'Ya tienes una cuenta?'))
-  const switchLabel = computed(() => (isLogin.value ? 'Registrate' : 'Inicia sesion'))
+  const switchLabel = computed(() => (isLogin.value ? 'Registrate' : 'Inicia sesión'))
   const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
 
   function validateEmail() {
     const value = email.value.trim()
 
     if (!value) {
-      emailError.value = 'Debes ingresar un correo electronico.'
+      emailError.value = 'Debes ingresar un correo electrónico.'
       return false
     }
 
     if (!EMAIL_REGEX.test(value)) {
-      emailError.value = 'Ingresa un correo electronico valido.'
+      emailError.value = 'Ingresa un correo electrónico valido.'
       return false
     }
 
@@ -53,12 +53,12 @@ export function useAuthForm(page) {
     const value = password.value
 
     if (!value.trim()) {
-      passwordError.value = 'Debes ingresar una contrasena.'
+      passwordError.value = 'Debes ingresar una contraseña.'
       return false
     }
 
     if (value.length < 8) {
-      passwordError.value = 'La contrasena debe tener minimo 8 caracteres.'
+      passwordError.value = 'La contraseña debe tener mínimo 8 caracteres.'
       return false
     }
 
@@ -126,7 +126,7 @@ export function useAuthForm(page) {
       }
       await router.push({ name: 'Dashboard' })
     } catch (error) {
-      errorMessage.value = error?.message || 'No se pudo completar la operacion.'
+      errorMessage.value = error?.message || 'No se pudo completar la operación.'
     } finally {
       loading.value = false
     }

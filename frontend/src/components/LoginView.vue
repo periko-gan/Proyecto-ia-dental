@@ -3,7 +3,6 @@
 
 import Header from "@/components/parts/all_pages/Header.vue";
 import Footer from "@/components/parts/all_pages/Footer.vue";
-import Aside from "@/components/parts/all_pages/Aside.vue";
 import Formulario from "@/components/parts/login_register/Formulario.vue";
 </script>
 
