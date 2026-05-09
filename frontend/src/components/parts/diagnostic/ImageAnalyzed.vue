@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
 import { useDentalProblems } from '@/composables/useDentalProblems'
-import { translateProblem, getProblemBorderClass, getProblemBadgeClass, getProblemHexColor } from '@/utils/problemTranslations'
+import { translateProblem, getProblemHexColor } from '@/utils/problemTranslations'
 
 const {
   currentAnalysis,
@@ -15,8 +15,8 @@ const {
   formatConfidence
 } = useImageAnalyzed()
 const {
-  detections,
   activeDetections,
+  visibleDetections,
   detectionStats
 } = useDentalProblems()
 
@@ -61,7 +61,7 @@ const isZoomed = ref(false)
         </div>
         
         <!-- Hotspots dinámicos basados en detecciones -->
-        <template v-if="detections.length > 0">
+        <template v-if="activeDetections.length > 0">
           <div
               v-for="(detection, index) in activeDetections"
               :key="`detection-${index}`"
@@ -83,14 +83,16 @@ const isZoomed = ref(false)
         <!-- Fallback si no hay detecciones -->
         <template v-else>
           <div class="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-            <p class="text-white text-center text-sm">Cargando análisis...</p>
+            <p class="text-white text-center text-sm">
+              {{ visibleDetections.length === 0 ? 'No hay resultados visibles con el umbral seleccionado.' : 'Todos los hallazgos visibles están desactivados.' }}
+            </p>
           </div>
         </template>
       </div>
       <!-- Caption bar -->
       <div class="p-4 bg-white flex flex-wrap justify-between items-center border-t border-slate-100">
         <p class="text-xs text-slate-500 font-medium">
-          {{ currentAnalysis?.fileName || 'Radiografía' }} • {{ detections.length }} hallazgo(s) detectado(s)
+          {{ currentAnalysis?.fileName || 'Radiografía' }} • {{ activeDetections.length }} hallazgo(s) detectado(s)
         </p>
         <div class="flex items-center gap-4">
           <div
@@ -116,8 +118,8 @@ const isZoomed = ref(false)
     </div>
     
     <!-- Zoom Modal -->
-    <div v-if="isZoomed" @click.self="isZoomed = false" class="fixed inset-0 z-[100] bg-slate-950/95 flex items-center justify-center backdrop-blur-sm p-4">
-      <button @click="isZoomed = false" class="absolute top-6 right-6 btn btn-circle glass text-white hover:bg-error hover:text-white z-[110]">
+    <div v-if="isZoomed" @click.self="isZoomed = false" class="fixed inset-0 z-100 bg-slate-950/95 flex items-center justify-center backdrop-blur-sm p-4">
+      <button @click="isZoomed = false" class="absolute top-6 right-6 btn btn-circle glass text-white hover:bg-error hover:text-white z-110">
         <span class="material-symbols-outlined text-2xl">close</span>
       </button>
 
@@ -134,7 +136,7 @@ const isZoomed = ref(false)
             class="w-full h-full object-contain pointer-events-none"
         />
         
-        <template v-if="detections.length > 0">
+        <template v-if="activeDetections.length > 0">
           <div
               v-for="(detection, index) in activeDetections"
               :key="`zoomed-detection-${index}`"
