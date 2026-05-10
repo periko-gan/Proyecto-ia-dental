@@ -57,4 +57,5 @@ class ModelLoader:
                 verbose=False,
             )
         except Exception as exc:
-            raise InferenceError("Fallo la inferencia del modelo") from exc
+            logger.exception("Fallo la inferencia del modelo al procesar %s", image_path)
+            raise InferenceError(f"Fallo la inferencia del modelo: {exc}") from exc

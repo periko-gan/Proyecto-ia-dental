@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import logging
+
 import strawberry
 from strawberry.types import Info
 
 from src.api.context import AppContext
 from src.api.types import AuthPayload, UploadResponse, User, to_graphql_analysis, to_graphql_user
 from src.domain.exceptions import AuthenticationError, BackendError
+
+
+logger = logging.getLogger(__name__)
 
 
 @strawberry.type
@@ -38,6 +43,12 @@ class Mutation:
                 analysis=to_graphql_analysis(record),
             )
         except BackendError as exc:
+            logger.warning("Fallo uploadRadiography: %s", exc)
             return UploadResponse(success=False, message=str(exc), analysis=None)
-        except Exception:
-            return UploadResponse(success=False, message="Error interno durante el analisis", analysis=None)
+        except Exception as exc:
+            logger.exception("Error interno inesperado en uploadRadiography")
+            return UploadResponse(
+                success=False,
+                message=f"Error interno durante el analisis: {exc}",
+                analysis=None,
+            )

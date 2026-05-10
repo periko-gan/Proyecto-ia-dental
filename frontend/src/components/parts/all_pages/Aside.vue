@@ -2,9 +2,13 @@
 import {computed} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {getSession} from '@/services/authService'
+import {useDiagnosticAnalysis} from '@/composables/useDiagnosticAnalysis'
+
+import logo from "@/assets/img/logo01.png";
 
 const route = useRoute()
 const router = useRouter()
+const { clearAnalysis } = useDiagnosticAnalysis()
 
 const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesión')
 
@@ -19,6 +23,7 @@ function navLinkClass(routeName) {
 
 // Maneja el logout: limpia sessionStorage, IndexedDB y redirige a la página principal
 async function handleLogout() {
+  clearAnalysis()
   sessionStorage.clear()
   
   try {
@@ -47,10 +52,14 @@ async function handleLogout() {
 
 <template>
   <aside
-      class="w-50 h-full  fixed top-0 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all">
+      class="w-55 h-full  fixed top-0 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all">
     <div class="px-6 py-6 border-t border-slate-200/50">
 <!--      <div class="flex items-center tex gap-3 mb-6">-->
-      <div class="flex items-center tex mb-6">
+<!--      <div class="flex items-center tex mb-6">      -->
+      <div class="flex flex-col items-center tex mb-6">
+<!--        <router-link :to="{name: 'Landing'}">-->
+        <img class="h-20 w-auto ml-2" :src="logo" alt="logo">
+<!--      </router-link>-->
 <!--        <div class="avatar">-->
 <!--          <div class="w-10 rounded-full">-->
 <!--            <img alt="Retrato profesional de un cirujano dental"-->
@@ -59,7 +68,7 @@ async function handleLogout() {
 <!--          </div>-->
 <!--        </div>-->
 <!--        <div>-->
-          <p class="text-xs font-bold text-on-surface">{{ loggedUserEmail }}</p>
+          <p class="text-xs font-bold text-on-surface pt-5">Hola {{ loggedUserEmail }}</p>
 <!--          <p class="text-[10px] text-slate-500 uppercase tracking-wider">Cirujano dental</p>-->
 <!--        </div>-->
       </div>

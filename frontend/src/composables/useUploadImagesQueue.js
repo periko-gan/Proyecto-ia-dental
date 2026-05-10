@@ -82,6 +82,7 @@ export function useUploadImagesQueue() {
 
 
   function openFilePicker() {
+    if (hasFiles.value) return
     fileInputRef.value?.click()
   }
 
@@ -92,11 +93,13 @@ export function useUploadImagesQueue() {
   }
 
   function onDragEnter() {
+    if (hasFiles.value) return
     dragDepth.value += 1
     isDragging.value = true
   }
 
   function onDragOver() {
+    if (hasFiles.value) return
     isDragging.value = true
   }
 
@@ -190,7 +193,12 @@ export function useUploadImagesQueue() {
   // No local storage: removed imageStorageService usage
 
   async function processIncomingFiles(rawFiles) {
-    const files = Array.from(rawFiles ?? [])
+    if (hasFiles.value) {
+      clearInputSelection()
+      return
+    }
+
+    const files = Array.from(rawFiles ?? []).slice(0, 1)
     const { validFiles, errors } = validateFiles(files)
 
     validationErrors.value = errors
@@ -200,19 +208,15 @@ export function useUploadImagesQueue() {
     sendSummaryMessage.value = ''
     sendErrorMessage.value = ''
 
-    // Añadir archivos válidos a la cola (sin almacenamiento local)
-    // convertimos a entradas de cola y las combinamos
-    // validFiles son File objects
-
-    const nextEntries = mergeFiles(droppedFiles.value, validFiles)
-
     for (const entry of droppedFiles.value) {
-      if (!nextEntries.some((candidate) => candidate.id === entry.id)) {
-        revokeQueueEntry(entry)
-      }
+      revokeQueueEntry(entry)
+    }
+    droppedFiles.value = []
+
+    if (validFiles.length > 0) {
+      droppedFiles.value = mergeFiles([], validFiles)
     }
 
-    droppedFiles.value = nextEntries
     clearInputSelection()
   }
 
@@ -394,8 +398,6 @@ export function useUploadImagesQueue() {
      onFileChange,
      onDrop,
      removeDroppedFile,
-     clearAllFiles,
-     prepareGraphQLPayload,
      sendQueuedFiles,
      formatFileSize,
 
