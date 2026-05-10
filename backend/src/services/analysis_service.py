@@ -2,6 +2,11 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import logging
+import tempfile
+from contextlib import suppress
+from pathlib import Path
+
+from PIL import Image, UnidentifiedImageError
 
 from src.config.settings import Settings
 from src.domain.exceptions import InferenceError
@@ -13,6 +18,20 @@ from src.services.upload_service import UploadService
 
 
 logger = logging.getLogger(__name__)
+
+
+def _prepare_image_for_inference(image_path: Path) -> Path:
+    """Convierte la imagen a un PNG temporal estandarizado para inferencia."""
+    try:
+        with Image.open(image_path) as image:
+            normalized = image.convert("RGB")
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
+            temp_path = Path(temp_file.name)
+            temp_file.close()
+            normalized.save(temp_path, format="PNG")
+            return temp_path
+    except (UnidentifiedImageError, OSError):
+        return image_path
 
 
 class AnalysisService:
@@ -50,7 +69,14 @@ class AnalysisService:
         )
 
         try:
-            detections, inference_time_ms = await self._inference_service.run_inference(stored_file.file_path)
+            inference_path = _prepare_image_for_inference(stored_file.file_path)
+            try:
+                detections, inference_time_ms = await self._inference_service.run_inference(inference_path)
+            finally:
+                if inference_path != stored_file.file_path:
+                    with suppress(FileNotFoundError):
+                        inference_path.unlink()
+
             record = AnalysisRecord(
                 analysis_id=stored_file.analysis_id,
                 user_id=user_id,

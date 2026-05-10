@@ -14,6 +14,7 @@ const {
   sendErrorMessage,
   totalFiles,
   totalSizeBytes,
+  hasFiles,
   openFilePicker,
   onDragEnter,
   onDragOver,
@@ -29,6 +30,31 @@ const {
 async function handleSendFiles() {
   await sendQueuedFiles()
 }
+
+function handleDragEnter(event) {
+  if (hasFiles.value) return
+  onDragEnter(event)
+}
+
+function handleDragOver(event) {
+  if (hasFiles.value) return
+  onDragOver(event)
+}
+
+function handleDragLeave(event) {
+  if (hasFiles.value) return
+  onDragLeave(event)
+}
+
+function handleDrop(event) {
+  if (hasFiles.value) return
+  onDrop(event)
+}
+
+function handleFileChange(event) {
+  if (hasFiles.value) return
+  onFileChange(event)
+}
 </script>
 
 <template>
@@ -37,11 +63,11 @@ async function handleSendFiles() {
     <!-- Upload Prompt & Queue -->
     <div
         class="border-2 border-dashed border-outline-variant bg-surface-container-low rounded-xl p-8 flex flex-col items-center justify-center transition-all hover:bg-surface-container-lowest hover:border-primary min-h-87.5"
-        :class="{ 'border-primary bg-surface-container-lowest': isDragging }"
-        @dragenter.prevent="onDragEnter"
-        @dragover.prevent="onDragOver"
-        @dragleave.prevent="onDragLeave"
-        @drop.prevent="onDrop"
+        :class="{ 'border-primary bg-surface-container-lowest': isDragging, 'opacity-80': hasFiles }"
+        @dragenter.prevent="handleDragEnter"
+        @dragover.prevent="handleDragOver"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
     >
       <!-- Upload Prompt -->
       <form class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
@@ -71,8 +97,8 @@ async function handleSendFiles() {
             class="hidden"
             type="file"
             accept="image/jpg,image/jpeg,image/png,.dcm,.dicom"
-            multiple
-            @change="onFileChange"
+            :disabled="hasFiles"
+            @change="handleFileChange"
         />
       </div>
 
@@ -85,8 +111,8 @@ async function handleSendFiles() {
       <div v-if="droppedFiles.length" class="w-full text-center space-y-4">
         <div class="flex flex-col gap-2 rounded-xl border border-base-200 bg-base-100 p-4 text-left md:flex-row md:items-center md:justify-between">
           <div>
-            <p class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Archivos añadidos</p>
-            <p class="text-sm text-on-surface-variant">{{ totalFiles }} archivo(s) · {{ formatFileSize(totalSizeBytes) }} en cola</p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">Imagen añadida</p>
+            <p class="text-sm text-on-surface-variant">{{ totalFiles }} imagen · {{ formatFileSize(totalSizeBytes) }} en cola</p>
           </div>
           <div class="flex flex-wrap gap-2">
 <!--            <button class="btn btn-ghost btn-xs" type="button" @click="clearAllFiles">Vaciar</button>-->
@@ -96,7 +122,7 @@ async function handleSendFiles() {
                 :disabled="isSendingQueue || !droppedFiles.length"
                 @click="handleSendFiles"
             >
-              {{ isSendingQueue ? 'Enviando...' : 'Enviar archivos' }}
+              {{ isSendingQueue ? 'Enviando...' : 'Enviar archivo' }}
             </button>
             <button
                 class="btn btn-error btn-xs"
@@ -109,7 +135,7 @@ async function handleSendFiles() {
 
           </div>
         </div>
-        <p class="text-xs text-on-surface-variant">Las imágenes seleccionadas quedan aquí en memoria hasta que se preparen o se envíen por GraphQL.</p>
+<!--        <p class="text-xs text-on-surface-variant">Las imágenes seleccionadas quedan aquí en memoria hasta que se preparen o se envíen por GraphQL.</p>-->
 
         <div v-if="queueReadyForGraphQL" class="rounded-xl border border-secondary/30 bg-secondary/5 p-4 text-left space-y-3">
           <div class="flex items-center justify-between gap-2">
@@ -137,7 +163,7 @@ async function handleSendFiles() {
         </div>
       </div>
 
-      <button class="btn btn-primary btn-wide font-bold gap-2" type="button" @click="openFilePicker">
+      <button class="btn btn-primary btn-wide font-bold gap-2" type="button" :disabled="hasFiles" @click="openFilePicker">
         <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
         Examinar archivo
       </button>

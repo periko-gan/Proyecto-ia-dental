@@ -2,7 +2,7 @@ import { postGraphQL } from '@/services/graphqlClient'
 
 const UPLOAD_RADIOGRAPHY_MUTATION = `
 mutation UploadRadiography($fileBase64: String!, $fileName: String!, $mimeType: String!) {
-  uploadRadiography(fileBase64: $fileBase64 fileName: $fileName mimeType: $mimeType) {
+  uploadRadiography(fileBase64: $fileBase64, fileName: $fileName, mimeType: $mimeType) {
     success
     message
     analysis {
@@ -43,8 +43,8 @@ function buildMutationPreview({ fileBase64, fileName, mimeType }) {
 
   return `mutation UploadRadiography {
   uploadRadiography(
-    fileBase64: "${escapeGraphQLString(previewBase64)}"
-    fileName: "${escapeGraphQLString(fileName)}"
+    fileBase64: "${escapeGraphQLString(previewBase64)}",
+    fileName: "${escapeGraphQLString(fileName)}",
     mimeType: "${escapeGraphQLString(mimeType)}"
   ) {
     success

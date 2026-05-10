@@ -75,7 +75,9 @@ const sliderBubbleLeft = computed(() => {
 
           <div class="mt-2 flex justify-between text-[10px] font-semibold text-slate-500">
             <span>0%</span>
+            <span>25%</span>
             <span>50%</span>
+            <span>75%</span>
             <span>100%</span>
           </div>
         </div>
