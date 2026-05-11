@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue'
-import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
-import { useDentalProblems } from '@/composables/useDentalProblems'
-import { translateProblem, getProblemHexColor } from '@/utils/problemTranslations'
+import {ref} from 'vue'
+import {useImageAnalyzed} from '@/composables/useImageAnalyzed'
+import {useDentalProblems} from '@/composables/useDentalProblems'
+import {getProblemHexColor, translateProblem} from '@/utils/problemTranslations'
 
 const {
   currentAnalysis,
@@ -38,7 +38,8 @@ const isZoomed = ref(false)
         </div>
       </div>
       <div class="absolute top-4 right-4 z-10 flex gap-2">
-        <button @click="isZoomed = true" class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
+        <button @click="isZoomed = true"
+                class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
           <span class="material-symbols-outlined text-lg">zoom_in</span>
         </button>
         <!-- <button class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
@@ -47,7 +48,7 @@ const isZoomed = ref(false)
       </div>
       <!-- Main Image with Hotspots -->
       <div class="relative w-full h-[60vh] bg-slate-950 overflow-hidden">
-        
+
         <img
             ref="imageRef"
             :alt="`Radiografía - ${currentAnalysis?.fileName || 'Análisis dental'}`"
@@ -55,11 +56,11 @@ const isZoomed = ref(false)
             class="absolute inset-0 w-full h-full object-fill opacity-80"
             @load="onImageLoad"
         />
-        
+
         <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
           <div class="scan-line absolute w-full top-1/3"></div>
         </div>
-        
+
         <!-- Hotspots dinámicos basados en detecciones -->
         <template v-if="activeDetections.length > 0">
           <div
@@ -84,7 +85,9 @@ const isZoomed = ref(false)
         <template v-else>
           <div class="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
             <p class="text-white text-center text-sm">
-              {{ visibleDetections.length === 0 ? 'No hay resultados visibles con el umbral seleccionado.' : 'Todos los hallazgos visibles están desactivados.' }}
+              {{
+                visibleDetections.length === 0 ? 'No hay resultados visibles con el umbral seleccionado.' : 'Todos los hallazgos visibles están desactivados.'
+              }}
             </p>
           </div>
         </template>
@@ -116,16 +119,18 @@ const isZoomed = ref(false)
         </div>
       </div>
     </div>
-    
+
     <!-- Zoom Modal -->
-    <div v-if="isZoomed" @click.self="isZoomed = false" class="fixed inset-0 z-100 bg-slate-950/95 flex items-center justify-center backdrop-blur-sm p-4">
-      <button @click="isZoomed = false" class="absolute top-6 right-6 btn btn-circle glass text-white hover:bg-error hover:text-white z-110">
+    <div v-if="isZoomed" @click.self="isZoomed = false"
+         class="fixed inset-0 z-100 bg-slate-950/95 flex items-center justify-center backdrop-blur-sm p-4">
+      <button @click="isZoomed = false"
+              class="absolute top-6 right-6 btn btn-circle glass text-white hover:bg-error hover:text-white z-110">
         <span class="material-symbols-outlined text-2xl">close</span>
       </button>
 
-      <div 
-        class="relative w-full max-w-[90vw] max-h-[90vh]"
-        :style="{ 
+      <div
+          class="relative w-full max-w-[90vw] max-h-[90vh]"
+          :style="{
           aspectRatio: imageNaturalWidth && imageNaturalHeight ? `${imageNaturalWidth} / ${imageNaturalHeight}` : 'auto',
           margin: 'auto'
         }"
@@ -135,7 +140,7 @@ const isZoomed = ref(false)
             :src="imageUrl"
             class="w-full h-full object-contain pointer-events-none"
         />
-        
+
         <template v-if="activeDetections.length > 0">
           <div
               v-for="(detection, index) in activeDetections"

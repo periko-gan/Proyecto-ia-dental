@@ -61,9 +61,9 @@ frontend/
 - Endpoint GraphQL usado por el frontend: `http://localhost:8000/graphql`
 - Vista de registro: `RegisterView` (usa `Formulario.vue`)
 - Logica de auth:
-  - `src/services/graphqlClient.js`
-  - `src/services/authService.js`
-  - `src/config/graphql.js`
+    - `src/services/graphqlClient.js`
+    - `src/services/authService.js`
+    - `src/config/graphql.js`
 
 ### Registro desde formulario
 
@@ -75,8 +75,8 @@ Al enviar el formulario de registro se ejecuta una mutacion GraphQL que hace:
 Si el flujo termina correctamente:
 
 - Se guarda en `sessionStorage`:
-  - `accessToken`
-  - `user` (JSON con `userId`, `email`, `isActive`, `role`, sin `createdAt`)
+    - `accessToken`
+    - `user` (JSON con `userId`, `email`, `isActive`, `role`, sin `createdAt`)
 - Se redirige a la ruta `Dashboard` (`/dashboard`).
 
 ### Variables opcionales

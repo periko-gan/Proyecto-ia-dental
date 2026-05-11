@@ -1,7 +1,6 @@
 <script setup>
 // Vista principal del panel clinico con resumen de estado, metricas y accesos rapidos.
 
-import Header from '@/components/parts/all_pages/Header.vue'
 import Aside from '@/components/parts/all_pages/Aside.vue'
 import Footer from "@/components/parts/all_pages/Footer.vue";
 import AllDiagnostics from '@/components/parts/dashboard/AllDiagnostics.vue';
@@ -11,7 +10,7 @@ import AllDiagnostics from '@/components/parts/dashboard/AllDiagnostics.vue';
   <div class="bg-slate-50 font-body text-on-surface">
 
     <!-- Header -->
-<!--    <Header/>-->
+    <!--    <Header/>-->
 
     <!-- Sidebar -->
     <Aside/>
@@ -38,13 +37,13 @@ import AllDiagnostics from '@/components/parts/dashboard/AllDiagnostics.vue';
             </div>
           </div>
 
-          
+
           <AllDiagnostics/>
 
-          
+
           <!-- Bento Grid -->
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            
+
             <!-- Health Score Hero -->
             <div class="md:col-span-4 card bg-primary text-primary-content shadow-xl overflow-hidden group">
               <div

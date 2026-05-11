@@ -16,11 +16,11 @@
 
 ## 📁 Archivos Modificados (3 archivos)
 
-| Archivo | Cambios | Estado |
-|---------|---------|--------|
-| `services/authService.js` | ✅ 60 líneas mejoradas | 💚 Operativo |
-| `services/graphqlClient.js` | ✅ Headers con Authorization | 💚 Operativo |
-| `router/index.js` | ✅ Guards + meta.requiresAuth | 💚 Operativo |
+| Archivo                     | Cambios                      | Estado       |
+|-----------------------------|------------------------------|--------------|
+| `services/authService.js`   | ✅ 60 líneas mejoradas        | 💚 Operativo |
+| `services/graphqlClient.js` | ✅ Headers con Authorization  | 💚 Operativo |
+| `router/index.js`           | ✅ Guards + meta.requiresAuth | 💚 Operativo |
 
 ---
 
@@ -122,11 +122,13 @@ mutation LoginUser($email: String!, $password: String!) {
 ```
 
 ### Endpoint
+
 ```
 POST http://localhost:8000/graphql
 ```
 
 ### Parámetros
+
 ```json
 {
   "email": "pepe@pepon.com",
@@ -139,6 +141,7 @@ POST http://localhost:8000/graphql
 ## 🎯 Funciones Principales
 
 ### ✅ loginAndPersist()
+
 ```javascript
 import { loginAndPersist } from '@/services/authService'
 
@@ -148,6 +151,7 @@ await loginAndPersist(email, password)
 ```
 
 ### ✅ getSession()
+
 ```javascript
 import { getSession } from '@/services/authService'
 
@@ -156,6 +160,7 @@ console.log(session.email)
 ```
 
 ### ✅ isAuthenticated()
+
 ```javascript
 import { isAuthenticated } from '@/services/authService'
 
@@ -165,6 +170,7 @@ if (isAuthenticated()) {
 ```
 
 ### ✅ logout()
+
 ```javascript
 import { logout } from '@/services/authService'
 
@@ -204,6 +210,7 @@ logout()
 ## 🚀 Inicio Rápido
 
 ### Backend
+
 ```bash
 cd backend
 python main.py
@@ -211,6 +218,7 @@ python main.py
 ```
 
 ### Frontend
+
 ```bash
 cd frontend
 npm run dev
@@ -218,6 +226,7 @@ npm run dev
 ```
 
 ### Hacer Login
+
 1. Ir a http://localhost:5173/login
 2. Ingresar: `pepe@pepon.com` / `12345678`
 3. Clickear "Iniciar sesión"
@@ -229,18 +238,19 @@ npm run dev
 
 Consulta estos archivos en `frontend/`:
 
-| Archivo | Contenido |
-|---------|----------|
-| `LOGIN_IMPLEMENTATION.md` | Documentación técnica completa |
-| `QUICK_TEST_GUIDE.md` | Guía de prueba rápida |
-| `LOGIN_CHANGES_SUMMARY.md` | Resumen de cambios |
-| `IMPLEMENTATION_COMPLETE.md` | Este resumen completo |
+| Archivo                      | Contenido                      |
+|------------------------------|--------------------------------|
+| `LOGIN_IMPLEMENTATION.md`    | Documentación técnica completa |
+| `QUICK_TEST_GUIDE.md`        | Guía de prueba rápida          |
+| `LOGIN_CHANGES_SUMMARY.md`   | Resumen de cambios             |
+| `IMPLEMENTATION_COMPLETE.md` | Este resumen completo          |
 
 ---
 
 ## 🐛 Problemas Comunes
 
 ### "No se redirige a /dashboard"
+
 ```
 → Verificar en Console (F12) si hay errores
 → Verificar que backend corre en :8000
@@ -248,6 +258,7 @@ Consulta estos archivos en `frontend/`:
 ```
 
 ### "SessionStorage está vacío"
+
 ```
 → Verificar respuesta GraphQL en Network tab
 → Verificar que accessToken está en respuesta
@@ -255,6 +266,7 @@ Consulta estos archivos en `frontend/`:
 ```
 
 ### "Error: Credenciales invalidas"
+
 ```
 → Verificar email y contraseña correctas
 → Crear usuario nuevo si no existe
@@ -262,6 +274,7 @@ Consulta estos archivos en `frontend/`:
 ```
 
 ### "Token no se incluye en peticiones"
+
 ```
 → Verificar getAccessToken() retorna token
 → Revisar Network tab → Headers → Authorization

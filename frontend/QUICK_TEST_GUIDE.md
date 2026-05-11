@@ -3,6 +3,7 @@
 ## ⚡ Prueba Rápida (5 minutos)
 
 ### Paso 1: Verificar que el backend está corriendo
+
 ```bash
 # En otra terminal
 cd backend
@@ -11,6 +12,7 @@ python main.py
 ```
 
 ### Paso 2: Iniciar el frontend
+
 ```bash
 # En otra terminal  
 cd frontend
@@ -21,6 +23,7 @@ npm run dev
 ### Paso 3: Prueba de Login
 
 #### Opción A: Con usuario ya registrado
+
 ```
 1. Acceder a http://localhost:5173/login
 2. Introducir email: pepe@pepon.com
@@ -30,6 +33,7 @@ npm run dev
 ```
 
 #### Opción B: Registrarse primero (si no existe)
+
 ```
 1. Acceder a http://localhost:5173/register
 2. Completar formulario con email y contraseña
@@ -45,12 +49,14 @@ npm run dev
 ## 🔍 Verificaciones en DevTools (F12)
 
 ### ✅ Verificación 1: SessionStorage
+
 ```javascript
 // En DevTools → Console
 console.table(Object.entries(sessionStorage).map(([k,v]) => ({key: k, value: v})))
 ```
 
 **Debe mostrar 5 filas:**
+
 ```
 ┌─────────────┬──────────────────────────────────────────┐
 │ (index)     │ key        value                          │
@@ -64,6 +70,7 @@ console.table(Object.entries(sessionStorage).map(([k,v]) => ({key: k, value: v})
 ```
 
 ### ✅ Verificación 2: Token en Headers
+
 ```
 1. DevTools → Network
 2. Hacer una petición GraphQL (ej: refrescar página en dashboard)
@@ -74,6 +81,7 @@ console.table(Object.entries(sessionStorage).map(([k,v]) => ({key: k, value: v})
 ```
 
 ### ✅ Verificación 3: Protección de Rutas
+
 ```javascript
 // En console, ejecutar:
 sessionStorage.clear()
@@ -83,6 +91,7 @@ sessionStorage.clear()
 ```
 
 ### ✅ Verificación 4: Redirección de Autenticados
+
 ```javascript
 // En console, simular sesión:
 sessionStorage.setItem('accessToken', 'test')
@@ -96,9 +105,11 @@ sessionStorage.setItem('accessToken', 'test')
 ## 📡 Prueba en GraphQL Playground
 
 ### Acceder al Playground
+
 - URL: `http://localhost:8000/graphql`
 
 ### Test 1: Login
+
 ```graphql
 mutation {
   loginUser(email: "pepe@pepon.com", password: "12345678") {
@@ -114,6 +125,7 @@ mutation {
 ```
 
 **Respuesta esperada:**
+
 ```json
 {
   "data": {
@@ -131,6 +143,7 @@ mutation {
 ```
 
 ### Test 2: Credenciales Inválidas
+
 ```graphql
 mutation {
   loginUser(email: "pepe@pepon.com", password: "contraseñaInvalida") {
@@ -146,6 +159,7 @@ mutation {
 ```
 
 **Respuesta esperada:**
+
 ```json
 {
   "errors": [
@@ -161,6 +175,7 @@ mutation {
 ## 🎯 Flujo Completo de Prueba
 
 ### Escenario 1: Nuevo Usuario
+
 ```
 1. ✅ Abrir http://localhost:5173/register
 2. ✅ Llenar formulario con nuevo email
@@ -175,6 +190,7 @@ mutation {
 ```
 
 ### Escenario 2: Usuario Existente
+
 ```
 1. ✅ Abrir http://localhost:5173/login
 2. ✅ Introducir email y contraseña de usuario existente
@@ -184,6 +200,7 @@ mutation {
 ```
 
 ### Escenario 3: Protección de Rutas
+
 ```
 1. ✅ sessionStorage.clear() en console
 2. ✅ Acceder a http://localhost:5173/dashboard
@@ -200,6 +217,7 @@ mutation {
 ## 🐛 Solución Rápida de Problemas
 
 ### Problema: "Error: No se pudo conectar al servidor"
+
 ```
 ✗ Solución:
 1. Verificar que backend está corriendo: http://localhost:8000
@@ -208,6 +226,7 @@ mutation {
 ```
 
 ### Problema: "Credenciales invalidas"
+
 ```
 ✗ Solución:
 1. Verificar que el email existe en la base de datos
@@ -216,6 +235,7 @@ mutation {
 ```
 
 ### Problema: "No se redirige a /dashboard"
+
 ```
 ✗ Solución:
 1. Abrir DevTools Console
@@ -225,6 +245,7 @@ mutation {
 ```
 
 ### Problema: "SessionStorage está vacío después de login"
+
 ```
 ✗ Solución:
 1. Verificar que persistSession() se está llamando
@@ -233,6 +254,7 @@ mutation {
 ```
 
 ### Problema: "No se incluye el token en peticiones"
+
 ```
 ✗ Solución:
 1. Verificar que getAccessToken() está implementado
