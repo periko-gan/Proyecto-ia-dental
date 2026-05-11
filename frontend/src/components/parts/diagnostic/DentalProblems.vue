@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useDentalProblems } from '@/composables/useDentalProblems'
-import { translateProblem, getProblemHexColor } from '@/utils/problemTranslations'
+import {computed, ref} from 'vue'
+import {useDentalProblems} from '@/composables/useDentalProblems'
+import {getProblemHexColor, translateProblem} from '@/utils/problemTranslations'
 
 const {
   totalDetections,
@@ -39,37 +39,38 @@ const sliderBubbleLeft = computed(() => {
           <div class="badge badge-neutral font-bold text-[10px]">{{ totalDetections }} TOTAL</div>
         </div>
 
-        <div class="mb-4 shrink-0 rounded-xl border border-cyan-200/70 bg-linear-to-br from-cyan-50 to-blue-50 px-4 py-1.5 shadow-sm">
+        <div
+            class="mb-4 shrink-0 rounded-xl border border-cyan-200/70 bg-linear-to-br from-cyan-50 to-blue-50 px-4 py-1.5 shadow-sm">
           <div class="flex items-center justify-between gap-3">
             <div>
               <p class="text-[10px] font-bold uppercase tracking-widest text-cyan-700">Umbral de confianza clínica</p>
-<!--              <p class="text-xs text-slate-600">Mostrar hallazgos desde este porcentaje mínimo</p>-->
+              <!--              <p class="text-xs text-slate-600">Mostrar hallazgos desde este porcentaje mínimo</p>-->
             </div>
             <div class="badge badge-info badge-outline font-bold">{{ formatMinimumConfidence(minimumConfidence) }}</div>
           </div>
 
           <div class="relative pt-6">
             <div
-              v-show="isSliding"
-              class="absolute top-0 rounded-md bg-cyan-700 px-2 py-1 text-[10px] font-bold text-white shadow"
-              :style="{ left: sliderBubbleLeft }"
+                v-show="isSliding"
+                class="absolute top-0 rounded-md bg-cyan-700 px-2 py-1 text-[10px] font-bold text-white shadow"
+                :style="{ left: sliderBubbleLeft }"
             >
               {{ formatMinimumConfidence(minimumConfidence) }}
             </div>
 
             <input
-              v-model.number="minimumConfidence"
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              class="range range-info range-sm"
-              @mousedown="isSliding = true"
-              @mouseup="isSliding = false"
-              @touchstart="isSliding = true"
-              @touchend="isSliding = false"
-              @focus="isSliding = true"
-              @blur="isSliding = false"
+                v-model.number="minimumConfidence"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                class="range range-info range-sm"
+                @mousedown="isSliding = true"
+                @mouseup="isSliding = false"
+                @touchstart="isSliding = true"
+                @touchend="isSliding = false"
+                @focus="isSliding = true"
+                @blur="isSliding = false"
             />
           </div>
 
@@ -107,10 +108,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                            :style="{ color: getProblemHexColor(detection) }"
-                            :value="getConfidencePercent(detection.confidence)"
-                            max="100"></progress>
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"></progress>
                 </div>
               </div>
             </div>
@@ -140,10 +141,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                            :style="{ color: getProblemHexColor(detection) }"
-                            :value="getConfidencePercent(detection.confidence)"
-                            max="100"></progress>
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"></progress>
                 </div>
               </div>
             </div>
@@ -173,10 +174,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                            class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                            :style="{ color: getProblemHexColor(detection) }"
-                            :value="getConfidencePercent(detection.confidence)"
-                            max="100"></progress>
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"></progress>
                 </div>
               </div>
             </div>
@@ -214,9 +215,11 @@ const sliderBubbleLeft = computed(() => {
 .overflow-y-auto::-webkit-scrollbar {
   width: 6px;
 }
+
 .overflow-y-auto::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background-color: #cbd5e1;
   border-radius: 10px;

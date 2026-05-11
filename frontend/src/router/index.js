@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { isAuthenticated } from '@/services/authService'
+import {createRouter, createWebHistory} from 'vue-router'
+import {isAuthenticated} from '@/services/authService'
 
 import AnalyzeView from '@/components/AnalyzeView.vue'
 import DashboardView from '@/components/DashboardView.vue'
@@ -20,25 +20,25 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         component: DashboardView,
-        meta: { requiresAuth: true },
+        meta: {requiresAuth: true},
     },
     {
         path: '/analyze',
         name: 'Analyze',
         component: AnalyzeView,
-        meta: { requiresAuth: true },
+        meta: {requiresAuth: true},
     },
     {
         path: '/diagnostic',
         name: 'Diagnostic',
         component: DiagnosticView,
-        meta: { requiresAuth: true },
+        meta: {requiresAuth: true},
     },
     {
         path: '/evolution',
         name: 'Evolution',
         component: EvolutionView,
-        meta: { requiresAuth: true },
+        meta: {requiresAuth: true},
     },
     {
         path: '/login',
@@ -70,14 +70,13 @@ router.beforeEach((to, from, next) => {
     // Si la ruta requiere autenticación y no hay sesión activa
     if (requiresAuth && !hasAuth) {
         // Redirigir a login
-        next({ name: 'Login' })
+        next({name: 'Login'})
     }
     // Si intenta acceder a login o registro estando autenticado
     else if ((to.name === 'Login' || to.name === 'Register') && hasAuth) {
         // Redirigir a dashboard
-        next({ name: 'Dashboard' })
-    }
-    else {
+        next({name: 'Dashboard'})
+    } else {
         next()
     }
 })

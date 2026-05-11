@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from 'vue'
-import { useAuthForm } from '@/composables/useAuthForm.js'
+import {computed} from 'vue'
+import {useAuthForm} from '@/composables/useAuthForm.js'
 
 // Recibe el contexto de página para reutilizar el mismo formulario en login y registro.
 const props = defineProps({
@@ -83,7 +83,8 @@ const {
                 <input
                     v-model="password"
                     class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                    placeholder="••••••••" :type="passwordVisible ? 'text' : 'password'" @blur="onPasswordBlur" @input="onPasswordInput"/>
+                    placeholder="••••••••" :type="passwordVisible ? 'text' : 'password'" @blur="onPasswordBlur"
+                    @input="onPasswordInput"/>
                 <span
                     class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-outline-variant hover:text-secondary transition-colors"
                     :data-icon="passwordVisible ? 'visibility_off' : 'visibility'"

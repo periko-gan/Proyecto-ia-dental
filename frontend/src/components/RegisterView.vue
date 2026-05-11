@@ -12,7 +12,7 @@ import Formulario from "@/components/parts/login_register/Formulario.vue";
 
     <Header/>
 
-<!--    <Aside/>-->
+    <!--    <Aside/>-->
 
     <Formulario page="register"/>
 

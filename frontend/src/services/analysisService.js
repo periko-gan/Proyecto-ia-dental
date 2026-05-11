@@ -1,4 +1,4 @@
-import { postGraphQL } from '@/services/graphqlClient'
+import {postGraphQL} from '@/services/graphqlClient'
 
 const MY_ANALYSES_QUERY = `
   query MyAnalyses($limit: Int, $offset: Int) {
@@ -22,6 +22,6 @@ const MY_ANALYSES_QUERY = `
 `
 
 export async function fetchMyAnalyses(limit = 20, offset = 0) {
-  const data = await postGraphQL(MY_ANALYSES_QUERY, { limit, offset })
-  return data.myAnalyses
+    const data = await postGraphQL(MY_ANALYSES_QUERY, {limit, offset})
+    return data.myAnalyses
 }
