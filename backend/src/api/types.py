@@ -66,6 +66,7 @@ class Role(Enum):
 class User:
     user_id: str
     email: str
+    name: str
     role: Role
     is_active: bool
     created_at: datetime
@@ -117,6 +118,7 @@ def to_graphql_user(record: UserRecord) -> User:
     return User(
         user_id=record.user_id,
         email=record.email,
+        name=record.name,
         role=to_graphql_role(record.role),
         is_active=record.is_active,
         created_at=record.created_at,

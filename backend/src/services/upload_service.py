@@ -1,12 +1,18 @@
 from __future__ import annotations
 
 import base64
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from uuid import uuid4
 
 from src.config.settings import Settings
 from src.domain.exceptions import ValidationError
+from src.events.image_events import create_image_uploaded_event
+from src.events.publishers import EventPublisher
+from src.services.event_emitter import EventEmitter
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -18,11 +24,12 @@ class StoredUpload:
     file_path: Path
 
 
-class UploadService:
-    def __init__(self, settings: Settings) -> None:
+class UploadService(EventEmitter):
+    def __init__(self, settings: Settings, event_publisher: EventPublisher | None = None) -> None:
+        super().__init__(event_publisher=event_publisher, logger_name=__name__)
         self._settings = settings
 
-    async def save_upload(self, file_base64: str, file_name: str, mime_type: str) -> StoredUpload:
+    async def save_upload(self, file_base64: str, file_name: str, mime_type: str, user_id: str) -> StoredUpload:
         if mime_type not in self._settings.allowed_mime_types:
             raise ValidationError(f"Tipo de archivo no permitido: {mime_type}")
 
@@ -44,11 +51,30 @@ class UploadService:
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_bytes(content)
 
-
-        return StoredUpload(
+        stored = StoredUpload(
             analysis_id=analysis_id,
             file_name=file_name,
             mime_type=mime_type,
             file_size_bytes=file_size_bytes,
             file_path=file_path,
         )
+
+        # Publicar evento de imagen subida
+        await self._safe_publish_event(
+            create_image_uploaded_event(
+                analysis_id=analysis_id,
+                user_id=user_id,
+                file_name=file_name,
+                mime_type=mime_type,
+                file_size_bytes=file_size_bytes,
+                file_path=str(file_path),
+                correlation_id=analysis_id,
+            )
+        )
+        await self.publish_system_log(
+            message="Imagen subida correctamente",
+            context={"analysis_id": analysis_id, "user_id": user_id, "file_name": file_name},
+            source="UploadService",
+        )
+
+        return stored

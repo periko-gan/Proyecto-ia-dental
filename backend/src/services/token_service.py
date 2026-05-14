@@ -21,6 +21,7 @@ class TokenService:
         payload: dict[str, Any] = {
             "sub": user.user_id,
             "email": user.email,
+            "name": user.name,
             "role": user.role.value,
             "iat": int(now.timestamp()),
             "exp": int((now + timedelta(minutes=self._ttl_minutes)).timestamp()),

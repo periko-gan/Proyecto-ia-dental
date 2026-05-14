@@ -15,15 +15,23 @@ logger = logging.getLogger(__name__)
 
 @strawberry.type
 class Mutation:
-    @strawberry.mutation(description="Registra un nuevo usuario con email y contrasena.")
-    async def register_user(self, info: Info[AppContext, None], email: str, password: str) -> User:
-        user = await info.context.auth_service.register_user(email=email, password=password)
+    @strawberry.mutation(description="Registra un nuevo usuario con nombre, email y contrasena.")
+    async def register_user(self, info: Info[AppContext, None], name: str, email: str, password: str) -> User:
+        user = await info.context.auth_service.register_user(name=name, email=email, password=password)
         return to_graphql_user(user)
 
     @strawberry.mutation(description="Inicia sesion y devuelve un access token JWT para autenticacion Bearer.")
     async def login_user(self, info: Info[AppContext, None], email: str, password: str) -> AuthPayload:
         user, token = await info.context.auth_service.login_user(email=email, password=password)
         return AuthPayload(access_token=token, token_type="Bearer", user=to_graphql_user(user))
+
+    @strawberry.mutation(description="Refresca un token JWT válido y devuelve uno nuevo.")
+    async def refresh_token(self, info: Info[AppContext, None], token: str) -> str:
+        return await info.context.auth_service.refresh_token(token)
+
+    @strawberry.mutation(description="Publica evento de logout para un token válido.")
+    async def logout_user(self, info: Info[AppContext, None], token: str) -> bool:
+        return await info.context.auth_service.logout_user(token)
 
     @strawberry.mutation(description="Sube una radiografia en base64, ejecuta inferencia y guarda el analisis asociado al usuario autenticado.")
     async def upload_radiography(self, info: Info[AppContext, None], file_base64: str, file_name: str, mime_type: str) -> UploadResponse:

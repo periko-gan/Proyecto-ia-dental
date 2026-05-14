@@ -15,6 +15,7 @@ class UserRole(str, Enum):
 class UserRecord(BaseModel):
     user_id: str
     email: str
+    name: str = "Usuario"
     password_hash: str
     is_active: bool = True
     role: UserRole = UserRole.USER
@@ -28,6 +29,12 @@ class UserRecord(BaseModel):
         if not normalized or "@" not in normalized:
             raise ValueError("Email invalido")
         return normalized
+
+    @field_validator("name")
+    @classmethod
+    def normalize_name(cls, value: str) -> str:
+        normalized = value.strip()
+        return normalized or "Usuario"
 
     def to_mongo(self) -> dict[str, Any]:
         payload = self.model_dump()

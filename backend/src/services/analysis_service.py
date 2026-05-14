@@ -1,3 +1,5 @@
+"""Servicio de análisis de radiografías con soporte a eventos."""
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -10,12 +12,14 @@ from PIL import Image, UnidentifiedImageError
 
 from src.config.settings import Settings
 from src.domain.exceptions import InferenceError
-from src.events.publishers import EventPublisher, NullEventPublisher
+from src.events.analysis_events import create_analysis_requested_event
+from src.events.publishers import EventPublisher
 from src.persistence.models import AnalysisRecord, AnalysisStatus
 from src.persistence.repository import AnalysisRepository
+from src.services.event_emitter import EventEmitter
 from src.services.inference_service import InferenceService
+from src.services.result_service import ResultService
 from src.services.upload_service import UploadService
-
 
 logger = logging.getLogger(__name__)
 
@@ -34,44 +38,51 @@ def _prepare_image_for_inference(image_path: Path) -> Path:
         return image_path
 
 
-class AnalysisService:
+class AnalysisService(EventEmitter):
     def __init__(
         self,
         settings: Settings,
         upload_service: UploadService,
         inference_service: InferenceService,
+        result_service: ResultService,
         repository: AnalysisRepository,
         event_publisher: EventPublisher | None = None,
     ) -> None:
+        super().__init__(event_publisher=event_publisher, logger_name=__name__)
         self._settings = settings
         self._upload_service = upload_service
         self._inference_service = inference_service
+        self._result_service = result_service
         self._repository = repository
-        self._event_publisher = event_publisher or NullEventPublisher()
-
-    async def _safe_publish(self, event_name: str, payload: dict[str, object]) -> None:
-        try:
-            await self._event_publisher.publish(event_name, payload)
-        except Exception:
-            logger.exception("No se pudo publicar evento %s", event_name)
 
     async def upload_and_analyze(self, file_base64: str, file_name: str, mime_type: str, user_id: str) -> AnalysisRecord:
-        stored_file = await self._upload_service.save_upload(file_base64, file_name, mime_type)
-        await self._safe_publish(
-            "analysis.uploaded",
-            {
-                "analysis_id": stored_file.analysis_id,
-                "user_id": user_id,
-                "file_name": stored_file.file_name,
-                "mime_type": stored_file.mime_type,
-                "file_size_bytes": stored_file.file_size_bytes,
-            },
+        stored_file = await self._upload_service.save_upload(file_base64, file_name, mime_type, user_id)
+
+        # Publicar evento de análisis solicitado
+        await self._safe_publish_event(
+            create_analysis_requested_event(
+                analysis_id=stored_file.analysis_id,
+                user_id=user_id,
+                file_name=stored_file.file_name,
+                file_path=str(stored_file.file_path),
+                correlation_id=stored_file.analysis_id,
+            )
+        )
+        await self.publish_system_log(
+            message="Analisis solicitado",
+            context={"analysis_id": stored_file.analysis_id, "user_id": user_id},
+            source="AnalysisService",
         )
 
         try:
             inference_path = _prepare_image_for_inference(stored_file.file_path)
             try:
-                detections, inference_time_ms = await self._inference_service.run_inference(inference_path)
+                detections, inference_time_ms = await self._inference_service.process_requested_analysis(
+                    analysis_id=stored_file.analysis_id,
+                    user_id=user_id,
+                    image_path=inference_path,
+                    correlation_id=stored_file.analysis_id,
+                )
             finally:
                 if inference_path != stored_file.file_path:
                     with suppress(FileNotFoundError):
@@ -92,17 +103,9 @@ class AnalysisService:
                 updated_at=datetime.now(timezone.utc),
             )
             persisted_record = await self._repository.create_analysis(record)
-            await self._safe_publish(
-                "analysis.completed",
-                {
-                    "analysis_id": persisted_record.analysis_id,
-                    "user_id": persisted_record.user_id,
-                    "status": persisted_record.status.value,
-                    "detections_count": len(persisted_record.detections),
-                    "inference_time_ms": persisted_record.inference_time_ms,
-                    "model_version": persisted_record.model_version,
-                },
-            )
+
+            await self._result_service.publish_result_saved(persisted_record)
+
             return persisted_record
         except Exception as exc:
             record = AnalysisRecord(
@@ -120,17 +123,14 @@ class AnalysisService:
                 created_at=datetime.now(timezone.utc),
                 updated_at=datetime.now(timezone.utc),
             )
-            persisted_record = await self._repository.create_analysis(record)
-            await self._safe_publish(
-                "analysis.failed",
-                {
-                    "analysis_id": persisted_record.analysis_id,
-                    "user_id": persisted_record.user_id,
-                    "status": persisted_record.status.value,
-                    "error_message": persisted_record.error_message,
-                    "model_version": persisted_record.model_version,
-                },
+            await self._repository.create_analysis(record)
+            await self.publish_system_error(
+                error_message="Fallo el analisis",
+                error_type=type(exc).__name__,
+                context={"analysis_id": stored_file.analysis_id, "user_id": user_id},
+                source="AnalysisService",
             )
+
             raise InferenceError(str(exc)) from exc
 
     async def get_analysis_by_id(self, analysis_id: str) -> AnalysisRecord | None:

@@ -1,9 +1,10 @@
 import {postGraphQL} from '@/services/graphqlClient';
 
 const REGISTER_AND_LOGIN_MUTATION = `
-mutation RegisterAndLogin($email: String!, $password: String!) {
-  registerUser(email: $email, password: $password) {
+mutation RegisterAndLogin($name: String!, $email: String!, $password: String!) {
+  registerUser(name: $name, email: $email, password: $password) {
     userId
+    name
     email
     isActive
     createdAt
@@ -14,6 +15,7 @@ mutation RegisterAndLogin($email: String!, $password: String!) {
     user {
       createdAt
       email
+      name
       isActive
       role
       userId
@@ -29,6 +31,7 @@ mutation LoginUser($email: String!, $password: String!) {
     user {
       createdAt
       email
+      name
       isActive
       role
       userId
@@ -41,6 +44,7 @@ function persistSession(accessToken, user) {
     // Guardar datos de forma individual en sessionStorage para mejor acceso
     sessionStorage.setItem('accessToken', accessToken);
     sessionStorage.setItem('userId', user.userId);
+    sessionStorage.setItem('name', user.name || '');
     sessionStorage.setItem('email', user.email);
     sessionStorage.setItem('isActive', user.isActive ? 'true' : 'false');
     sessionStorage.setItem('role', user.role);
@@ -60,6 +64,7 @@ export function getSession() {
     return {
         accessToken,
         userId: sessionStorage.getItem('userId'),
+        name: sessionStorage.getItem('name') || '',
         email: sessionStorage.getItem('email'),
         isActive: sessionStorage.getItem('isActive') === 'true',
         role: sessionStorage.getItem('role'),
@@ -88,13 +93,14 @@ export function getAccessToken() {
 export function logout() {
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('isActive');
     sessionStorage.removeItem('role');
 }
 
-export async function registerAndLogin(email, password) {
-    const data = await postGraphQL(REGISTER_AND_LOGIN_MUTATION, {email, password});
+export async function registerAndLogin(name, email, password) {
+  const data = await postGraphQL(REGISTER_AND_LOGIN_MUTATION, {name, email, password});
     const loginPayload = data?.loginUser;
 
     if (!loginPayload?.accessToken || !loginPayload?.user) {

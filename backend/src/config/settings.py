@@ -42,7 +42,13 @@ class Settings(BaseSettings):
     events_transport: str = "log"
     kafka_enabled: bool = False
     kafka_bootstrap_servers: str = "localhost:9092"
-    kafka_topic_analysis_events: str = "analysis-events"
+    kafka_inference_consumer_enabled: bool = False
+    kafka_inference_consumer_group_id: str = "dental-inference-consumer"
+    kafka_inference_consumer_offset_reset: str = "latest"
+    # Configuración de eventos multicanal
+    event_format_version: int = 1
+    event_dead_letter_enabled: bool = True
+    mongo_dead_letter_collection: str = "dead_letter_events"
 
     auth_jwt_secret: str = "change-this-secret-in-production"
     auth_jwt_algorithm: str = "HS256"

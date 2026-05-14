@@ -66,6 +66,20 @@ export function useAuthForm(page) {
         return true
     }
 
+    function validateFullName() {
+        if (isLogin.value) {
+            return true
+        }
+
+        const value = fullName.value.trim()
+        if (!value) {
+            errorMessage.value = 'Debes ingresar tu nombre completo.'
+            return false
+        }
+
+        return true
+    }
+
     function onEmailBlur() {
         emailTouched.value = true
         validateEmail()
@@ -99,9 +113,10 @@ export function useAuthForm(page) {
     function validateForm() {
         emailTouched.value = true
         passwordTouched.value = true
+        const isFullNameValid = validateFullName()
         const isEmailValid = validateEmail()
         const isPasswordValid = validatePassword()
-        return isEmailValid && isPasswordValid
+        return isFullNameValid && isEmailValid && isPasswordValid
     }
 
     function togglePasswordVisibility() {
@@ -122,7 +137,7 @@ export function useAuthForm(page) {
             if (isLogin.value) {
                 await loginAndPersist(sanitizedEmail, password.value)
             } else {
-                await registerAndLogin(sanitizedEmail, password.value)
+                await registerAndLogin(fullName.value.trim(), sanitizedEmail, password.value)
             }
             await router.push({name: 'Dashboard'})
         } catch (error) {
