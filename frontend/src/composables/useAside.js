@@ -1,4 +1,4 @@
-import {computed} from 'vue'
+import {capitalize, computed, ref, onMounted, onUnmounted} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {getSession} from '@/services/authService'
 import {useDiagnosticAnalysis} from '@/composables/useDiagnosticAnalysis'
@@ -11,7 +11,7 @@ export function useAside() {
     const router = useRouter()
     const {clearAnalysis} = useDiagnosticAnalysis()
 
-    const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesión')
+    const loggedUserName = computed(() => getSession()?.name || 'Usuario sin sesión')
 
     function navLinkClass(routeName) {
         const baseClass = 'text-slate-500 hover:text-blue-700'
@@ -46,9 +46,24 @@ export function useAside() {
         router.push('/')
     }
 
+    // Mobile/hamburger drawer state & helpers
+    const isOpen = ref(false)
+    function openMenu(){ isOpen.value = true }
+    function closeMenu(){ isOpen.value = false }
+
+    function onKeydown(e){ if (e?.key === 'Escape') closeMenu() }
+    onMounted(()=> window.addEventListener('keydown', onKeydown))
+    onUnmounted(()=> window.removeEventListener('keydown', onKeydown))
+
+    function logoutAndClose(){ handleLogout(); closeMenu() }
+
     return {
-        loggedUserEmail,
+        loggedUserName,
         navLinkClass,
         handleLogout,
+        isOpen,
+        openMenu,
+        closeMenu,
+        logoutAndClose,
     }
 }

@@ -58,8 +58,10 @@ function viewDetails(analysis) {
         <span class="loading loading-spinner text-primary"></span>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
+      <!-- Desktop/tablet: show table on md+ -->
+      <div class="hidden md:block overflow-x-auto w-full">
+        <!-- table remains for larger screens -->
+        <table class="table table-zebra w-full min-w-max">
           <!-- head -->
           <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
           <tr>
@@ -116,6 +118,49 @@ function viewDetails(analysis) {
           </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Mobile: stacked cards -->
+      <div class="md:hidden space-y-4">
+        <div v-for="analysis in analyses" :key="analysis.analysisId" class="bg-white rounded-lg shadow-sm border p-4">
+          <div class="flex justify-between items-start gap-3">
+            <div class="min-w-0">
+              <div class="font-bold text-slate-800 truncate">{{ analysis.fileName }}</div>
+              <div class="text-[10px] text-slate-400 font-mono mt-0.5">{{ analysis.analysisId.split('-')[0] }}</div>
+              <div class="text-sm text-slate-600 mt-2">{{ formatDate(analysis.createdAt) }}</div>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <div :class="['badge badge-sm font-bold text-[10px]', getStatusBadgeClass(analysis.status)]">
+                {{ analysis.status === 'COMPLETED' ? 'COMPLETADO' : analysis.status === 'FAILED' ? 'FALLIDO' : 'PENDIENTE' }}
+              </div>
+              <button
+                  class="btn btn-sm btn-ghost text-primary font-bold text-xs mt-1"
+                  :disabled="analysis.status !== 'COMPLETED'"
+                  @click="viewDetails(analysis)"
+              >
+                Ver
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div v-if="analysis.status === 'COMPLETED' && analysis.detections" class="flex flex-wrap gap-2">
+              <template v-for="(count, severity) in countSeverities(analysis.detections)" :key="severity">
+                <div v-if="count > 0" class="flex items-center gap-1.5 text-xs">
+                  <span class="w-2 h-2 rounded-full" :class="{
+                    'bg-error': severity === 'critical',
+                    'bg-warning': severity === 'warning',
+                    'bg-success': severity === 'success'
+                  }"></span>
+                  <span class="font-bold">{{ count }}</span>
+                  <span class="text-slate-500 ml-1">{{ severity.toUpperCase() }}</span>
+                </div>
+              </template>
+              <div v-if="analysis.detections.length === 0" class="badge badge-ghost text-[10px] font-bold">Sin hallazgos</div>
+            </div>
+            <div v-else class="text-xs text-slate-400">-</div>
+          </div>
+        </div>
       </div>
 
       <!-- Paginación -->
