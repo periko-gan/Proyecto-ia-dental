@@ -25,8 +25,7 @@ import ProblemTypesChart from "@/components/parts/dashboard/ProblemTypesChart.vu
           <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
             <div class="space-y-1">
               <span class="badge badge-secondary badge-outline font-bold tracking-widest text-[10px] h-auto py-1 px-3">RESUMEN CLÍNICO</span>
-              <h1 class="text-3xl font-extrabold font-headline tracking-tight text-slate-900">Panel de salud del
-                paciente</h1>
+              <h1 class="text-3xl font-extrabold font-headline tracking-tight text-slate-900">Estadísticas de resultados obtenidos</h1>
             </div>
             <div class="alert bg-white border border-slate-200 shadow-sm w-auto py-2 px-4 gap-3">
               <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -34,22 +33,29 @@ import ProblemTypesChart from "@/components/parts/dashboard/ProblemTypesChart.vu
             </div>
           </div>
 
+          <!-- Bento Grid (Responsive Flexbox) -->
+          <div class="flex flex-col xl:flex-row gap-6 mb-10 w-full items-stretch">
+
+            <!-- Health Score Hero -->
+            <div class="w-full xl:flex-[1] flex">
+              <HealthScoreHero class="w-full h-full"/>
+            </div>
+
+            <!-- Latest Diagnosis -->
+            <div class="w-full xl:flex-[1.4] flex">
+              <LatestDiagnosisSummary class="w-full h-full"/>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="w-full xl:flex-[1.1] flex">
+              <ProblemTypesChart class="w-full h-full"/>
+            </div>
+
+          </div>
+
           <!-- Tabla-->
           <AllDiagnostics/>
 
-          <!-- Bento Grid -->
-          <div class="flex justify-evenly gap-2">
-
-            <!-- Health Score Hero -->
-            <HealthScoreHero/>
-
-            <!-- Latest Diagnosis -->
-            <LatestDiagnosisSummary/>
-
-            <!-- Chart Section -->
-            <ProblemTypesChart/>
-
-          </div>
         </div>
       </main>
     </div>

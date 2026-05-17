@@ -31,19 +31,19 @@ const {
           {{ heroHealthLabel }}
         </div>
       </div>
-      <div class="py-10 flex items-baseline gap-2">
+      <div class="py-5 flex items-baseline gap-2">
         <span class="text-7xl font-black font-headline">{{ heroHealthScore ?? '--' }}</span>
         <span class="text-2xl font-bold opacity-60">/100</span>
       </div>
       <div class="space-y-4">
         <progress class="progress progress-secondary w-full" max="100" :value="heroHealthScore ?? 0"></progress>
-        <p class="text-sm font-medium leading-relaxed text-blue-50">{{ heroHealthSummary }}</p>
-        <div v-if="heroCompletedAnalyses.length > 0" class="flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-wider">
-          <span class="badge badge-outline border-white/20 text-white/90">{{ heroCompletedAnalyses.length }} análisis</span>
-          <span class="badge badge-outline border-white/20 text-white/90">{{ heroDetections.length }} hallazgos</span>
-          <span class="badge badge-outline border-white/20 text-white/90">Media {{ heroHealthScore ?? 0 }}%</span>
-          <span v-if="heroSeverityCounts.critical > 0" class="badge badge-outline border-white/20 text-white/90">{{ heroSeverityCounts.critical }} críticos</span>
-          <span v-if="heroSeverityCounts.warning > 0" class="badge badge-outline border-white/20 text-white/90">{{ heroSeverityCounts.warning }} seguimiento</span>
+<!-- <p class="text-sm font-medium leading-relaxed text-blue-50">{{ heroHealthSummary }}</p>-->
+        <div v-if="heroCompletedAnalyses.length > 0" class="flex flex-col flex-wrap gap-4 text-[10px] font-bold uppercase tracking-wider mt-4">
+          <span class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90">{{ heroCompletedAnalyses.length }} radiografiàs analizadas</span>
+          <span class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90">{{ heroDetections.length }} problemas hallados</span>
+          <span class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90">Media de aciertos del {{ heroHealthScore ?? 0 }}%</span>
+          <span v-if="heroSeverityCounts.critical > 0" class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90">{{ heroSeverityCounts.critical }} críticos</span>
+          <span v-if="heroSeverityCounts.warning > 0" class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90">{{ heroSeverityCounts.warning }} problemas en seguimiento</span>
         </div>
       </div>
       </div>

@@ -21,10 +21,10 @@ const {
       <div class="card-body p-6">
         <div class="flex justify-between items-start mb-3 gap-4">
           <div>
-            <h3 class="font-headline font-extrabold text-slate-900 text-lg">Último diagnóstico de IA</h3>
+            <h3 class="font-headline font-extrabold text-slate-900 text-lg">Último diagnóstico</h3>
             <p class="text-[10px] text-slate-500 font-label tracking-wide uppercase">
               {{
-                latestAnalysis ? `Actualizado ${lastUpdate}` : analysesLoading ? 'Cargando historial' : 'Sin diagnóstico reciente'
+                latestAnalysis ? `${lastUpdate}` : analysesLoading ? 'Cargando historial' : 'Sin diagnóstico reciente'
               }}
             </p>
           </div>
@@ -44,6 +44,7 @@ const {
                 </div>
               </div>
             </div>
+
             <div class="flex-1">
               <div class="rounded-xl border border-slate-100 bg-slate-50 p-4 space-y-2">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">RESUMEN DEL ÚLTIMO
@@ -53,7 +54,7 @@ const {
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-center">
             <div class="rounded-xl border border-slate-100 bg-white p-3">
               <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Hallazgos</p>
               <p class="mt-1 text-2xl font-black text-slate-900">{{ detections.length }}</p>
@@ -67,7 +68,8 @@ const {
           <div class="space-y-1">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Hallazgo principal</p>
             <p class="text-base font-bold text-slate-900 leading-tight">{{ mainFinding }}</p>
-            <p class="text-xs text-slate-500">{{ latestAnalysis.fileName }} • {{ lastUpdate }}</p>
+            <!--            <p class="text-xs text-slate-500">{{ latestAnalysis.fileName }}</p>-->
+            <!--            <p class="text-xs text-slate-500">{{ lastUpdate }}</p>-->
           </div>
 
         </div>
