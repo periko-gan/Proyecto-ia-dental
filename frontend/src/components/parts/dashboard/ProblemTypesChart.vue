@@ -12,33 +12,33 @@
         </div>
       </div>
 
-
+      <!--charts-->
       <div class="flex justify-evenly w-full">
         <div class="flex flex-col items-center gap-6">
-          <div class="radial-progress text-primary font-black font-headline text-lg" role="progressbar"
+          <div class="radial-progress text-caries font-black font-headline text-lg" role="progressbar"
                style="--value:85; --size:6rem; --thickness: 8px;">90%
           </div>
-          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Incisivos</span>
+          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Caries</span>
         </div>
         <div class="flex flex-col items-center gap-6">
-          <div class="radial-progress text-secondary font-black font-headline text-lg" role="progressbar"
+          <div class="radial-progress text-empaste font-black font-headline text-lg" role="progressbar"
                style="--value:80; --size:6rem; --thickness: 8px;">75%
           </div>
-          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Molares</span>
+          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Empaste</span>
         </div>
       </div>
       <div class="flex justify-evenly w-full">
         <div class="flex flex-col items-center gap-6">
-          <div class="radial-progress text-info font-black font-headline text-lg" role="progressbar"
+          <div class="radial-progress text-implante font-black font-headline text-lg" role="progressbar"
                style="--value:85; --size:6rem; --thickness: 8px;">85%
           </div>
-          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Caninos</span>
+          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Implante</span>
         </div>
         <div class="flex flex-col items-center gap-6">
-          <div class="radial-progress text-emerald-600 font-black font-headline text-lg" role="progressbar"
+          <div class="radial-progress text-impactado font-black font-headline text-lg" role="progressbar"
                style="--value:80; --size:6rem; --thickness: 8px;">80%
           </div>
-          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Premolares</span>
+          <span class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto">Diente impactado</span>
         </div>
       </div>
     </div>
@@ -46,3 +46,20 @@
 
 </template>
 
+<style>
+
+.text-caries {
+  color: #EF4444;
+}
+
+.text-empaste {
+  color: #F59E0B;
+}
+.text-implante {
+  color: #12457EFF;
+}
+.text-impactado {
+  color: #8B5CF6;
+}
+
+</style>

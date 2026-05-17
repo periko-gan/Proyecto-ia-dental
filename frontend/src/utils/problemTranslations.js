@@ -5,80 +5,23 @@
 
 export const problemTranslations = {
     cavity: 'Caries',
-    caries: 'Caries',
-    decay: 'Caries dental',
-
     filling: 'Empaste',
-    restoration: 'Restauración defectuosa',
-    crown: 'Corona',
-
     implant: 'Implante',
-
-    plaque: 'Placa bacteriana',
-    placa: 'Placa bacteriana',
-    tartar: 'Sarro',
-    calculus: 'Cálculo dental',
-
-    periodontitis: 'Periodontitis',
-    gingivitis: 'Gingivitis',
-    inflammation: 'Inflamación',
-    inflamation: 'Inflamación',
-
-    endodontic: 'Problema endodóntico',
-    pulp: 'Afección pulpar',
-    abscess: 'Absceso',
-
-    bone_loss: 'Pérdida ósea',
-    resorption: 'Resorción',
-
-    fracture: 'Fractura',
-    broken: 'Diente fracturado',
-
-    malocclusion: 'Maloclusión',
-    misalignment: 'Desalineación',
-
-    normal: 'Saludable',
-    healthy: 'Saludable',
     impacted: 'Diente impactado',
 };
 
 export const problemColors = {
     cavity: '#EF4444',
-    caries: '#EF4444',
-    decay: '#DC2626',
+    // caries: '#EF4444',
 
     filling: '#F59E0B',
-    restoration: '#F59E0B',
-    crown: '#F59E0B',
+    // empaste: '#F59E0B',
 
-    implant: '#8B5CF6',
+    implant: '#12457EFF',
+    // implante: '#8B5CF6',
 
-    plaque: '#F97316',
-    placa: '#F97316',
-    tartar: '#EA580C',
-    calculus: '#EA580C',
-
-    periodontitis: '#EC4899',
-    gingivitis: '#EC4899',
-    inflammation: '#F43F5E',
-    inflamation: '#F43F5E',
-
-    endodontic: '#06B6D4',
-    pulp: '#06B6D4',
-    abscess: '#0369A1',
-
-    bone_loss: '#A78BFA',
-    resorption: '#A78BFA',
-
-    fracture: '#6B21A8',
-    broken: '#6B21A8',
-
-    malocclusion: '#06B6D4',
-    misalignment: '#06B6D4',
-
-    normal: '#10B981',
-    healthy: '#10B981',
     impacted: '#8B5CF6',
+    // impactado: '#8B5CF6',
 };
 
 function removeDiacritics(value) {
