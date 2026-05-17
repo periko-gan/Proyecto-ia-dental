@@ -1,5 +1,5 @@
 <script setup>
-import logo from "@/assets/img/logo01.png";
+import logo from "@/assets/img/logo.png";
 import {useAside} from '@/composables/useAside'
 
 // destructure the composable - mobile menu logic lives in the composable now
