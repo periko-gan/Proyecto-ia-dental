@@ -185,18 +185,20 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
     'opsz' 24;
 }
 
-//.scan-line {
-//  height: 2px;
-//  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
-//  box-shadow: 0 0 15px #22d3ee;
-//  position: absolute;
-//  width: 100%;
-//  top: 0;
-//  z-index: 20;
-//}
-//
-//.glass-panel {
-//  backdrop-filter: blur(12px);
-//  background: rgba(15, 23, 42, 0.8);
-//}
+/*
+.scan-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+  box-shadow: 0 0 15px #22d3ee;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 20;
+}
+
+.glass-panel {
+  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.8);
+}
+*/
 </style>
