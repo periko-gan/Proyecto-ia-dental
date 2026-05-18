@@ -1,7 +1,7 @@
-import {computed} from 'vue'
-import {useMyAnalyses} from '@/composables/useMyAnalyses'
-import {useDiagnosticAnalysis} from '@/composables/useDiagnosticAnalysis'
-import {getProblemSeverity} from '@/utils/problemTranslations'
+import { computed } from 'vue'
+import { useMyAnalyses } from '@/composables/useMyAnalyses'
+import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
+import { getProblemSeverity } from '@/utils/problemTranslations'
 
 function normalizeConfidenceToPercent(confidence) {
   const value = Number(confidence)
@@ -10,8 +10,8 @@ function normalizeConfidenceToPercent(confidence) {
 }
 
 const useHealthScoreHero = () => {
-  const {analyses, loading: analysesLoading, error: analysesError, formatDate} = useMyAnalyses(50)
-  const {currentAnalysis} = useDiagnosticAnalysis()
+  const { analyses, loading: analysesLoading, error: analysesError, formatDate } = useMyAnalyses(50)
+  const { currentAnalysis } = useDiagnosticAnalysis()
 
   const heroAnalyses = computed(() => {
     const unique = new Map()
@@ -38,7 +38,7 @@ const useHealthScoreHero = () => {
   })
 
   const heroSeverityCounts = computed(() => {
-    const counts = {critical: 0, warning: 0, success: 0}
+    const counts = { critical: 0, warning: 0, success: 0 }
 
     for (const detection of heroDetections.value) {
       const severity = getProblemSeverity(detection)
@@ -54,8 +54,8 @@ const useHealthScoreHero = () => {
     if (heroCompletedAnalyses.value.length === 0) return null
 
     const confidences = heroDetections.value
-        .map((detection) => normalizeConfidenceToPercent(detection?.confidence))
-        .filter((value) => value !== null)
+      .map((detection) => normalizeConfidenceToPercent(detection?.confidence))
+      .filter((value) => value !== null)
 
     if (confidences.length === 0) return 100
 
@@ -77,8 +77,8 @@ const useHealthScoreHero = () => {
   const heroHealthSummary = computed(() => {
     if (heroCompletedAnalyses.value.length === 0) {
       return analysesError.value
-          ? `No se pudo cargar el historial: ${analysesError.value}. Inicia un análisis nuevo para generar el score.`
-          : 'Sube una radiografía para calcular un índice de salud dental y compararlo con tu historial.'
+        ? `No se pudo cargar el historial: ${analysesError.value}. Inicia un análisis nuevo para generar el score.`
+        : 'Sube una radiografía para calcular un índice de salud dental y compararlo con tu historial.'
     }
 
     if (heroDetections.value.length === 0) {
@@ -90,9 +90,12 @@ const useHealthScoreHero = () => {
   })
 
   const heroLatestAnalysis = computed(() => {
-    return heroCompletedAnalyses.value
+    return (
+      heroCompletedAnalyses.value
         .slice()
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ?? null
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ??
+      null
+    )
   })
 
   const heroLastUpdate = computed(() => {
@@ -115,5 +118,4 @@ const useHealthScoreHero = () => {
 
 void useHealthScoreHero
 
-export {useHealthScoreHero}
-
+export { useHealthScoreHero }

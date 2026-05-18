@@ -1,23 +1,22 @@
 <script setup>
 // Vista de reporte diagnostico: combina imagen anotada y panel de hallazgos.
 
-import Aside from "@/components/parts/all_pages/Aside.vue";
-import Footer from "@/components/parts/all_pages/Footer.vue";
-import ImageAnalyzed from "@/components/parts/diagnostic/ImageAnalyzed.vue";
-import DentalProblems from "@/components/parts/diagnostic/DentalProblems.vue";
-import {computed} from "vue";
-import {getSession} from "@/services/authService.js";
+import Aside from '@/components/parts/all_pages/Aside.vue'
+import Footer from '@/components/parts/all_pages/Footer.vue'
+import ImageAnalyzed from '@/components/parts/diagnostic/ImageAnalyzed.vue'
+import DentalProblems from '@/components/parts/diagnostic/DentalProblems.vue'
+import { computed } from 'vue'
+import { getSession } from '@/services/authService.js'
 
 const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesión')
 </script>
 
 <template>
-
   <div class="bg-surface font-body text-on-surface">
     <!-- TopNavBar -->
     <!--    <Header/>-->
     <!-- SideNavBar -->
-    <Aside/>
+    <Aside />
     <!-- Main Content Canvas -->
     <main class="md:ml-64 pt-20 px-8 pb-12 min-h-screen">
       <div class="max-w-7xl mx-auto py-8">
@@ -30,10 +29,12 @@ const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesi�
             <!--                <li class="text-primary font-semibold">Informe #AX-9021</li>-->
             <!--              </ul>-->
             <!--            </div>-->
-            <h1 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">Informe diagnóstico de
-              IA</h1>
-            <p class="text-on-surface-variant mt-1">Paciente: {{ loggedUserEmail }} • Fecha de escaneo: 24 oct.,
-              2024</p>
+            <h1 class="text-4xl font-headline font-extrabold text-on-surface tracking-tight">
+              Informe diagnóstico de IA
+            </h1>
+            <p class="text-on-surface-variant mt-1">
+              Paciente: {{ loggedUserEmail }} • Fecha de escaneo: 24 oct., 2024
+            </p>
           </div>
           <!--          <div class="flex gap-3">-->
           <!--            <button class="btn btn-outline btn-sm border-outline-variant text-on-surface font-bold normal-case">-->
@@ -74,21 +75,24 @@ const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesi�
         <!-- Analysis Layout -->
         <div class="grid grid-cols-12 gap-6">
           <!-- Left: Visualizer -->
-          <ImageAnalyzed/>
+          <ImageAnalyzed />
           <!-- Right: Findings Panel -->
-          <DentalProblems/>
+          <DentalProblems />
         </div>
       </div>
     </main>
     <!-- Footer -->
-    <Footer/>
+    <Footer />
   </div>
-
 </template>
 
 <style scoped>
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
 
 .glass-panel {

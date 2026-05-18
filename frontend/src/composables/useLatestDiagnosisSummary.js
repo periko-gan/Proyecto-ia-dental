@@ -1,7 +1,7 @@
-import {computed} from 'vue'
-import {useMyAnalyses} from '@/composables/useMyAnalyses'
-import {useDiagnosticAnalysis} from '@/composables/useDiagnosticAnalysis'
-import {getProblemSeverity, translateProblem} from '@/utils/problemTranslations'
+import { computed } from 'vue'
+import { useMyAnalyses } from '@/composables/useMyAnalyses'
+import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
+import { getProblemSeverity, translateProblem } from '@/utils/problemTranslations'
 
 function normalizeConfidenceToPercent(confidence) {
   const value = Number(confidence)
@@ -10,8 +10,8 @@ function normalizeConfidenceToPercent(confidence) {
 }
 
 const useLatestDiagnosisSummary = () => {
-  const {analyses, loading: analysesLoading, error: analysesError, formatDate} = useMyAnalyses(50)
-  const {currentAnalysis} = useDiagnosticAnalysis()
+  const { analyses, loading: analysesLoading, error: analysesError, formatDate } = useMyAnalyses(50)
+  const { currentAnalysis } = useDiagnosticAnalysis()
 
   const allAnalyses = computed(() => {
     const unique = new Map()
@@ -34,15 +34,18 @@ const useLatestDiagnosisSummary = () => {
   })
 
   const latestAnalysis = computed(() => {
-    return completedAnalyses.value
+    return (
+      completedAnalyses.value
         .slice()
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ?? null
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0] ??
+      null
+    )
   })
 
   const detections = computed(() => latestAnalysis.value?.detections ?? [])
 
   const severityCounts = computed(() => {
-    const counts = {critical: 0, warning: 0, success: 0}
+    const counts = { critical: 0, warning: 0, success: 0 }
 
     for (const detection of detections.value) {
       const severity = getProblemSeverity(detection)
@@ -57,21 +60,19 @@ const useLatestDiagnosisSummary = () => {
   const mainFinding = computed(() => {
     if (detections.value.length === 0) return 'Sin hallazgos visibles'
 
-    const topDetection = detections.value
-        .slice()
-        .sort((a, b) => {
-          const confidenceA = normalizeConfidenceToPercent(a?.confidence) ?? 0
-          const confidenceB = normalizeConfidenceToPercent(b?.confidence) ?? 0
-          return confidenceB - confidenceA
-        })[0]
+    const topDetection = detections.value.slice().sort((a, b) => {
+      const confidenceA = normalizeConfidenceToPercent(a?.confidence) ?? 0
+      const confidenceB = normalizeConfidenceToPercent(b?.confidence) ?? 0
+      return confidenceB - confidenceA
+    })[0]
 
     return translateProblem(topDetection)
   })
 
   const averageConfidence = computed(() => {
     const confidences = detections.value
-        .map((detection) => normalizeConfidenceToPercent(detection?.confidence))
-        .filter((value) => value !== null)
+      .map((detection) => normalizeConfidenceToPercent(detection?.confidence))
+      .filter((value) => value !== null)
 
     if (confidences.length === 0) return null
 
@@ -82,14 +83,14 @@ const useLatestDiagnosisSummary = () => {
   const summary = computed(() => {
     if (!latestAnalysis.value) {
       return analysesError.value
-          ? `No se pudo cargar el historial: ${analysesError.value}.`
-          : 'Todavía no hay un diagnóstico reciente para resumir.'
+        ? `No se pudo cargar el historial: ${analysesError.value}.`
+        : 'Todavía no hay un diagnóstico reciente para resumir.'
     }
 
     if (latestAnalysis.value.status === 'FAILED') {
       return latestAnalysis.value.errorMessage
-          ? `El último análisis falló: ${latestAnalysis.value.errorMessage}`
-          : 'El último análisis no pudo completarse correctamente.'
+        ? `El último análisis falló: ${latestAnalysis.value.errorMessage}`
+        : 'El último análisis no pudo completarse correctamente.'
     }
 
     if (latestAnalysis.value.status === 'PENDING') {
@@ -143,8 +144,8 @@ const useLatestDiagnosisSummary = () => {
     const fileName = parts[parts.length - 1]
 
     const baseUrl = import.meta.env.VITE_GRAPHQL_ENDPOINT
-        ? import.meta.env.VITE_GRAPHQL_ENDPOINT.replace('/graphql', '')
-        : 'http://localhost:8000'
+      ? import.meta.env.VITE_GRAPHQL_ENDPOINT.replace('/graphql', '')
+      : 'http://localhost:8000'
 
     return `${baseUrl}/uploads/${fileName}`
   }
@@ -171,5 +172,4 @@ const useLatestDiagnosisSummary = () => {
 
 void useLatestDiagnosisSummary
 
-export {useLatestDiagnosisSummary}
-
+export { useLatestDiagnosisSummary }

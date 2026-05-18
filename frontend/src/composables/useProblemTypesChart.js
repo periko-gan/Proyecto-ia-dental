@@ -1,11 +1,11 @@
-import {computed} from 'vue'
-import {useMyAnalyses} from '@/composables/useMyAnalyses'
-import {useDiagnosticAnalysis} from '@/composables/useDiagnosticAnalysis'
+import { computed } from 'vue'
+import { useMyAnalyses } from '@/composables/useMyAnalyses'
+import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
 
 export function useProblemTypesChart() {
   // Usar el límite máximo para traer todos los análisis
-  const {analyses} = useMyAnalyses(200)
-  const {currentAnalysis} = useDiagnosticAnalysis()
+  const { analyses } = useMyAnalyses(200)
+  const { currentAnalysis } = useDiagnosticAnalysis()
 
   // Obtener análisis únicos y completados
   const completedAnalyses = computed(() => {
@@ -44,7 +44,7 @@ export function useProblemTypesChart() {
 
       if (className.includes('cavity')) {
         counts.caries += 1
-      } else if (className.includes('filling') || className.includes('empaste') || className.includes('restoration')) {
+      } else if (className.includes('filling') || className.includes('empaste')) {
         counts.empaste += 1
       } else if (className.includes('implant') || className.includes('implante')) {
         counts.implante += 1
@@ -88,4 +88,3 @@ export function useProblemTypesChart() {
     allDetections,
   }
 }
-

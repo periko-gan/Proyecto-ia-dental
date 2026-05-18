@@ -1,19 +1,18 @@
 <script setup>
 // Vista de analisis: integra layout comun y el módulo de carga/validación de imagenes.
 
-import Aside from "@/components/parts/all_pages/Aside.vue";
-import Footer from "@/components/parts/all_pages/Footer.vue";
-import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
+import Aside from '@/components/parts/all_pages/Aside.vue'
+import Footer from '@/components/parts/all_pages/Footer.vue'
+import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
 </script>
 
 <template>
-
   <div class="bg-surface font-body text-on-surface antialiased">
     <!-- TopNavBar (Shared Component) -->
     <!--    <Header/>-->
 
     <!-- Sidebar -->
-    <Aside/>
+    <Aside />
 
     <!-- Main Content Canvas -->
     <main class="pt-20 md:pl-64 min-h-screen flex flex-col lg:flex-row gap-0">
@@ -22,13 +21,17 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
         <div class="w-full max-w-4xl space-y-8">
           <div class="flex justify-between items-end">
             <div>
-              <h3 class="font-headline text-3xl font-extrabold text-primary mb-2">Análisis clínico de imagen</h3>
-              <p class="text-on-surface-variant font-medium">Sube fotografías intraorales o radiografías para apoyo
-                diagnóstico con IA.</p>
+              <h3 class="font-headline text-3xl font-extrabold text-primary mb-2">
+                Análisis clínico de imagen
+              </h3>
+              <p class="text-on-surface-variant font-medium">
+                Sube fotografías intraorales o radiografías para apoyo diagnóstico con IA.
+              </p>
             </div>
             <div class="flex gap-3">
               <div
-                  class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]">
+                class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]"
+              >
                 <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
                 Sistema de IA listo
               </div>
@@ -36,7 +39,7 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
           </div>
           <!-- Drag & Drop Zone -->
           <div class="relative group">
-            <UploadImages/>
+            <UploadImages />
           </div>
           <!-- Bento Grid Tools -->
           <!--          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">-->
@@ -79,8 +82,14 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
             <span class="material-symbols-outlined text-blue-600" data-icon="info">info</span>
             <div class="flex-1">
               <h3 class="font-bold text-sm text-blue-900">Red neuronal activa</h3>
-              <div class="text-xs text-blue-700">Analizando patrones patológicos... 78% completado</div>
-              <progress class="progress progress-primary w-full mt-2" max="100" value="78"></progress>
+              <div class="text-xs text-blue-700">
+                Analizando patrones patológicos... 78% completado
+              </div>
+              <progress
+                class="progress progress-primary w-full mt-2"
+                max="100"
+                value="78"
+              ></progress>
             </div>
             <button class="btn btn-sm btn-ghost">Cancelar</button>
           </div>
@@ -163,14 +172,17 @@ import UploadImages from "@/components/parts/upload_images/UploadImages.vue";
       <!--      </aside>-->
     </main>
     <!-- Footer (Shared Component) -->
-    <Footer/>
+    <Footer />
   </div>
-
 </template>
 
 <style>
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }
 
 .scan-line {
