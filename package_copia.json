@@ -1,0 +1,14 @@
+{
+  "name": "codigo-proyecto-final",
+  "private": true,
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "preview": "pnpm --filter frontend preview",
+    "format": "pnpm --filter frontend format",
+    "backend": "cd backend && docker compose -f docker-compose.mongo.yml up -d && .\\.venv\\Scripts\\python.exe -m uvicorn main:app --reload --host 0.0.0.0 --port 8000",
+    "start": "start cmd /k pnpm run dev & start cmd /k pnpm run backend"
+  }
+}
+
