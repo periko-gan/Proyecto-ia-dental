@@ -45,7 +45,6 @@ const sliderBubbleLeft = computed(() => {
               <p class="text-[10px] font-bold uppercase tracking-widest text-cyan-700">
                 Umbral de confianza clínica
               </p>
-              <!--              <p class="text-xs text-slate-600">Mostrar hallazgos desde este porcentaje mínimo</p>-->
             </div>
             <div class="badge badge-info badge-outline font-bold">
               {{ formatMinimumConfidence(minimumConfidence) }}

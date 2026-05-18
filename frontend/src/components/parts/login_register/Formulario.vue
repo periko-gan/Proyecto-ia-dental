@@ -77,12 +77,12 @@ const {
               <label
                 class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary"
               >
-                Correo electronico</label
+                Correo electrónico</label
               >
               <input
                 v-model="email"
                 class="w-full bg-surface-container-high border-0 rounded-lg px-4 py-3.5 text-on-surface placeholder:text-outline/50 focus:ring-0 focus:bg-surface-container-lowest transition-all border-l-2 border-transparent focus:border-secondary"
-                placeholder="Correo electronico"
+                placeholder="Correo electrónico"
                 type="email"
                 @blur="onEmailBlur"
                 @input="onEmailInput"
@@ -94,7 +94,7 @@ const {
             <div class="group">
               <label
                 class="block text-[0.6875rem] font-bold uppercase tracking-wider text-outline mb-1.5 ml-1 transition-colors group-focus-within:text-secondary"
-                >Contrasena</label
+                >Contraseña</label
               >
               <div class="relative">
                 <input
@@ -117,13 +117,6 @@ const {
               </p>
             </div>
           </div>
-          <!--          <div class="flex items-center gap-3 pt-2">-->
-          <!--            <input class="rounded-sm border-outline-variant text-primary focus:ring-primary h-4 w-4" id="terms"-->
-          <!--                   type="checkbox"/>-->
-          <!--            <label class="text-xs text-on-surface-variant" for="terms">Acepto los <a-->
-          <!--                class="text-primary font-semibold hover:underline" href="#">Términos del servicio</a> y los <a-->
-          <!--                class="text-primary font-semibold hover:underline" href="#">Protocolos de datos clínicos</a>.</label>-->
-          <!--          </div>-->
           <p v-if="errorMessage" class="text-sm text-error">{{ errorMessage }}</p>
           <div class="pt-4">
             <button

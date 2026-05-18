@@ -1,4 +1,4 @@
-import { capitalize, computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getSession } from '@/services/authService'
 import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'

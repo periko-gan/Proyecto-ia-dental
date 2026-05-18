@@ -11,8 +11,6 @@ import Formulario from '@/components/parts/login_register/Formulario.vue'
   <div class="bg-surface font-body text-on-surface">
     <Header />
 
-    <!--    <Aside/>-->
-
     <Formulario page="register" />
 
     <Footer />

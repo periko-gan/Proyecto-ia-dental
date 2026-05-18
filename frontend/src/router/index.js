@@ -4,7 +4,6 @@ import { isAuthenticated } from '@/services/authService'
 import AnalyzeView from '@/components/AnalyzeView.vue'
 import DashboardView from '@/components/DashboardView.vue'
 import DiagnosticView from '@/components/DiagnosticView.vue'
-import EvolutionView from '@/components/EvolutionView.vue'
 import LandingView from '@/components/LandingView.vue'
 import LoginView from '@/components/LoginView.vue'
 import RegisterView from '@/components/RegisterView.vue'
@@ -32,12 +31,6 @@ const routes = [
     path: '/diagnostic',
     name: 'Diagnostic',
     component: DiagnosticView,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/evolution',
-    name: 'Evolution',
-    component: EvolutionView,
     meta: { requiresAuth: true },
   },
   {

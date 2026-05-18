@@ -81,7 +81,6 @@ const { problemCounts, problemPercentages } = useProblemTypesChart()
 .text-caries {
   color: #ef4444;
 }
-
 .text-empaste {
   color: #f59e0b;
 }

@@ -85,8 +85,8 @@ const useHealthScoreHero = () => {
       return 'El historial no muestra hallazgos relevantes en los análisis completados.'
     }
 
-    const averageConfidence = heroHealthScore.value ?? 0
-    return `La media de acierto de ${heroDetections.value.length} hallazgo(s) es ${averageConfidence}%.`
+    // const averageConfidence = heroHealthScore.value ?? 0
+    // return `La media de acierto de ${heroDetections.value.length} hallazgo(s) es ${averageConfidence}%.`
   })
 
   const heroLatestAnalysis = computed(() => {

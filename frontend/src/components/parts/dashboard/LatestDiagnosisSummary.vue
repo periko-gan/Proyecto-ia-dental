@@ -90,8 +90,6 @@ const {
               Hallazgo principal
             </p>
             <p class="text-base font-bold text-slate-900 leading-tight">{{ mainFinding }}</p>
-            <!--            <p class="text-xs text-slate-500">{{ latestAnalysis.fileName }}</p>-->
-            <!--            <p class="text-xs text-slate-500">{{ lastUpdate }}</p>-->
           </div>
         </div>
 

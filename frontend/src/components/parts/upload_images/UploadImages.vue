@@ -69,26 +69,11 @@ function handleFileChange(event) {
     >
       <!-- Upload Prompt -->
       <form class="flex flex-col items-center text-center space-y-6 w-full max-w-md">
-        <!--      <div-->
-        <!--          class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">-->
-        <!--                  <span class="material-symbols-outlined text-primary text-4xl"-->
-        <!--                        data-icon="cloud_upload">cloud_upload</span>-->
-        <!--      </div>-->
         <div class="space-y-2">
           <h4 class="text-xl font-bold text-on-surface font-headline">
             Arrastra y suelta la imagen
           </h4>
           <p class="text-on-surface-variant text-sm">Compatible con archivos JPG, JPEG y PNG.</p>
-          <!--        <p-->
-          <!--            class="text-sm font-semibold text-primary cursor-pointer select-none hover:underline"-->
-          <!--            role="button"-->
-          <!--            tabindex="0"-->
-          <!--            @click="openFilePicker"-->
-          <!--            @keydown.enter.prevent="openFilePicker"-->
-          <!--            @keydown.space.prevent="openFilePicker"-->
-          <!--        >-->
-          <!--          Haz clic aquí para examinar archivos-->
-          <!--        </p>-->
         </div>
         <!-- DaisyUI File Input -->
         <div class="form-control w-full hidden">
@@ -121,7 +106,6 @@ function handleFileChange(event) {
               </p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <!--            <button class="btn btn-ghost btn-xs" type="button" @click="clearAllFiles">Vaciar</button>-->
               <button
                 class="btn btn-primary btn-xs"
                 type="button"
@@ -140,8 +124,6 @@ function handleFileChange(event) {
               </button>
             </div>
           </div>
-          <!--        <p class="text-xs text-on-surface-variant">Las imágenes seleccionadas quedan aquí en memoria hasta que se preparen o se envíen por GraphQL.</p>-->
-
           <div
             v-if="queueReadyForGraphQL"
             class="rounded-xl border border-secondary/30 bg-secondary/5 p-4 text-left space-y-3"

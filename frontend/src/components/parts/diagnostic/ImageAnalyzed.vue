@@ -41,9 +41,6 @@ const isZoomed = ref(false)
         >
           <span class="material-symbols-outlined text-lg">zoom_in</span>
         </button>
-        <!-- <button class="btn btn-circle btn-sm glass text-white hover:bg-white hover:text-primary">
-          <span class="material-symbols-outlined text-lg">layers</span>
-        </button> -->
       </div>
       <!-- Main Image with Hotspots -->
       <div class="relative w-full h-[60vh] bg-slate-950 overflow-hidden">
@@ -77,7 +74,6 @@ const isZoomed = ref(false)
               :style="{ backgroundColor: getProblemHexColor(detection) }"
             >
               {{ translateProblem(detection) }} {{ formatConfidence(detection.confidence) }}%
-              <!-- <span class="ml-1 opacity-75 font-mono text-[8px]">(Raw: {{ detection.bboxXyxy.slice(0,2).map(n => Math.round(n)).join(',') }})</span> -->
             </span>
           </div>
         </template>

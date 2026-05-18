@@ -52,7 +52,7 @@ const {
             max="100"
             :value="heroHealthScore ?? 0"
           ></progress>
-          <!-- <p class="text-sm font-medium leading-relaxed text-blue-50">{{ heroHealthSummary }}</p>-->
+          <p class="text-sm font-medium leading-relaxed text-blue-50">{{ heroHealthSummary }}</p>
           <div
             v-if="heroCompletedAnalyses.length > 0"
             class="flex flex-col flex-wrap gap-4 text-[10px] font-bold uppercase tracking-wider mt-4"
