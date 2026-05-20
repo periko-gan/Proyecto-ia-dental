@@ -10,6 +10,7 @@ const props = defineProps({
   },
 })
 
+// Estado y handlers del formulario según el tipo de página.
 const {
   isLogin,
   fullName,

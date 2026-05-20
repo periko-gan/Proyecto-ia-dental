@@ -1,22 +1,22 @@
-# Frontend
+# Frontend - Dashboard de IA Dental
 
-Aplicacion frontend construida con **Vue 3 + Vite**.
+Aplicación frontend construida con **Vue 3 + Vite** para análisis radiográfico dental con inteligencia artificial.
 
 ## Stack principal
 
-- Vue 3
-- Vite
-- Pinia
-- Vue Router
-- Apollo Client + GraphQL
-- Tailwind CSS v4 + daisyUI
+- **Vue 3** - Framework progresivo
+- **Vite** - Build tool y dev server
+- **Pinia** - State management
+- **Vue Router** - Enrutamiento
+- **Apollo Client + GraphQL** - Consultas y mutaciones API
+- **Tailwind CSS v4 + daisyUI** - Styling y componentes UI
 
 ## Requisitos
 
-- **Node.js**: `^20.19.0 || >=22.12.0`
-- **pnpm**: recomendado (definido en `packageManager`: `pnpm@10.17.1`)
+- **Node.js**: `^20.19.0` o `>=22.12.0`
+- **pnpm**: `10.17.1` (recomendado, evita mezclar gestores)
 
-## Instalacion
+## Instalación
 
 Desde la carpeta `frontend`:
 
@@ -27,138 +27,167 @@ pnpm install
 ## Scripts disponibles
 
 ```sh
-pnpm dev
-pnpm build
-pnpm preview
-pnpm format
+pnpm dev       # Inicia servidor de desarrollo (hot reload)
+pnpm build     # Genera build de producción
+pnpm preview   # Sirve localmente el build generado
+pnpm format    # Formatea src/ con oxfmt
 ```
 
-- `pnpm dev`: inicia el servidor de desarrollo
-- `pnpm build`: genera el build de produccion
-- `pnpm preview`: sirve localmente el build generado
-- `pnpm format`: formatea `src/` con `oxfmt`
-
-## Estructura basica
+## Estructura de carpetas
 
 ```text
 frontend/
   src/
-    App.vue
-    main.js
-    style.css
-    components/
-      AnalysisResults.vue
-      UploadRadiography.vue
-    graphql/
-      mutations.js
-    router/
-      index.js
-    stores/
+    ├── main.js                    # Punto de entrada
+    ├── App.vue                    # Componente raíz
+    ├── style.css                  # Estilos globales con Tailwind
+    ├── components/
+    │   ├── AnalyzeView.vue        # Vista de análisis de radiografías
+    │   ├── DashboardView.vue      # Dashboard principal (responsive)
+    │   ├── RegisterView.vue       # Registro de usuarios
+    │   ├── LoginView.vue          # Login de usuarios
+    │   └── parts/
+    │       ├── dashboard/
+    │       │   ├── HealthScoreHero.vue          # Puntuación de salud (hero)
+    │       │   ├── LatestDiagnosisSummary.vue   # Último diagnóstico
+    │       │   └── ProblemTypesChart.vue        # Gráfico de tipos de problemas
+    │       └── Formulario.vue                   # Componente reutilizable formulario
+    ├── composables/
+    │   ├── useHealthScoreHero.js  # Lógica de cálculo de puntuación de salud
+    │   └── useAuth.js             # Lógica de autenticación
+    ├── config/
+    │   └── graphql.js             # Configuración del endpoint GraphQL
+    ├── graphql/
+    │   ├── mutations.js           # Mutaciones GraphQL
+    │   └── queries.js             # Consultas GraphQL
+    ├── router/
+    │   └── index.js               # Configuración de rutas
+    ├── services/
+    │   ├── graphqlClient.js       # Cliente GraphQL (Apollo)
+    │   └── authService.js         # Servicio de autenticación
+    └── stores/
+        └── auth.js                # Store de Pinia para autenticación
 ```
 
-## Flujo de autenticacion (registro y login)
+## Configuración de variables de entorno
 
-- Endpoint GraphQL usado por el frontend: `http://localhost:8000/graphql`
-- Vista de registro: `RegisterView` (usa `Formulario.vue`)
-- Logica de auth:
-    - `src/services/graphqlClient.js`
-    - `src/services/authService.js`
-    - `src/config/graphql.js`
+Crear archivo `.env` en la raíz de `frontend`:
 
-### Registro desde formulario
+```env
+VITE_GRAPHQL_ENDPOINT=http://localhost:8080/graphql
+```
 
-Al enviar el formulario de registro se ejecuta una mutacion GraphQL que hace:
+**Nota**: Las variables deben estar prefijadas con `VITE_` para ser inyectadas por Vite en tiempo de build.
 
-1. `registerUser(email, password)`
-2. `loginUser(email, password)`
+- `VITE_GRAPHQL_ENDPOINT`: Endpoint GraphQL (por defecto: `http://localhost:8000/graphql`)
 
-Si el flujo termina correctamente:
+## Flujo de autenticación
 
-- Se guarda en `sessionStorage`:
-    - `accessToken`
-    - `user` (JSON con `userId`, `email`, `isActive`, `role`, sin `createdAt`)
-- Se redirige a la ruta `Dashboard` (`/dashboard`).
+### Registro
 
-### Variables opcionales
+1. El usuario completa el formulario de registro (`RegisterView`)
+2. Se ejecuta la mutación GraphQL `registerUser(email, password)`
+3. El backend crea la cuenta y retorna `accessToken`
+4. El token se guarda en `sessionStorage`
+5. Se redirige a `/dashboard`
 
-- `VITE_GRAPHQL_ENDPOINT`: permite sobrescribir el endpoint GraphQL en entorno.
-- Si no se define, se usa `http://localhost:8000/graphql` por defecto.
+### Login
+
+1. El usuario ingresa credenciales en `LoginView`
+2. Se ejecuta la mutación GraphQL `loginUser(email, password)`
+3. Retorna `accessToken` y datos de usuario
+4. Se almacena en `sessionStorage`:
+   - `accessToken` - para autorización GraphQL
+   - `user` - JSON con `userId`, `email`, `isActive`, `role`
+
+### Protección de rutas
+
+Las rutas protegidas requieren `accessToken` válido en `sessionStorage`. Si no existe, se redirige a `/login`.
+
+## Dashboard responsivo
+
+El dashboard se adapta automáticamente a diferentes tamaños de pantalla:
+
+- **Móvil** (< 768px): Stack vertical de componentes
+- **Tablet** (768px - 1024px): Dos columnas
+- **Desktop** (> 1024px): Tres columnas con proporciones ajustadas
+
+### Componentes principales
+
+1. **Health Score Hero**
+   - Muestra puntuación de salud (promedio de confianza de todos los hallazgos)
+   - Radiograma circular con indicador de porcentaje
+   - Recuento de severidades (crítico, advertencia, éxito)
+
+2. **Latest Diagnosis Summary**
+   - Thumbnail de la radiografía más reciente
+   - Resumen del hallazgo principal
+   - Confianza promedio del análisis
+
+3. **Problem Types Chart**
+   - Visualiza distribución de problemas detectados
+   - Categorías: Caries, Empastes, Implantes, Dientes impactados
+   - Muestra conteos y porcentajes
 
 ## Tailwind CSS v4 + daisyUI
 
-La configuracion activa usa el plugin oficial de Vite para Tailwind v4:
+Configuración:
 
-- `vite.config.js` con `@tailwindcss/vite`
-- `src/style.css` con:
-    - `@import 'tailwindcss';`
-    - `@plugin "daisyui";`
-- `src/main.js` importa `./style.css`
+- `vite.config.js` - Usa plugin `@tailwindcss/vite`
+- `src/style.css` - Importa Tailwind y plugin daisyUI:
+  ```css
+  @import 'tailwindcss';
+  @plugin 'daisyui';
+  ```
+- `tailwind.config.js` - Configuración de temas y extensiones
 
-En Tailwind v4 no es necesario `tailwindcss init -p`.
+**Nota**: En Tailwind v4 no es necesario ejecutar `tailwindcss init -p`.
 
-## Uso desde la raiz del repositorio
+## Uso desde raíz del repositorio
 
-Con `pnpm-workspace.yaml` y `package.json` en la raiz (`codigo proyecto final`), puedes ejecutar:
+Con `pnpm-workspace.yaml` en la raíz, puedes ejecutar los scripts desde cualquier ubicación:
 
 ```sh
-pnpm install
-pnpm dev
-pnpm build
-pnpm preview
-pnpm format
+pnpm install  # Instala dependencias de todos los workspaces
+pnpm dev      # Inicia dev de frontend (delegado por workspace)
+pnpm build    # Build de frontend
 ```
 
-Los scripts de la raiz delegan al paquete `frontend`.
+## Docker
 
-## Docker (solo carpeta frontend)
-
-El `Dockerfile` de `frontend` publica Nginx en el puerto `80`. Para lanzarlo con Compose:
+Lanzar frontend en contenedor:
 
 ```sh
 cd frontend
 docker compose up --build -d
 ```
 
-Abrir en navegador:
+Acceso:
+- Si puerto `80` está disponible: `http://localhost:80`
+- Si puerto `80` está ocupado: `http://localhost:8080` (cambiar mapeo en `docker-compose.yml` a `8080:80`)
 
-```text
-http://localhost:8080
-```
-
-Comandos utiles:
+Comandos útiles:
 
 ```sh
-cd frontend
-docker compose ps
-docker compose logs -f
-docker compose down
+docker compose ps      # Ver estado del contenedor
+docker compose logs -f # Ver logs en tiempo real
+docker compose down    # Detener contenedor
 ```
-
-Si el puerto `80` ya esta ocupado en tu maquina, cambia temporalmente el mapeo en `docker-compose.yml` a `8080:80` y
-abre `http://localhost:8080`.
 
 ## Problemas comunes
 
 ### 1) Error de dependencias con `npm` (`ERESOLVE`)
 
-Este proyecto esta preparado para **pnpm**. Evita mezclar gestores.
+Este proyecto está preparado para **pnpm**. Evita mezclar gestores:
 
 ```sh
-# recomendado
-pnpm install
+pnpm install  # ✓ Correcto
+npm install   # ✗ Evitar
 ```
 
 ### 2) `ERR_PNPM_UNEXPECTED_VIRTUAL_STORE`
 
-Suele ocurrir si cambiaste de ruta/proyecto o instalaste antes desde otra ubicacion.
-
-Pasos recomendados (en la raiz del frontend):
-
-```sh
-pnpm install
-```
-
-Si persiste, limpia instalaciones previas y reinstala:
+Ocurre si hay conflictos con instalaciones previas. Solución:
 
 ```sh
 Remove-Item -Recurse -Force node_modules
@@ -166,7 +195,67 @@ Remove-Item -Force pnpm-lock.yaml
 pnpm install
 ```
 
-## Notas
+### 3) Variables de entorno no cargadas
 
-- Usa **solo pnpm** para evitar conflictos de lockfile y peers.
-- Si vas a trabajar varios paquetes desde la raiz, considera mantener un `pnpm-workspace.yaml` en la raiz del repo.
+Las variables de entorno se inyectan en tiempo de **build**. Si cambias `.env`:
+
+```sh
+# Reinicia el servidor de desarrollo
+pnpm dev
+```
+
+Verifica que la variable exista en el bundle compilado:
+
+```powershell
+# En frontend/
+pnpm build
+Select-String -Path "dist\assets\*.js" -Pattern "8080/graphql"
+```
+
+### 4) CSS compilation error: `Invalid declaration: //`
+
+En bloques `<style>` de Vue, usar solo comentarios en bloque:
+
+```vue
+<!-- ✓ Correcto -->
+<style>
+  /* Comentario válido */
+</style>
+
+<!-- ✗ Incorrecto -->
+<style>
+  // Esto causa error en Tailwind CSS v4
+</style>
+```
+
+## Desarrollo local
+
+### Flujo típico
+
+1. Clonar repository y entrar en `frontend/`
+2. Instalar dependencias: `pnpm install`
+3. Crear `.env` con `VITE_GRAPHQL_ENDPOINT`
+4. Asegurarse de que backend está corriendo en el endpoint especificado
+5. Iniciar dev server: `pnpm dev`
+6. Abrir navegador en `http://localhost:5173`
+
+### Debugging
+
+- **Inspeccionar requests GraphQL**: Abrir DevTools → Network tab → filtrar "graphql"
+- **Verificar variables de entorno**: Abrir DevTools → Console → `console.log(import.meta.env)`
+- **Ver estado de Pinia**: Instalar [Pinia DevTools](https://devtools.vuejs.org/)
+
+## Notas importantes
+
+- Usa **solo pnpm** para evitar conflictos con lock files
+- Las variables de entorno deben prefijarse con `VITE_` para ser accesibles
+- Los composables (`src/composables/`) contienen lógica reutilizable
+- Los stores de Pinia deben usarse para estado global (autenticación, datos usuario)
+- El dashboard usa Flexbox (no CSS Grid) para mejor responsividad
+
+## Contacto y recursos
+
+- [Documentación Vue 3](https://vuejs.org/)
+- [Documentación Vite](https://vitejs.dev/)
+- [Documentación Tailwind CSS v4](https://tailwindcss.com/)
+- [Documentación Apollo Client](https://www.apollographiql.com/docs/react/)

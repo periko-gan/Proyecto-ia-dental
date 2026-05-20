@@ -11,6 +11,7 @@ export function useImageAnalyzed() {
   const containerHeight = ref(0)
   let resizeObserver = null
 
+  // Observa cambios de tamaño del contenedor para ubicar hotspots.
   onMounted(() => {
     resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -67,6 +68,7 @@ export function useImageAnalyzed() {
     return 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEXf34UgRNFGqb6Vc9yeb-ySBpcKcd5i3YjYQ00PKVS2O1sYFdg6mu22F-aK2B086Dgha46TK9oNF9PcNO-RsrkikrnqSVFjcICU5fx07pm1y56KDcU_Sgw-B5CuJy8TrVZbC3X-Aff9hxwF9P9qGlGo_RvCNBCeTB-NO5gEpbFZCFa3J3KzvpsIZOtrgirS2XaP_Ck9yzHuA0KkZ8_-ujWOd8I_106X9iGP2zk05gz3kLxz2jdIiGfJsP7EuXMW8QmAdEb2HmDr9H'
   })
 
+  // Soporta bbox como array o string serializado.
   function parseBboxXyxy(rawBbox) {
     if (Array.isArray(rawBbox)) {
       return rawBbox.map((item) => Number(item))
@@ -92,6 +94,7 @@ export function useImageAnalyzed() {
     return Math.max(0, Math.min(100, value))
   }
 
+  // Convierte bbox a porcentajes relativos al tamaño natural de la imagen.
   function toPercentCoordinates(x1, y1, x2, y2) {
     const NW = imageNaturalWidth.value
     const NH = imageNaturalHeight.value
@@ -113,6 +116,7 @@ export function useImageAnalyzed() {
     return { left: 0, top: 0, width: 0, height: 0 }
   }
 
+  // Calcula el estilo CSS para dibujar el hotspot en overlay.
   function calculateHotspotStyle(bboxXyxy) {
     const parsed = parseBboxXyxy(bboxXyxy)
     if (!parsed || parsed.length < 4 || parsed.some((value) => !Number.isFinite(value))) return {}
@@ -149,6 +153,7 @@ export function useImageAnalyzed() {
     imageNaturalHeight.value = target?.naturalHeight || 0
   }
 
+  // Formatea la confianza a porcentaje entero.
   function formatConfidence(confidenceValue) {
     const value = Number(confidenceValue)
     if (!Number.isFinite(value)) return 0

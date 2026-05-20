@@ -1,5 +1,6 @@
 import { postGraphQL } from '@/services/graphqlClient'
 
+// Mutación de carga de radiografía con retorno del análisis asociado.
 const UPLOAD_RADIOGRAPHY_MUTATION = `
 mutation UploadRadiography($fileBase64: String!, $fileName: String!, $mimeType: String!) {
   uploadRadiography(fileBase64: $fileBase64, fileName: $fileName, mimeType: $mimeType) {
@@ -30,6 +31,7 @@ mutation UploadRadiography($fileBase64: String!, $fileName: String!, $mimeType: 
 }
 `
 
+// Escapa caracteres conflictivos para mostrar la mutación en logs.
 function escapeGraphQLString(value) {
   return String(value)
     .replaceAll('\\', '\\\\')
@@ -38,6 +40,7 @@ function escapeGraphQLString(value) {
     .replaceAll('\r', '\\r')
 }
 
+// Genera una vista previa acotada de la mutación para depuración.
 function buildMutationPreview({ fileBase64, fileName, mimeType }) {
   const previewBase64 = fileBase64.length > 120 ? `${fileBase64.slice(0, 120)}…` : fileBase64
 
@@ -75,6 +78,7 @@ function buildMutationPreview({ fileBase64, fileName, mimeType }) {
 }
 
 export async function uploadRadiography({ fileBase64, fileName, mimeType }) {
+  // Logs de diagnóstico para validar el payload enviado.
   console.log('📤 Iniciando envío de radiografía al backend...')
   console.log(`   📄 Archivo: ${fileName}`)
   console.log(`   🖼️  Tipo MIME: ${mimeType}`)

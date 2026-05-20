@@ -9,6 +9,7 @@ export function useAuthForm(page) {
 
   const isLogin = computed(() => unref(page) === 'login')
 
+  // Estado del formulario y mensajes de validación.
   const fullName = ref('')
   const email = ref('')
   const password = ref('')
@@ -38,6 +39,7 @@ export function useAuthForm(page) {
   const switchLabel = computed(() => (isLogin.value ? 'Registrate' : 'Inicia sesión'))
   const switchRouteName = computed(() => (isLogin.value ? 'Register' : 'Login'))
 
+  // Validaciones sincrónicas de formulario.
   function validateEmail() {
     const value = email.value.trim()
 
@@ -116,6 +118,7 @@ export function useAuthForm(page) {
     }
   }
 
+  // Ejecuta todas las validaciones antes de enviar.
   function validateForm() {
     emailTouched.value = true
     passwordTouched.value = true
@@ -145,6 +148,7 @@ export function useAuthForm(page) {
       } else {
         await registerAndLogin(fullName.value.trim(), sanitizedEmail, password.value)
       }
+      // Redirige al dashboard al completar el flujo.
       await router.push({ name: 'Dashboard' })
     } catch (error) {
       errorMessage.value = error?.message || 'No se pudo completar la operación.'

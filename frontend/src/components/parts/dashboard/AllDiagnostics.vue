@@ -6,6 +6,7 @@ import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis.js'
 const router = useRouter()
 const { setAnalysis } = useDiagnosticAnalysis()
 
+// Paginación y helpers del historial de análisis.
 const {
   analyses,
   loading,

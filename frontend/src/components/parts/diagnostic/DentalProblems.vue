@@ -3,9 +3,11 @@ import { computed, ref } from 'vue'
 import { useDentalProblems } from '@/composables/useDentalProblems'
 import { getProblemHexColor, translateProblem } from '@/utils/problemTranslations'
 
+// Estado de detecciones, filtros y acciones de toggle.
 const { totalDetections, detectionStats, toggleDetection, isDetectionEnabled, minimumConfidence } =
   useDentalProblems()
 
+// Estado visual para el bubble del slider.
 const isSliding = ref(false)
 
 function formatMinimumConfidence(value) {
@@ -18,6 +20,7 @@ function getConfidencePercent(confidence) {
   return Math.max(0, Math.min(100, Math.round(value > 1 ? value : value * 100)))
 }
 
+// Posiciona el bubble sobre el slider según el valor actual.
 const sliderBubbleLeft = computed(() => {
   const value = Number(minimumConfidence.value) || 0
   return `calc(${value}% - 16px)`

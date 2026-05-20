@@ -6,9 +6,11 @@ import { ref } from 'vue'
 const currentAnalysis = ref(null)
 const currentImage = ref(null)
 
+// Clave de persistencia para restaurar estado en recarga de página.
 const DIAGNOSTIC_STORAGE_KEY = 'diagnostic.analysis.v1'
 
 function revokeCurrentImageUrl() {
+  // Evita fugas de memoria liberando blob URLs anteriores.
   const imageSrc = currentImage.value?.imageSrc
   if (imageSrc?.startsWith('blob:')) {
     URL.revokeObjectURL(imageSrc)
@@ -56,6 +58,7 @@ function hydrateDiagnosticState() {
   }
 }
 
+// Cargar estado persistido al inicializar el módulo.
 hydrateDiagnosticState()
 
 export function useDiagnosticAnalysis() {

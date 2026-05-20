@@ -1,6 +1,7 @@
 <script setup>
 import { useLatestDiagnosisSummary } from '@/composables/useLatestDiagnosisSummary'
 
+// Estado agregado del último diagnóstico y métricas derivadas.
 const {
   analysesLoading,
   latestAnalysis,

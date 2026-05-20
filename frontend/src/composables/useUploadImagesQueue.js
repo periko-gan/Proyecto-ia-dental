@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { uploadRadiography } from '@/services/uploadRadiographyService'
 import { useDiagnosticAnalysis } from './useDiagnosticAnalysis'
 
+// Límite de peso y formatos permitidos para radiografías.
 const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png'])
 const allowedExtensions = new Set(['dcm', 'dicom', 'jpg', 'jpeg', 'png'])
@@ -17,6 +18,7 @@ function isAllowedType(file) {
   return allowedMimeTypes.has(file.type) || allowedExtensions.has(extension)
 }
 
+// Genera un id estable para evitar duplicados en cola.
 function getFileKey(file) {
   return `${file.name}-${file.size}-${file.lastModified}-${file.type}`
 }
@@ -36,6 +38,7 @@ function revokeQueueEntry(entry) {
   }
 }
 
+// Convierte un File a base64 para enviarlo por GraphQL.
 function readFileAsBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -108,6 +111,7 @@ export function useUploadImagesQueue() {
     }
   }
 
+  // Valida formato y tamaño de archivos entrantes.
   function validateFiles(files) {
     const validFiles = []
     const errors = []
@@ -129,6 +133,7 @@ export function useUploadImagesQueue() {
     return { validFiles, errors }
   }
 
+  // Une lista previa con nuevos archivos evitando duplicados.
   function mergeFiles(existingFiles, incomingFiles) {
     const seen = new Set(existingFiles.map((entry) => entry.id))
     const merged = [...existingFiles]
@@ -217,6 +222,7 @@ export function useUploadImagesQueue() {
     clearInputSelection()
   }
 
+  // Envia la cola actual (o la prepara si no está lista).
   async function sendQueuedFiles() {
     if (!droppedFiles.value.length) {
       sendErrorMessage.value = 'No hay archivos para enviar.'
@@ -327,6 +333,7 @@ export function useUploadImagesQueue() {
     }
   }
 
+  // Prepara la cola para enviar: base64 + metadatos mínimos.
   async function prepareGraphQLPayload() {
     if (!droppedFiles.value.length) {
       preparedGraphQLPayload.value = []
@@ -353,6 +360,7 @@ export function useUploadImagesQueue() {
     }
   }
 
+  // Formateo corto de tamaño de archivo.
   function formatFileSize(bytes) {
     if (!Number.isFinite(bytes)) return '0 B'
     if (bytes < 1024) return `${bytes} B`

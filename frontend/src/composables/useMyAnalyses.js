@@ -11,6 +11,7 @@ export function useMyAnalyses(itemsPerPage = 5) {
   const currentPage = ref(1)
   const hasMoreItems = ref(false)
 
+  // Carga una página del historial con control de estados.
   async function loadPage(page) {
     if (page < 1) return
 
@@ -59,6 +60,7 @@ export function useMyAnalyses(itemsPerPage = 5) {
     }
   }
 
+  // Formatea fechas del backend en formato local.
   function formatDate(dateString) {
     if (!dateString) return ''
     const date = new Date(dateString)
@@ -68,12 +70,14 @@ export function useMyAnalyses(itemsPerPage = 5) {
     }).format(date)
   }
 
+  // Mapea estados de análisis a clases de badge.
   function getStatusBadgeClass(status) {
     if (status === 'COMPLETED') return 'badge-success text-white'
     if (status === 'FAILED') return 'badge-error text-white'
     return 'badge-warning text-white'
   }
 
+  // Cuenta severidades para UI de resumen.
   function countSeverities(detections) {
     if (!detections) return { critical: 0, warning: 0, success: 0 }
     const counts = { critical: 0, warning: 0, success: 0 }

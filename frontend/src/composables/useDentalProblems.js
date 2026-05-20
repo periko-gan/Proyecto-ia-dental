@@ -8,10 +8,12 @@ const disabledDetections = ref(new Set())
 const minimumConfidence = ref(loadStoredMinimumConfidence())
 const { currentAnalysis } = useDiagnosticAnalysis()
 
+// Reinicia selecciones cuando cambia el análisis actual.
 watch(currentAnalysis, () => {
   disabledDetections.value = new Set()
 })
 
+// Persiste el umbral de confianza en localStorage.
 watch(minimumConfidence, (value) => {
   const normalized = clampPercent(value)
   if (normalized !== value) {
@@ -42,6 +44,7 @@ function loadStoredMinimumConfidence() {
   }
 }
 
+// Normaliza confianza 0-1 o 0-100 a porcentaje 0-100.
 function normalizeConfidence(confidence) {
   const value = Number(confidence)
   if (!Number.isFinite(value)) return 0
@@ -69,6 +72,7 @@ export function useDentalProblems() {
     return visibleDetections.value.length
   })
 
+  // Activa o desactiva manualmente un hallazgo en la UI.
   const toggleDetection = (detection) => {
     const newSet = new Set(disabledDetections.value)
     if (newSet.has(detection)) {

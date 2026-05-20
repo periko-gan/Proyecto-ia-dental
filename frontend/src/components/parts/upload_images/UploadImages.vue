@@ -1,6 +1,7 @@
 <script setup>
 import { useUploadImagesQueue } from '@/composables/useUploadImagesQueue'
 
+// Estado y acciones para la cola de carga de imágenes.
 const {
   isDragging,
   fileInputRef,
@@ -30,6 +31,7 @@ async function handleSendFiles() {
   await sendQueuedFiles()
 }
 
+// Handlers que respetan el bloqueo cuando ya hay archivo en cola.
 function handleDragEnter(event) {
   if (hasFiles.value) return
   onDragEnter(event)

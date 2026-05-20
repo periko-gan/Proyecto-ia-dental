@@ -151,7 +151,7 @@ export class ImageStorageService {
 
     for (const image of images) {
       if (image.base64) {
-        // Aproximación: cada carácter en base64 ocupa 1 byte
+        // Aproximación: cada carácter en base64 ocupa 1 byte.
         totalSize += image.base64.length
       }
     }
@@ -219,6 +219,6 @@ export class ImageStorageService {
   }
 }
 
-// Instancia singleton
+// Instancia singleton para reutilizar la conexión/estado de IndexedDB.
 const imageStorageService = new ImageStorageService()
 export default imageStorageService

@@ -1,6 +1,7 @@
 <script setup>
 import { useProblemTypesChart } from '@/composables/useProblemTypesChart'
 
+// Conteos y porcentajes de problemas agrupados por tipo.
 const { problemCounts, problemPercentages } = useProblemTypesChart()
 </script>
 

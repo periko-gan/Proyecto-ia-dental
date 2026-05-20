@@ -2,7 +2,7 @@
 import logo from '@/assets/img/logo.png'
 import { useAside } from '@/composables/useAside'
 
-// destructure the composable - mobile menu logic lives in the composable now
+// Estado del sidebar y handlers (logout + menú móvil).
 const { loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu, logoutAndClose } =
   useAside()
 </script>

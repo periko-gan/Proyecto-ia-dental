@@ -13,6 +13,7 @@ export function useAside() {
 
   const loggedUserName = computed(() => getSession()?.name || 'Usuario sin sesión')
 
+  // Determina la clase CSS de navegación según la ruta activa.
   function navLinkClass(routeName) {
     const baseClass = 'text-slate-500 hover:text-blue-700'
     const activeClass =
@@ -23,6 +24,7 @@ export function useAside() {
   }
 
   async function handleLogout() {
+    // Limpia sesión y caches locales.
     clearAnalysis()
     sessionStorage.clear()
 

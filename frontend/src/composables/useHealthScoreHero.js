@@ -3,6 +3,7 @@ import { useMyAnalyses } from '@/composables/useMyAnalyses'
 import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
 import { getProblemSeverity } from '@/utils/problemTranslations'
 
+// Normaliza confianza 0-1 o 0-100 a porcentaje 0-100.
 function normalizeConfidenceToPercent(confidence) {
   const value = Number(confidence)
   if (!Number.isFinite(value)) return null
@@ -13,6 +14,7 @@ const useHealthScoreHero = () => {
   const { analyses, loading: analysesLoading, error: analysesError, formatDate } = useMyAnalyses(50)
   const { currentAnalysis } = useDiagnosticAnalysis()
 
+  // Unifica historial y análisis actual evitando duplicados.
   const heroAnalyses = computed(() => {
     const unique = new Map()
 
@@ -29,14 +31,17 @@ const useHealthScoreHero = () => {
     return [...unique.values()]
   })
 
+  // Filtra solo análisis completados.
   const heroCompletedAnalyses = computed(() => {
     return heroAnalyses.value.filter((analysis) => analysis?.status === 'COMPLETED')
   })
 
+  // Flatten de detecciones para cálculo global del score.
   const heroDetections = computed(() => {
     return heroCompletedAnalyses.value.flatMap((analysis) => analysis?.detections ?? [])
   })
 
+  // Cuenta severidades para la UI del hero.
   const heroSeverityCounts = computed(() => {
     const counts = { critical: 0, warning: 0, success: 0 }
 
@@ -50,6 +55,7 @@ const useHealthScoreHero = () => {
     return counts
   })
 
+  // Promedio de confianza como porcentaje redondeado.
   const heroHealthScore = computed(() => {
     if (heroCompletedAnalyses.value.length === 0) return null
 
@@ -89,6 +95,7 @@ const useHealthScoreHero = () => {
     // return `La media de acierto de ${heroDetections.value.length} hallazgo(s) es ${averageConfidence}%.`
   })
 
+  // Último análisis completado para metadata del hero.
   const heroLatestAnalysis = computed(() => {
     return (
       heroCompletedAnalyses.value

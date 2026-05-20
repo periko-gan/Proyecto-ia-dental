@@ -25,12 +25,14 @@ export const problemColors = {
 }
 
 function removeDiacritics(value) {
+  // Elimina acentos para comparaciones más tolerantes.
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
 
 function normalizeProblemKey(value) {
   if (!value) return ''
 
+  // Normaliza a snake_case para facilitar el matching.
   return removeDiacritics(
     String(value)
       .toLowerCase()
@@ -47,6 +49,7 @@ function normalizeProblemKey(value) {
 function resolveProblemName(problemInput) {
   if (!problemInput) return ''
 
+  // Soporta objetos de detección y strings simples.
   if (typeof problemInput === 'object') {
     return problemInput.label || problemInput.className || problemInput.name || ''
   }
@@ -57,10 +60,12 @@ function resolveProblemName(problemInput) {
 function findTranslationByContains(normalizedKey) {
   if (!normalizedKey) return ''
 
+  // Primero intenta matching exacto.
   const entries = Object.entries(problemTranslations)
   const exact = entries.find(([key]) => key === normalizedKey)
   if (exact) return exact[1]
 
+  // Luego intenta matching parcial para variaciones menores.
   const partial = entries.find(
     ([key]) => normalizedKey.includes(key) || key.includes(normalizedKey),
   )

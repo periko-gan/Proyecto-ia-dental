@@ -4,6 +4,7 @@ import { useImageAnalyzed } from '@/composables/useImageAnalyzed'
 import { useDentalProblems } from '@/composables/useDentalProblems'
 import { getProblemHexColor, translateProblem } from '@/utils/problemTranslations'
 
+// Datos de la imagen y helpers de coordenadas/estilos.
 const {
   currentAnalysis,
   imageUrl,
@@ -14,8 +15,11 @@ const {
   onImageLoad,
   formatConfidence,
 } = useImageAnalyzed()
+
+// Filtro y agrupación de detecciones visibles.
 const { activeDetections, visibleDetections, detectionStats } = useDentalProblems()
 
+// Estado del modal de zoom.
 const isZoomed = ref(false)
 
 // Obtiene la clase de borde para un hotspot

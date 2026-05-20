@@ -1,6 +1,7 @@
 import { GRAPHQL_ENDPOINT } from '@/config/graphql'
 import { getAccessToken } from './authService'
 
+// Ejecuta una operación GraphQL con trazas de red y validación de errores.
 export async function postGraphQL(query, variables = {}) {
   const headers = {
     'Content-Type': 'application/json',
@@ -12,6 +13,7 @@ export async function postGraphQL(query, variables = {}) {
     headers['Authorization'] = `Bearer ${token}`
   }
 
+  // Normaliza la query para trazas en consola.
   const operationPreview = String(query).trim()
 
   console.log(
@@ -25,6 +27,7 @@ export async function postGraphQL(query, variables = {}) {
   console.log('├─ Operación GraphQL completa:\n' + operationPreview)
   console.log('└─ Variables:', variables)
 
+  // Medir latencia total de la petición.
   const startTime = performance.now()
 
   const response = await fetch(GRAPHQL_ENDPOINT, {
@@ -44,6 +47,7 @@ export async function postGraphQL(query, variables = {}) {
 └─ Content-Type: ${response.headers.get('content-type')}
   `)
 
+  // Parseo JSON con control de errores para respuestas inválidas.
   let payload
   try {
     payload = await response.json()
@@ -54,6 +58,7 @@ export async function postGraphQL(query, variables = {}) {
     throw new Error('No se pudo leer la respuesta del servidor.')
   }
 
+  // Errores HTTP fuera de rango 2xx.
   if (!response.ok) {
     const firstError = payload?.errors?.[0]?.message
     console.error(
@@ -62,17 +67,20 @@ export async function postGraphQL(query, variables = {}) {
 ├─ Status: ${response.status}
 ├─ Error: ${firstError || 'Fallo la peticion GraphQL.'}
 └─ Payload:`,
+
       payload,
     )
     throw new Error(firstError || 'Fallo la peticion GraphQL.')
   }
 
+  // Errores GraphQL reportados en el payload.
   if (payload?.errors?.length) {
     console.error(
       `
 ❌ ERROR GraphQL
 ├─ Cantidad de errores: ${payload.errors.length}
 └─ Errores:`,
+
       payload.errors,
     )
     throw new Error(payload.errors[0].message || 'Error GraphQL no especificado.')

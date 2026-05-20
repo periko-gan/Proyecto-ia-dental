@@ -2,10 +2,12 @@ const DB_NAME = 'dental-ai-upload-queue'
 const DB_VERSION = 1
 const STORE_NAME = 'files'
 
+// Verifica soporte de IndexedDB en el navegador actual.
 function isIndexedDbAvailable() {
   return typeof window !== 'undefined' && 'indexedDB' in window
 }
 
+// Convierte una IndexedDBRequest en Promise.
 function requestToPromise(request) {
   return new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result)
@@ -13,6 +15,7 @@ function requestToPromise(request) {
   })
 }
 
+// Abre (o crea) la base para la cola de subida.
 function openDatabase() {
   if (!isIndexedDbAvailable()) {
     return Promise.reject(new Error('IndexedDB no está disponible en este entorno.'))
@@ -33,6 +36,7 @@ function openDatabase() {
   })
 }
 
+// Reconstruye el objeto File si el navegador devolvió Blob/objeto plano.
 function normalizeStoredRecord(record) {
   if (!record) {
     return null
@@ -62,6 +66,7 @@ function normalizeStoredRecord(record) {
   }
 }
 
+// Carga y ordena archivos encolados para reintento.
 async function loadQueuedFiles() {
   const db = await openDatabase()
   try {
@@ -78,6 +83,7 @@ async function loadQueuedFiles() {
   }
 }
 
+// Reemplaza todo el contenido de la cola.
 async function replaceQueuedFiles(entries) {
   const db = await openDatabase()
   try {
@@ -100,6 +106,7 @@ async function replaceQueuedFiles(entries) {
   }
 }
 
+// Vacía la cola de subida.
 async function clearQueuedFiles() {
   const db = await openDatabase()
   try {

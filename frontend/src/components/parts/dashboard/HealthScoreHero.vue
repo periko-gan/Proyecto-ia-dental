@@ -1,6 +1,7 @@
 <script setup>
 import { useHealthScoreHero } from '@/composables/useHealthScoreHero'
 
+// Datos agregados del historial para el hero de puntuación.
 const {
   analysesLoading,
   heroCompletedAnalyses,

@@ -1,5 +1,6 @@
 import { postGraphQL } from '@/services/graphqlClient'
 
+// Mutación combinada: registra y luego loguea al usuario en una sola llamada.
 const REGISTER_AND_LOGIN_MUTATION = `
 mutation RegisterAndLogin($name: String!, $email: String!, $password: String!) {
   registerUser(name: $name, email: $email, password: $password) {
@@ -24,6 +25,7 @@ mutation RegisterAndLogin($name: String!, $email: String!, $password: String!) {
 }
 `
 
+// Mutación de login simple.
 const LOGIN_MUTATION = `
 mutation LoginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
@@ -100,6 +102,7 @@ export function logout() {
 }
 
 export async function registerAndLogin(name, email, password) {
+  // Ejecuta registro + login y persiste sesión si todo salió bien.
   const data = await postGraphQL(REGISTER_AND_LOGIN_MUTATION, { name, email, password })
   const loginPayload = data?.loginUser
 
@@ -117,6 +120,7 @@ export async function registerAndLogin(name, email, password) {
 }
 
 export async function loginAndPersist(email, password) {
+  // Login directo y persistencia de sesión.
   const data = await postGraphQL(LOGIN_MUTATION, { email, password })
   const loginPayload = data?.loginUser
 

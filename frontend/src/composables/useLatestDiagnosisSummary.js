@@ -3,6 +3,7 @@ import { useMyAnalyses } from '@/composables/useMyAnalyses'
 import { useDiagnosticAnalysis } from '@/composables/useDiagnosticAnalysis'
 import { getProblemSeverity, translateProblem } from '@/utils/problemTranslations'
 
+// Normaliza confianza 0-1 o 0-100 a porcentaje 0-100.
 function normalizeConfidenceToPercent(confidence) {
   const value = Number(confidence)
   if (!Number.isFinite(value)) return null
@@ -13,6 +14,7 @@ const useLatestDiagnosisSummary = () => {
   const { analyses, loading: analysesLoading, error: analysesError, formatDate } = useMyAnalyses(50)
   const { currentAnalysis } = useDiagnosticAnalysis()
 
+  // Unifica historial + análisis actual para tomar el más reciente.
   const allAnalyses = computed(() => {
     const unique = new Map()
 
@@ -29,10 +31,12 @@ const useLatestDiagnosisSummary = () => {
     return [...unique.values()]
   })
 
+  // Solo análisis completados para el resumen.
   const completedAnalyses = computed(() => {
     return allAnalyses.value.filter((analysis) => analysis?.status === 'COMPLETED')
   })
 
+  // Selecciona el más reciente por fecha.
   const latestAnalysis = computed(() => {
     return (
       completedAnalyses.value
@@ -44,6 +48,7 @@ const useLatestDiagnosisSummary = () => {
 
   const detections = computed(() => latestAnalysis.value?.detections ?? [])
 
+  // Conteo por severidades para texto de resumen.
   const severityCounts = computed(() => {
     const counts = { critical: 0, warning: 0, success: 0 }
 
@@ -57,6 +62,7 @@ const useLatestDiagnosisSummary = () => {
     return counts
   })
 
+  // Hallazgo principal con mayor confianza.
   const mainFinding = computed(() => {
     if (detections.value.length === 0) return 'Sin hallazgos visibles'
 
@@ -80,6 +86,7 @@ const useLatestDiagnosisSummary = () => {
     return Math.max(0, Math.min(100, Math.round(average)))
   })
 
+  // Construye el texto visible del resumen.
   const summary = computed(() => {
     if (!latestAnalysis.value) {
       return analysesError.value
@@ -136,6 +143,7 @@ const useLatestDiagnosisSummary = () => {
     return typeof value === 'string' && /^https?:\/\//i.test(value)
   }
 
+  // Genera la URL de uploads según endpoint configurado.
   function buildUploadUrl(filePath) {
     if (!filePath) return null
     if (isHttpUrl(filePath)) return filePath
