@@ -207,7 +207,7 @@ Funciones:
 Flujo simplificado:
 
 1. Preparas datos en `dataset/` y confirmas `dataset/data.yaml`.
-2. Ejecutas `tools/train_yolov8.py` con modelo base (`yolov8n.pt` u otro).
+2. Ejecutas `tools/train_yolov8.py` con modelo base (`yolov8n.pt`, `yolo26n.pt` u otro).
 3. El script decide dispositivo (`auto`, `cpu`, `0`, etc.).
 4. Ultralytics entrena por épocas y guarda artefactos en `runs/train/<run>/`.
 5. Obtienes checkpoints:
@@ -254,8 +254,13 @@ Flujo:
 
 ## 7.3 Continuar entrenamiento (fine-tuning)
 
-- Reanuda desde `last.pt` si necesitas continuidad de una corrida.
-- Prueba nuevas configuraciones (`epochs`, `imgsz`, `batch`, `model`) y compara métricas.
+- Reanuda desde `last.pt` si necesitas continuidad de una corrida con `--resume`.
+- **Mejores prácticas para Finetuning (ej. Portátil 8GB VRAM con modelo preentrenado local `yolo26n.pt`):**
+  - **Resolución y Batch:** Usa `--imgsz 800` y `--batch 8` para equilibrar detalle fino (caries) sin colapsar la VRAM.
+  - **Protección del modelo base:** Usa `--freeze 10` para congelar las capas iniciales y evitar el olvido catastrófico.
+  - **Optimizador y Learning Rate:** Usa `--optimizer AdamW`, `--lr0 0.001`, `--cos-lr` y `--warmup-epochs 3.0` para un ajuste fino y suave.
+  - **Evitar sobreajuste:** Desactiva mosaic al final con `--close-mosaic 15`.
+  - **Rendimiento térmico:** Limita `--workers 4` para no saturar la CPU en portátiles.
 
 ## 7.4 Preparar despliegue
 

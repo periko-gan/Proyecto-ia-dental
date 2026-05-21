@@ -64,12 +64,12 @@ def parse_args() -> argparse.Namespace:
         "--max-pred-images",
         type=int,
         default=100,
-        help="Limite de imagenes a procesar en prediccion",
+        help="Limite de imágenes a procesar en predicción",
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Solo imprime configuracion sin ejecutar ultralytics",
+        help="Solo imprime configuración sin ejecutar ultralytics",
     )
     return parser.parse_args()
 

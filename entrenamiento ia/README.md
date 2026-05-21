@@ -1,4 +1,4 @@
-# Conversor CSV -> YOLOv8
+# Conversor CSV -> YOLO
 
 Este proyecto convierte anotaciones en CSV dentro de `dataset/labels/{train,val,test}/_annotations.csv`
 al formato YOLO (`.txt` por imagen) y crea `dataset/data.yaml`.
@@ -149,13 +149,13 @@ Ejemplo recomendado (auto: usa GPU si existe; si no, CPU):
 PowerShell (Windows):
 
 ```powershell
-python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device auto
+python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device auto
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device auto
+python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device auto
 ```
 
 Ejemplo base (CPU forzado):
@@ -163,13 +163,13 @@ Ejemplo base (CPU forzado):
 PowerShell (Windows):
 
 ```powershell
-python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device cpu
+python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device cpu
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device cpu
+python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device cpu
 ```
 
 Ejemplo GPU (si tu equipo la detecta):
@@ -177,13 +177,27 @@ Ejemplo GPU (si tu equipo la detecta):
 PowerShell (Windows):
 
 ```powershell
-python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device 0
+python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device 0
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device 0
+python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device 0
+```
+
+Ejemplo Finetuning Avanzado (Portátil 8GB VRAM, modelo preentrenado local):
+
+PowerShell (Windows):
+
+```powershell
+python .\tools\train_yolov8.py --data .\dataset\data.yaml --model yolo26n.pt --device 0 --epochs 150 --imgsz 800 --batch 8 --workers 4 --optimizer AdamW --lr0 0.001 --cos-lr --freeze 10 --close-mosaic 15 --warmup-epochs 3.0 --name "dental_yolo26n_laptop"
+```
+
+Bash (Linux):
+
+```bash
+python3 ./tools/train_yolov8.py --data ./dataset/data.yaml --model yolo26n.pt --device 0 --epochs 150 --imgsz 800 --batch 8 --workers 4 --optimizer AdamW --lr0 0.001 --cos-lr --freeze 10 --close-mosaic 15 --warmup-epochs 3.0 --name "dental_yolo26n_laptop"
 ```
 
 Validar configuración sin entrenar:
@@ -213,13 +227,13 @@ Evaluar + predecir en un solo comando:
 PowerShell (Windows):
 
 ```powershell
-python .\tools\eval_predict_yolov8.py --task both --data .\dataset\data.yaml --source .\dataset\images\test --model yolov8n.pt --device auto
+python .\tools\eval_predict_yolov8.py --task both --data .\dataset\data.yaml --source .\dataset\images\test --model best.pt --device auto
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/eval_predict_yolov8.py --task both --data ./dataset/data.yaml --source ./dataset/images/test --model yolov8n.pt --device auto
+python3 ./tools/eval_predict_yolov8.py --task both --data ./dataset/data.yaml --source ./dataset/images/test --model best.pt --device auto
 ```
 
 Solo evaluación:
@@ -227,13 +241,13 @@ Solo evaluación:
 PowerShell (Windows):
 
 ```powershell
-python .\tools\eval_predict_yolov8.py --task val --data .\dataset\data.yaml --model yolov8n.pt --device auto
+python .\tools\eval_predict_yolov8.py --task val --data .\dataset\data.yaml --model best.pt --device auto
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/eval_predict_yolov8.py --task val --data ./dataset/data.yaml --model yolov8n.pt --device auto
+python3 ./tools/eval_predict_yolov8.py --task val --data ./dataset/data.yaml --model best.pt --device auto
 ```
 
 Solo predicción:
@@ -241,13 +255,13 @@ Solo predicción:
 PowerShell (Windows):
 
 ```powershell
-python .\tools\eval_predict_yolov8.py --task predict --data .\dataset\data.yaml --source .\dataset\images\test --model yolov8n.pt --device auto
+python .\tools\eval_predict_yolov8.py --task predict --data .\dataset\data.yaml --source .\dataset\images\test --model best.pt --device auto
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/eval_predict_yolov8.py --task predict --data ./dataset/data.yaml --source ./dataset/images/test --model yolov8n.pt --device auto
+python3 ./tools/eval_predict_yolov8.py --task predict --data ./dataset/data.yaml --source ./dataset/images/test --model best.pt --device auto
 ```
 
 Validar configuración sin ejecutar Ultralytics:
@@ -328,13 +342,13 @@ Ejecuta todo en secuencia con nombres versionados por timestamp UTC:
 PowerShell (Windows):
 
 ```powershell
-python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device auto --task both
+python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device auto --task both
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolov8n.pt --epochs 100 --imgsz 640 --batch 16 --device auto --task both
+python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolo26n.pt --epochs 100 --imgsz 640 --batch 16 --device auto --task both
 ```
 
 Preset `GPU segura` (prioriza estabilidad, menor riesgo de OOM):
@@ -342,13 +356,13 @@ Preset `GPU segura` (prioriza estabilidad, menor riesgo de OOM):
 PowerShell (Windows):
 
 ```powershell
-python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolov8n.pt --epochs 120 --imgsz 640 --batch 4 --device 0 --task both
+python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolo26n.pt --epochs 120 --imgsz 640 --batch 4 --device 0 --task both
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolov8n.pt --epochs 120 --imgsz 640 --batch 4 --device 0 --task both
+python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolo26n.pt --epochs 120 --imgsz 640 --batch 4 --device 0 --task both
 ```
 
 Preset `GPU agresiva` (prioriza calidad/rendimiento, requiere más VRAM):
@@ -356,13 +370,13 @@ Preset `GPU agresiva` (prioriza calidad/rendimiento, requiere más VRAM):
 PowerShell (Windows):
 
 ```powershell
-python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolov8s.pt --epochs 200 --imgsz 896 --batch 8 --device 0 --task both
+python .\tools\run_train_eval_predict_yolov8.py --data .\dataset\data.yaml --source .\dataset\images\test --model yolo26n.pt --epochs 200 --imgsz 896 --batch 8 --device 0 --task both
 ```
 
 Bash (Linux):
 
 ```bash
-python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolov8s.pt --epochs 200 --imgsz 896 --batch 8 --device 0 --task both
+python3 ./tools/run_train_eval_predict_yolov8.py --data ./dataset/data.yaml --source ./dataset/images/test --model yolo26n.pt --epochs 200 --imgsz 896 --batch 8 --device 0 --task both
 ```
 
 Si aparece `CUDA out of memory`, baja primero `--batch` (por ejemplo, `8 -> 4 -> 2`) y luego `--imgsz` (`896 -> 768 -> 640`).
