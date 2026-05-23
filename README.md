@@ -1,14 +1,18 @@
-# 🦷 Proyecto IA Dental
+# Proyecto IA Dental
 
-![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
-![Python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
-![YOLOv8](https://img.shields.io/badge/YOLOv8-FF1493?style=for-the-badge&logo=yolo&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+## Tecnologías utilizadas
 
-## 📌 Descripción General
+| Tecnología | Descripción |
+| :--- | :--- |
+| **Vue.js** | **Frontend**: Construcción de la interfaz de usuario interactiva y reactiva. |
+| **FastAPI** | **Backend**: Servidor web principal que expone la API GraphQL. |
+| **Python** | **Lenguaje principal**: Lógica de backend, procesamiento ETL de datos y ejecución del entrenamiento del modelo. |
+| **YOLOv8** | **Inteligencia Artificial**: Red neuronal convolucional para la detección y localización de patologías dentales. |
+| **MongoDB** | **Base de datos**: Almacenamiento no relacional y persistente para usuarios, diagnósticos e imágenes. |
+| **Docker** | **Infraestructura**: Contenedorización para el levantamiento unificado de las bases de datos y microservicios. |
+| **Tailwind CSS** | **Diseño**: Estilado moderno y responsivo de la interfaz de usuario. |
+
+## Descripción general
 
 **Proyecto IA Dental** es una plataforma web integral impulsada por Inteligencia Artificial diseñada para asistir a odontólogos y especialistas en el análisis, diagnóstico y seguimiento de radiografías dentales.
 
@@ -18,7 +22,7 @@ El sistema proporciona una interfaz visual altamente interactiva para ver los re
 
 ---
 
-## 🚀 Características Principales
+## Características principales
 
 * **Autenticación de Usuarios:** Sistema seguro de registro e inicio de sesión para que los especialistas guarden sus historiales médicos.
 * **Diagnóstico Automatizado (IA):** Subida de radiografías en varios formatos e inferencia instantánea utilizando redes neuronales profundas (YOLOv8).
@@ -28,7 +32,7 @@ El sistema proporciona una interfaz visual altamente interactiva para ver los re
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## Arquitectura del sistema
 
 El proyecto está dividido en varios microservicios y capas principales:
 
@@ -52,7 +56,7 @@ El proyecto está dividido en varios microservicios y capas principales:
 
 ---
 
-## 🛠️ Requisitos Previos
+## Requisitos previos
 
 Asegúrate de tener instalados en tu sistema local los siguientes programas:
 * [Node.js](https://nodejs.org/) y [pnpm](https://pnpm.io/) (para el Frontend).
@@ -61,11 +65,15 @@ Asegúrate de tener instalados en tu sistema local los siguientes programas:
 
 ---
 
-## ⚙️ Cómo iniciar la aplicación
+## Cómo iniciar la aplicación
+
+El proyecto se puede iniciar de forma automática a través de scripts interactivos o de forma manual paso a paso.
+
+### Inicio automático (Recomendado)
 
 El proyecto incluye scripts interactivos que automatizan el levantamiento y cierre de todos los componentes de la aplicación (Frontend, Backend, Bases de Datos).
 
-### 🪟 En Windows (PowerShell)
+#### En Windows (PowerShell)
 
 Abre PowerShell en la raíz del proyecto y ejecuta:
 ```powershell
@@ -73,7 +81,7 @@ Abre PowerShell en la raíz del proyecto y ejecuta:
 ```
 *Se desplegará un menú en la terminal donde podrás elegir la opción `5. Levantar TODO` para iniciar Docker, FastAPI y Vite de forma automática.*
 
-### 🐧 En Linux / macOS (Bash)
+#### En Linux / macOS (Bash)
 
 Abre la terminal en la raíz del proyecto y ejecuta:
 ```bash
@@ -81,14 +89,74 @@ Abre la terminal en la raíz del proyecto y ejecuta:
 ```
 *Al igual que en Windows, se mostrará un menú interactivo. Selecciona `5` para desplegar todos los servicios.*
 
-### ¿Qué ocurre al iniciar la aplicación?
-1. Se levantan los contenedores de **Docker** (MongoDB).
-2. Se inicia el servidor **Backend (Uvicorn/FastAPI)** en el puerto local (`localhost:8000`).
-3. Se inicia el entorno de desarrollo del **Frontend (Vite)**, el cual suele ejecutarse en `localhost:5173` u `8080`. Se abrirá automáticamente o te mostrará el enlace en la consola.
+### Inicio manual paso a paso
+
+Si prefieres levantar cada servicio de forma individual y manual, abre diferentes terminales y sigue estos pasos:
+
+#### 1. Base de Datos (MongoDB)
+El backend requiere una instancia de MongoDB. Puedes levantar el contenedor Docker de las siguientes maneras:
+- **MongoDB básico**:
+  ```bash
+  cd backend
+  docker compose -f docker-compose.mongo.yml up -d
+  ```
+- **Contenedores completos (MongoDB, Kafka, Zookeeper)**:
+  ```bash
+  cd docker
+  docker compose up -d
+  ```
+
+#### 2. Servidor Backend (FastAPI)
+1. Ve al directorio del backend:
+   ```bash
+   cd backend
+   ```
+2. Crea y activa el entorno virtual de Python:
+   - **En Windows**:
+     ```powershell
+     python -m venv .venv
+     .venv\Scripts\activate
+     ```
+   - **En Linux / macOS**:
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
+3. Instala las dependencias requeridas:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Copia el archivo `.env.example` a `.env` (si aún no lo has hecho) y arranca el servidor:
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   *El backend estará escuchando en `http://localhost:8000`.*
+
+#### 3. Aplicación Frontend (Vue 3 / Vite)
+1. Ve al directorio del frontend:
+   ```bash
+   cd frontend
+   ```
+2. Crea el archivo de variables de entorno `.env` en `frontend/` apuntando al endpoint de GraphQL del backend:
+   ```env
+   VITE_GRAPHQL_ENDPOINT=http://localhost:8000/graphql
+   ```
+3. Instala las dependencias del proyecto usando `pnpm` (evita `npm` o `yarn` para prevenir conflictos de lockfile):
+   ```bash
+   pnpm install
+   ```
+4. Inicia el servidor de desarrollo:
+   ```bash
+   pnpm run dev
+   ```
+   *(Alternativamente, puedes ejecutar `pnpm install` y `pnpm dev` directamente desde la raíz del proyecto gracias a la configuración de workspaces de `pnpm`).*
+   
+   *El frontend estará disponible en `http://localhost:5173`.*
+
 
 ---
 
-## 📁 Estructura de Directorios
+## Estructura de directorios
 
 ```text
 Proyecto-ia-dental/
@@ -103,6 +171,6 @@ Proyecto-ia-dental/
 
 ---
 
-## 🤝 Soporte y Cierre Seguro
+## Soporte y cierre seguro
 
 Para detener la aplicación, simplemente vuelve al menú interactivo del script (`start_aplicacion.ps1` o `start_aplicaion.sh`) y selecciona la opción **10. Cerrar TODO**. Esto detendrá de forma segura los servidores y apagará los contenedores Docker, evitando que queden procesos huérfanos consumiendo memoria.

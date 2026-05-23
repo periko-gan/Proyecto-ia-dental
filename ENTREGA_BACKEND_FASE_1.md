@@ -8,74 +8,74 @@ Implementar la **base funcional mínima** del backend para el flujo prioritario:
 
 ## Alcance incluido
 
-✅ **Infraestructura Python + FastAPI + GraphQL Strawberry**
+- **Infraestructura Python + FastAPI + GraphQL Strawberry**
 - Punto de entrada ASGI en `backend/main.py`
 - App FastAPI con ciclo de vida startup/shutdown
 - Montaje de GraphQL en `/graphql`
 - Endpoint health check en `/health`
 
-✅ **Configuración centralizada**
+- **Configuración centralizada**
 - Modelo de configuración con Pydantic Settings
 - Lectura de variables de entorno desde `.env`
 - Validaciones tempranas de configuración crítica
 - Rutas resueltas dinámicamente (modelos, uploads)
 
-✅ **Persistencia MongoDB**
+- **Persistencia MongoDB**
 - Cliente Motor asíncrono encapsulado
 - Documento Analysis con campos de contrato mínimo
 - Repositorio con operaciones create, getById, list
 - Índices básicos en status y created_at
 - Inicialización automática en startup
 
-✅ **Capa de Inferencia**
+- **Capa de Inferencia**
 - Cargador de modelo YOLO con lazy-loading (no bloquea arranque)
 - Adaptador de salida nativa de YOLO a formato interno estable
 - Resolución automática de dispositivo (CPU/GPU)
 - Servicio de inferencia con timing y manejo de errores
 
-✅ **Capa de Upload**
+- **Capa de Upload**
 - Validación de tipo MIME y tamaño de archivo
 - Almacenamiento en filesystem con UUID
 - Prevención de sobrescrita de nombres
 
-✅ **Servicios de negocio**
+- **Servicios de negocio**
 - AnalysisService que orquesta flujo completo
 - Manejo de errores por categoría controlada
 - Persistencia de análisis completados y fallidos
 
-✅ **API GraphQL mínima**
+- **API GraphQL mínima**
 - Tipos: Analysis, Detection, UploadResponse, AnalysisStatus, SystemStats
 - Query: getAnalysisById, listAnalyses, getSystemStats
 - Mutation: uploadRadiography (flujo síncrono completo)
 - Formato de respuesta coherente y documentado
 
-✅ **Estructura por capas clara**
+- **Estructura por capas clara**
 ```
 backend/
-├── src/
-│   ├── api/           → contrato GraphQL
-│   ├── services/      → casos de uso
-│   ├── inference/     → IA y YOLO
-│   ├── persistence/   → MongoDB
-│   ├── config/        → entorno e infraestructura
-│   ├── domain/        → errores y tipos
-│   ├── events/        → placeholder para Kafka
-│   └── utils/         → logging y validadores
-├── tests/             → smoke tests (implementar)
-├── pyproject.toml     → dependencias
-├── .env.example       → variables de entorno
-├── main.py            → punto de entrada
-└── README.md          → guía de uso
+ src/
+    api/           → contrato GraphQL
+    services/      → casos de uso
+    inference/     → IA y YOLO
+    persistence/   → MongoDB
+    config/        → entorno e infraestructura
+    domain/        → errores y tipos
+    events/        → placeholder para Kafka
+    utils/         → logging y validadores
+ tests/             → smoke tests (implementar)
+ pyproject.toml     → dependencias
+ .env.example       → variables de entorno
+ main.py            → punto de entrada
+- README.md          → guía de uso
 ```
 
 ## Alcance NO incluido (según plan)
 
-❌ Kafka
-❌ Node-RED
-❌ ELK (Elasticsearch, Logstash, Kibana)
-❌ Observabilidad avanzada
-❌ Dockerización completa (preparada para agregar después)
-❌ Hardening de seguridad (implementar según requisitos)
+- Kafka
+- Node-RED
+- ELK (Elasticsearch, Logstash, Kibana)
+- Observabilidad avanzada
+- Dockerización completa (preparada para agregar después)
+- Hardening de seguridad (implementar según requisitos)
 
 ## Dependencias instaladas
 
@@ -213,13 +213,12 @@ mutation UploadRadiography($file: Upload!) {
 - **Estructura**: Capas desacopladas permitiendo crecimiento futuro
 
 ## Estado de calidad
-
-- ✅ Código 100% tipado (type hints modernos)
-- ✅ Sin errores estáticos (Pylance limpio)
-- ✅ Imports estructurados por capas
-- ✅ Manejo de errores por categoría
-- ✅ Configuración validada en startup
-- ✅ Documentación de tipos GraphQL clara
+- Código 100% tipado (type hints modernos)
+- Sin errores estáticos (Pylance limpio)
+- Imports estructurados por capas
+- Manejo de errores por categoría
+- Configuración validada en startup
+- Documentación de tipos GraphQL clara
 
 ## Notas finales
 

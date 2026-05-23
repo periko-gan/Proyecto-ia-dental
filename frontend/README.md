@@ -38,35 +38,35 @@ pnpm format    # Formatea src/ con oxfmt
 ```text
 frontend/
   src/
-    ├── main.js                    # Punto de entrada
-    ├── App.vue                    # Componente raíz
-    ├── style.css                  # Estilos globales con Tailwind
-    ├── components/
-    │   ├── AnalyzeView.vue        # Vista de análisis de radiografías
-    │   ├── DashboardView.vue      # Dashboard principal (responsive)
-    │   ├── RegisterView.vue       # Registro de usuarios
-    │   ├── LoginView.vue          # Login de usuarios
-    │   └── parts/
-    │       ├── dashboard/
-    │       │   ├── HealthScoreHero.vue          # Puntuación de salud (hero)
-    │       │   ├── LatestDiagnosisSummary.vue   # Último diagnóstico
-    │       │   └── ProblemTypesChart.vue        # Gráfico de tipos de problemas
-    │       └── Formulario.vue                   # Componente reutilizable formulario
-    ├── composables/
-    │   ├── useHealthScoreHero.js  # Lógica de cálculo de puntuación de salud
-    │   └── useAuth.js             # Lógica de autenticación
-    ├── config/
-    │   └── graphql.js             # Configuración del endpoint GraphQL
-    ├── graphql/
-    │   ├── mutations.js           # Mutaciones GraphQL
-    │   └── queries.js             # Consultas GraphQL
-    ├── router/
-    │   └── index.js               # Configuración de rutas
-    ├── services/
-    │   ├── graphqlClient.js       # Cliente GraphQL (Apollo)
-    │   └── authService.js         # Servicio de autenticación
-    └── stores/
-        └── auth.js                # Store de Pinia para autenticación
+     main.js                    # Punto de entrada
+     App.vue                    # Componente raíz
+     style.css                  # Estilos globales con Tailwind
+     components/
+        AnalyzeView.vue        # Vista de análisis de radiografías
+        DashboardView.vue      # Dashboard principal (responsive)
+        RegisterView.vue       # Registro de usuarios
+        LoginView.vue          # Login de usuarios
+        parts/
+            dashboard/
+               HealthScoreHero.vue          # Puntuación de salud (hero)
+               LatestDiagnosisSummary.vue   # Último diagnóstico
+               ProblemTypesChart.vue        # Gráfico de tipos de problemas
+            Formulario.vue                   # Componente reutilizable formulario
+     composables/
+        useHealthScoreHero.js  # Lógica de cálculo de puntuación de salud
+        useAuth.js             # Lógica de autenticación
+     config/
+        graphql.js             # Configuración del endpoint GraphQL
+     graphql/
+        mutations.js           # Mutaciones GraphQL
+        queries.js             # Consultas GraphQL
+     router/
+        index.js               # Configuración de rutas
+     services/
+        graphqlClient.js       # Cliente GraphQL (Apollo)
+        authService.js         # Servicio de autenticación
+     stores/
+         auth.js                # Store de Pinia para autenticación
 ```
 
 ## Configuración de variables de entorno
@@ -181,8 +181,8 @@ docker compose down    # Detener contenedor
 Este proyecto está preparado para **pnpm**. Evita mezclar gestores:
 
 ```sh
-pnpm install  # ✓ Correcto
-npm install   # ✗ Evitar
+pnpm install  #  Correcto
+npm install   #  Evitar
 ```
 
 ### 2) `ERR_PNPM_UNEXPECTED_VIRTUAL_STORE`
@@ -217,12 +217,12 @@ Select-String -Path "dist\assets\*.js" -Pattern "8080/graphql"
 En bloques `<style>` de Vue, usar solo comentarios en bloque:
 
 ```vue
-<!-- ✓ Correcto -->
+<!--  Correcto -->
 <style>
   /* Comentario válido */
 </style>
 
-<!-- ✗ Incorrecto -->
+<!--  Incorrecto -->
 <style>
   // Esto causa error en Tailwind CSS v4
 </style>

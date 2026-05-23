@@ -1,30 +1,30 @@
-# ⚡ RESUMEN VISUAL RÁPIDO - Sistema de Login Implementado
+#  RESUMEN VISUAL RÁPIDO - Sistema de Login Implementado
 
-## 📌 De Un Vistazo
+##  De Un Vistazo
 
-### ✅ Lo que funciona ahora:
+###  Lo que funciona ahora:
 
 ```
-😊 Usuario
+ Usuario
   ↓ Hace login con email+password
   ↓ Se guardan datos en sessionStorage (5 campos)
   ↓ Token JWT incluido en peticiones posteriores
-  ✅ Accede a /dashboard y rutas protegidas
+   Accede a /dashboard y rutas protegidas
 ```
 
 ---
 
-## 📁 Archivos Modificados (3 archivos)
+##  Archivos Modificados (3 archivos)
 
 | Archivo                     | Cambios                      | Estado       |
 |-----------------------------|------------------------------|--------------|
-| `services/authService.js`   | ✅ 60 líneas mejoradas        | 💚 Operativo |
-| `services/graphqlClient.js` | ✅ Headers con Authorization  | 💚 Operativo |
-| `router/index.js`           | ✅ Guards + meta.requiresAuth | 💚 Operativo |
+| `services/authService.js`   |  60 líneas mejoradas        |  Operativo |
+| `services/graphqlClient.js` |  Headers con Authorization  |  Operativo |
+| `router/index.js`           |  Guards + meta.requiresAuth |  Operativo |
 
 ---
 
-## 🔄 Flujo Simplificado
+##  Flujo Simplificado
 
 ```
 Input (email+password)
@@ -43,12 +43,12 @@ router.push('/dashboard')
          ↓
 Guard verifica isAuthenticated()
          ↓
-✅ Dashboard accesible
+ Dashboard accesible
 ```
 
 ---
 
-## 💾 Datos en SessionStorage
+##  Datos en SessionStorage
 
 ```javascript
 sessionStorage: {
@@ -62,19 +62,19 @@ sessionStorage: {
 
 ---
 
-## 🛣️ Rutas Protegidas
+##  Rutas Protegidas
 
 ```
 PROTEGIDAS (requieren login):
-  ✓ /dashboard
-  ✓ /analyze
-  ✓ /diagnostic
-  ✓ /evolution
+   /dashboard
+   /analyze
+   /diagnostic
+   /evolution
 
 PÚBLICAS:
-  ✓ / (Landing)
-  ✓ /login
-  ✓ /register
+   / (Landing)
+   /login
+   /register
 ```
 
 ---
@@ -93,16 +93,16 @@ email: pepe@pepon.com
 password: 12345678
 
 # 4. Clickea "Iniciar sesión"
-# ✅ Debe ir a /dashboard
+#  Debe ir a /dashboard
 
 # 5. Abre DevTools (F12)
 # Console → sessionStorage
-# ✅ Debe mostrar 5 campos
+#  Debe mostrar 5 campos
 ```
 
 ---
 
-## 📡 API GraphQL
+##  API GraphQL
 
 ### Mutation Utilizada
 
@@ -138,9 +138,9 @@ POST http://localhost:8000/graphql
 
 ---
 
-## 🎯 Funciones Principales
+##  Funciones Principales
 
-### ✅ loginAndPersist()
+###  loginAndPersist()
 
 ```javascript
 import { loginAndPersist } from '@/services/authService'
@@ -150,7 +150,7 @@ await loginAndPersist(email, password)
 // → Redirige a /dashboard
 ```
 
-### ✅ getSession()
+###  getSession()
 
 ```javascript
 import { getSession } from '@/services/authService'
@@ -159,7 +159,7 @@ const session = getSession()
 console.log(session.email)
 ```
 
-### ✅ isAuthenticated()
+###  isAuthenticated()
 
 ```javascript
 import { isAuthenticated } from '@/services/authService'
@@ -169,7 +169,7 @@ if (isAuthenticated()) {
 }
 ```
 
-### ✅ logout()
+###  logout()
 
 ```javascript
 import { logout } from '@/services/authService'
@@ -180,34 +180,34 @@ logout()
 
 ---
 
-## 🔐 Guard de Rutas
+##  Guard de Rutas
 
 ```javascript
 // Automáticamente:
-// ✅ Sin token → redirige a /login
-// ✅ Con token en /login → redirige a /dashboard
-// ✅ Con token → peticiones llevan Authorization header
+//  Sin token → redirige a /login
+//  Con token en /login → redirige a /dashboard
+//  Con token → peticiones llevan Authorization header
 ```
 
 ---
 
-## 📊 Comparación: Login vs Registro
+##  Comparación: Login vs Registro
 
 ```
-┌─────────────┬──────────────────┬──────────────────┐
-│ Aspecto     │ Login            │ Registro         │
-├─────────────┼──────────────────┼──────────────────┤
-│ Función     │ loginAndPersist()│ registerAndLogin()│
-│ Crea user   │ ❌ No            │ ✅ Sí            │
-│ SessionStore│ Granular (5)     │ Granular (5)     │
-│ Destino     │ /dashboard       │ /dashboard       │
-│ Token       │ ✅ Retorna       │ ✅ Retorna       │
-└─────────────┴──────────────────┴──────────────────┘
+
+ Aspecto      Login             Registro         
+
+ Función      loginAndPersist() registerAndLogin()
+ Crea user     No              Sí            
+ SessionStore Granular (5)      Granular (5)     
+ Destino      /dashboard        /dashboard       
+ Token         Retorna         Retorna       
+
 ```
 
 ---
 
-## 🚀 Inicio Rápido
+##  Inicio Rápido
 
 ### Backend
 
@@ -230,11 +230,11 @@ npm run dev
 1. Ir a http://localhost:5173/login
 2. Ingresar: `pepe@pepon.com` / `12345678`
 3. Clickear "Iniciar sesión"
-4. ✅ Redirecciona a /dashboard
+4.  Redirecciona a /dashboard
 
 ---
 
-## 📚 Documentación
+##  Documentación
 
 Consulta estos archivos en `frontend/`:
 
@@ -247,7 +247,7 @@ Consulta estos archivos en `frontend/`:
 
 ---
 
-## 🐛 Problemas Comunes
+##  Problemas Comunes
 
 ### "No se redirige a /dashboard"
 
@@ -283,7 +283,7 @@ Consulta estos archivos en `frontend/`:
 
 ---
 
-## ✅ Checklist Final
+##  Checklist Final
 
 - [ ] Backend corriendo en localhost:8000
 - [ ] Frontend corriendo en localhost:5173
@@ -297,7 +297,7 @@ Consulta estos archivos en `frontend/`:
 
 ---
 
-## 🎓 Próximas Mejoras
+##  Próximas Mejoras
 
 1. Implementar logout UI en navbar
 2. Mostrar datos usuario en dashboard
@@ -307,16 +307,16 @@ Consulta estos archivos en `frontend/`:
 
 ---
 
-## 📞 Resumen TL;DR
+##  Resumen TL;DR
 
-✅ **Sistema de login completamente implementado**
+- **Sistema de login completamente implementado**
 
-- Login con email+password via GraphQL ✅
-- Datos guardados en sessionStorage (5 campos granulares) ✅
-- Rutas protegidas con guards ✅
-- Token en Authorization header ✅
-- Redirecciona a /dashboard ✅
-- Documentación completa ✅
+- Login con email+password via GraphQL 
+- Datos guardados en sessionStorage (5 campos granulares) 
+- Rutas protegidas con guards 
+- Token en Authorization header 
+- Redirecciona a /dashboard 
+- Documentación completa 
 
-**Listo para usar. ¡A loguearse! 🚀**
+**Listo para usar. ¡A loguearse! **
 

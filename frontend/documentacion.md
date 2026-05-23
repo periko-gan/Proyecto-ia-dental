@@ -268,4 +268,4 @@ El archivo [docker-compose.yml](file:///c:/Users/pemip/Desktop/Proyecto-ia-denta
 docker compose up --build -d
 ```
 
-Una vez en ejecución, el frontend estará disponible en `http://localhost:80` (o en el puerto alternativo configurado en las propiedades de docker-compose).
+Una vez en ejecución, el frontend estará disponible en `http://localhost:8080` (o en el puerto alternativo configurado en las propiedades de docker-compose).

@@ -9,7 +9,7 @@ Se completó la **Primera Entrega Mínima del Backend** conforme a las especific
 
 ### Entregables
 
-✅ **35 módulos Python** organizados en 6 capas arquitectónicas:
+- **35 módulos Python** organizados en 6 capas arquitectónicas:
 - `api/` (5): schema, queries, mutations, types, context
 - `config/` (2): settings, mongodb  
 - `services/` (3): analysis, inference, upload
@@ -17,7 +17,7 @@ Se completó la **Primera Entrega Mínima del Backend** conforme a las especific
 - `persistence/` (2): models, repository
 - `domain/`, `events/`, `utils/` (5): excepciones, publishers, logging
 
-✅ **6 archivos raíz**:
+- **6 archivos raíz**:
 - `main.py`: punto de entrada ASGI
 - `pyproject.toml`: dependencias (fastapi, strawberry, motor, ultralytics, etc.)
 - `.env.example`: plantilla de variables de entorno
@@ -25,7 +25,7 @@ Se completó la **Primera Entrega Mínima del Backend** conforme a las especific
 - `estructura.md`: árbol de carpetas documentado
 - `validate_implementation.py`: script de validación
 
-✅ **Documentación**:
+- **Documentación**:
 - `ENTREGA_BACKEND_FASE_1.md`: guía completa con contrato GraphQL
 - Inline type hints en todo el código
 - Docstrings en módulos críticos
@@ -33,20 +33,20 @@ Se completó la **Primera Entrega Mínima del Backend** conforme a las especific
 ### Validaciones ejecutadas
 
 **Validación de código:**
-- ✅ 0 errores estáticos (Pylance limpio)
-- ✅ Todos los imports resolvibles
-- ✅ Type hints modernos (`from __future__ import annotations`)
-- ✅ Lazy-loading de Ultralytics (no bloquea arranque)
+- 0 errores estáticos (Pylance limpio)
+- Todos los imports resolvibles
+- Type hints modernos (`from __future__ import annotations`)
+- Lazy-loading de Ultralytics (no bloquea arranque)
 
 **Validación de funcionalidad:**
-- ✅ App FastAPI crea correctamente
-- ✅ Rutas `/graphql` y `/health` montadas
-- ✅ Schema GraphQL cargado y válido
-- ✅ Configuración Pydantic cargada desde .env
-- ✅ Modelos de persistencia instanciables
+- App FastAPI crea correctamente
+- Rutas `/graphql` y `/health` montadas
+- Schema GraphQL cargado y válido
+- Configuración Pydantic cargada desde .env
+- Modelos de persistencia instanciables
 
 **Validación de tests:**
-- ✅ 6/6 tests smoke pasando
+- 6/6 tests smoke pasando
   - test_graphql_schema_contains_minimum_contract
   - test_analysis_service_upload_and_analyze_smoke
   - test_settings_loads
@@ -55,8 +55,8 @@ Se completó la **Primera Entrega Mínima del Backend** conforme a las especific
   - test_analysis_record_to_mongo
 
 **Script de validación:**
-- ✅ 6/6 checks pasados
-- ✅ Backend listo para producción local
+- 6/6 checks pasados
+- Backend listo para producción local
 
 ### Flujo funcional implementado
 
@@ -129,17 +129,16 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 6. **Idioma**: Inglés en código, español en mensajes de error
 
 ### NO incluido en esta entrega (según plan)
-
-- ❌ Kafka (Fase 2)
-- ❌ Node-RED (Fase 2)
-- ❌ ELK (Fase 2)
-- ❌ Dockerización completa (Fase 2)
-- ❌ Hardening de seguridad (Fase 2)
-- ❌ Observabilidad avanzada (Fase 2)
+- Kafka (Fase 2)
+- Node-RED (Fase 2)
+- ELK (Fase 2)
+- Dockerización completa (Fase 2)
+- Hardening de seguridad (Fase 2)
+- Observabilidad avanzada (Fase 2)
 
 ## Estado final
 
-**✅ COMPLETADO Y LISTO PARA REVISION**
+** COMPLETADO Y LISTO PARA REVISION**
 
 El backend está:
 - Implementado completamente

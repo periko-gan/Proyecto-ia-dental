@@ -1,4 +1,4 @@
-# 📚 Estudio del Código y Evolución del Entrenamiento YOLOv8
+#  Estudio del Código y Evolución del Entrenamiento YOLOv8
 
 > [!NOTE]
 > Este documento sirve como guía de estudio para comprender la arquitectura de scripts desarrollada en el proyecto y resumir las fases de experimentación y *fine-tuning* extraídas de la documentación de pruebas.
@@ -16,11 +16,11 @@ Para que la Inteligencia Artificial aprenda a detectar problemas dentales, se ha
 
 ---
 
-## 🛠️ 1. Arquitectura del Código (`tools/`)
+##  1. Arquitectura del Código (`tools/`)
 
 El conjunto de herramientas en la carpeta `tools` está diseñado para facilitar, automatizar y estandarizar el flujo de trabajo con YOLOv8, desde la preparación de datos hasta la evaluación de resultados.
 
-### 📄 1.1 `csv_to_yolo.py`
+###  1.1 `csv_to_yolo.py`
 **Propósito:** Convierte anotaciones de bounding boxes desde un formato tabular (CSV) al formato de texto plano requerido por YOLOv8 (`.txt` por cada imagen).
 **Funcionamiento:**
 - Lee el CSV y detecta las clases dinámicamente (`collect_classes`).
@@ -37,7 +37,7 @@ El conjunto de herramientas en la carpeta `tools` está diseñado para facilitar
 - **Soporte para Tuning:** Incluye la bandera `--tune` que lanza un algoritmo genético de mutación de hiperparámetros de Ultralytics para buscar la mejor configuración de *Data Augmentation*.
 - Permite inyectar un archivo de configuración externo (como `best_hyperparameters.yaml`) a través del flag `--cfg`.
 
-### 📊 1.3 `eval_predict_yolov8.py`
+###  1.3 `eval_predict_yolov8.py`
 **Propósito:** Evaluar un modelo entrenado sobre el conjunto de validación o lanzar predicciones masivas sobre nuevas imágenes/videos.
 **Funcionamiento:**
 - Puede operar en modo `val` (solo métricas), `predict` (solo inferencia visual) o `both` (ambos).
@@ -45,19 +45,19 @@ El conjunto de herramientas en la carpeta `tools` está diseñado para facilitar
 - **Extracción de Métricas:** Atrapa los resultados y los formatea automáticamente en `val_metrics.json` y `val_metrics.csv`.
 - Guarda un `run_report.json` con toda la trazabilidad de la ejecución.
 
-### ⚙️ 1.4 `run_train_eval_predict_yolov8.py`
+###  1.4 `run_train_eval_predict_yolov8.py`
 **Propósito:** Pipeline automatizado. Orquesta el flujo completo de entrenamiento y evaluación secuencialmente.
 **Funcionamiento:**
 - Llama de forma programática a `train_yolov8.py` mediante un subproceso.
 - Al terminar el entrenamiento, busca automáticamente los mejores pesos (`best.pt` o `last.pt`).
 - Pasa esos mejores pesos a `eval_predict_yolov8.py` para sacar las métricas finales.
 
-### 🖥️ 1.5 `device_resolver.py`
+###  1.5 `device_resolver.py`
 **Propósito:** Utilidad auxiliar para detectar y asignar correctamente la GPU o CPU.
 
 ---
 
-## 🔬 2. Pasos y Evolución del Fine-Tuning
+##  2. Pasos y Evolución del Fine-Tuning
 
 Basado en la bitácora de pruebas, el entrenamiento ha pasado por múltiples iteraciones intentando maximizar la detección de patologías difíciles en un dataset limitado, sin desbordar la memoria VRAM.
 
@@ -66,13 +66,13 @@ Basado en la bitácora de pruebas, el entrenamiento ha pasado por múltiples ite
 - **Prueba 1 (`dental_yolo26n_laptop`):** Se aplicó `--freeze 10` y un learning rate suave. Resultó en un aprendizaje más estable hasta la época 119 y redujo drásticamente falsas alarmas, pero se volvió muy conservador.
 - **Prueba 2 (`dental_yolo26n_laptop_freeze5`):** Al reducir a `--freeze 5`, la red pudo adaptarse un poco más a las radiografías. Subió el mAP50 a **72.2%** y balanceó perfectamente Precisión vs Recall.
 
-### 🎯 Fase 2: Exprimir el dataset con YOLO "Nano"
+###  Fase 2: Exprimir el dataset con YOLO "Nano"
 Se lanzaron 3 estrategias simultáneas para mejorar la detección de **Caries** (la clase más problemática):
 1. **Regularizado (`dental_regularizado`):** Uso de Dropout y Weight Decay para evitar memorización. El exceso de regularización frenó el aprendizaje (mAP50 73.1%).
 2. **Alta Resolución (`dental_alta_resolucion`):** Subir `imgsz=1024` bajando el batch a 4. Excelente en empastes e implantes, pero penalizado en estabilidad de gradientes por el batch pequeño.
 3. **Cero Freeze Suave (`dental_nofreeze_suave`):** Ninguna capa congelada, pero con un aprendizaje ultra-suave. **Fue el claro ganador** con un mAP50 de **75.5%** y la mejor detección de caries (mAP50 41.2%).
 
-### 🚀 Fase 3: Escalar la Arquitectura (Nano vs Medium)
+###  Fase 3: Escalar la Arquitectura (Nano vs Medium)
 Al agotar el potencial del modelo Nano, se dio el salto a la arquitectura Medium (`yolo26m.pt`) manteniendo la configuración de la mejor prueba.
 - **Resultado (`dental_nofreeze_suave_yolo26m`):** El salto fue monumental. Alcanzó un mAP50 de **82.19%** en tan solo 39 épocas. 
 
@@ -91,7 +91,7 @@ Para exprimir el modelo Medium al máximo, se ejecutó una búsqueda automatizad
 > Los pesos (`.pt`) guardados en esta carpeta **no** son un modelo finalizado ni deben usarse en producción para hacer diagnósticos. Son simplemente un subproducto temporal de estos miniciclos experimentales de 15 épocas. El verdadero "tesoro" que se debe extraer y conservar de esta prueba es únicamente la "receta" guardada en el archivo `best_hyperparameters.yaml`.
 
 > [!TIP]
-> ### 🏆 Fase Final: El "Super Modelo" Definitivo
+> ###  Fase Final: El "Super Modelo" Definitivo
 > Para culminar todo el aprendizaje, se configuró el entrenamiento final inyectando el archivo de hiperparámetros obtenido del *tuning*:
 > - Modelo: `yolo26m.pt`
 > - Resolución: `imgsz 1024`
@@ -100,9 +100,9 @@ Para exprimir el modelo Medium al máximo, se ejecutó una búsqueda automatizad
 
 ---
 
-## 🔍 3. Profundización en Componentes Clave del Código
+##  3. Profundización en Componentes Clave del Código
 
-### 📏 3.1 Conversión y Escalado de Coordenadas (`csv_to_yolo.py`)
+###  3.1 Conversión y Escalado de Coordenadas (`csv_to_yolo.py`)
 
 Uno de los retos al entrenar YOLO es que no entiende coordenadas absolutas (píxeles), sino **coordenadas normalizadas al centro**. El script `csv_to_yolo.py` incluye una función llamada `row_to_box()` que se encarga específicamente de esta tarea matemática de forma segura.
 
@@ -118,7 +118,7 @@ y_center = ((ymin + ymax) / 2.0) / img_h
 ```
 *Resultado:* Una caries que estaba en los píxeles (100, 200) pasa a representarse como `(0.125, 0.250)` respecto al tamaño total.
 
-### 💉 3.2 Inyección de Hiperparámetros (`train_yolov8.py`)
+###  3.2 Inyección de Hiperparámetros (`train_yolov8.py`)
 
 Durante la fase de *tuning*, Ultralytics descubre qué tanta probabilidad de rotación, alteración de color o traslación necesita la red. Esa "receta secreta" queda guardada en un `best_hyperparameters.yaml`.
 
@@ -129,11 +129,11 @@ Durante la fase de *tuning*, Ultralytics descubre qué tanta probabilidad de rot
 
 ---
 
-## 📈 4. Interpretación de los Artefactos Gráficos (Carpeta `runs/`)
+##  4. Interpretación de los Artefactos Gráficos (Carpeta `runs/`)
 
 Cada vez que YOLO finaliza un entrenamiento o evaluación, genera una serie de gráficos e imágenes en la carpeta `runs/train/nombre_experimento/`. Aprender a leerlos es vital para saber si el modelo va por buen camino o si tiene problemas. A continuación se muestran ejemplos reales del entrenamiento `dental_nofreeze_suave_yolo26m`.
 
-### 📉 4.1 Gráficos de Rendimiento y Curvas
+###  4.1 Gráficos de Rendimiento y Curvas
 - **`results.png`:** Es el "electrocardiograma" del entrenamiento. Muestra 10 gráficas distintas.
   > [!CAUTION]
   > *Cómo leerlo:* Quieres ver que las curvas de pérdida (*loss*) bajan suavemente y que las curvas de métricas suben y se estabilizan. Si el *loss* de validación (*val/box_loss*) empieza a subir de repente mientras el de entrenamiento baja, tienes **sobreajuste (overfitting)**.
@@ -148,7 +148,7 @@ Cada vez que YOLO finaliza un entrenamiento o evaluación, genera una serie de g
   
   ![Curva F1](runs/train/dental_nofreeze_suave_yolo26m/BoxF1_curve.png)
 
-### 🖼️ 4.2 Matrices y Visualizaciones de Detección
+###  4.2 Matrices y Visualizaciones de Detección
 - **`confusion_matrix.png`:** Una tabla que cruza lo que el modelo predijo frente a lo que realmente era.
   > [!NOTE]
   > *Cómo leerlo:* La diagonal principal representa los aciertos. Si ves números altos fuera de esa diagonal, significa que el modelo confunde ciertas clases (ej. confundir un empaste con una caries).
@@ -157,7 +157,7 @@ Cada vez que YOLO finaliza un entrenamiento o evaluación, genera una serie de g
 
 - **`val_batch*_labels.jpg` vs `val_batch*_pred.jpg`:** Imágenes de radiografías de validación. El archivo `labels` muestra dónde están los problemas reales, y el `pred` muestra lo que dibujó la IA.
   
-  **Realidad (Labels) vs Predicción de IA:**
+- **Realidad (Labels) vs Predicción de IA:**
   ![Etiquetas Reales](runs/train/dental_nofreeze_suave_yolo26m/val_batch0_labels.jpg)
   ![Predicciones IA](runs/train/dental_nofreeze_suave_yolo26m/val_batch0_pred.jpg)
 
