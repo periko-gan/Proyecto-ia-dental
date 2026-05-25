@@ -47,8 +47,8 @@ Desarrollar una plataforma web integral que combine una **interfaz moderna**, un
 
 **Incluido:**
 - Autenticación de usuarios (rol USER y ADMIN)
-- Análisis de radiografías panorámicas, periapicales e ocluyentes
-- Detección de: caries, sarro/cálculo, lesiones periapicales, restauraciones, implantes, dientes impactados
+- Análisis de radiografías
+- Detección de: caries, empastes, implantes, dientes impactados
 - Dashboard responsivo para móvil, tablet y escritorio
 - API GraphQL y REST con soporte de eventos
 
@@ -120,12 +120,22 @@ Historial → Análisis Comparativo
 
 ## 3. Entrenamiento e Inferencia del Modelo IA
 
-### 3.1 Visión general del módulo de entrenamiento
+### 3.1 Visión general y Fundamentos de IA / Big Data
 
-La carpeta `entrenamiento ia/` contiene el **pipeline completo de Machine Learning** para entrenar, evaluar y desplegar modelos YOLOv8 especializados en detección de patologías dentales. Este módulo es independiente del backend y permite experimentar con diferentes arquitecturas, hiperparámetros y datasets.
+La carpeta `entrenamiento ia/` contiene el **pipeline completo de Machine Learning** para entrenar, evaluar y desplegar modelos YOLOv8 especializados en detección de patologías dentales. Este módulo es independiente del backend y permite experimentar con diferentes arquitecturas, hiperparámetros y datasets bajo buenas prácticas de MLOps.
 
 **Propósito fundamental:**
-Crear un modelo de detección de objetos capaz de identificar automáticamente patologías dentales (caries, sarro, lesiones periapicales, etc.) en radiografías con alta precisión y velocidad.
+Crear un modelo de detección de objetos capaz de identificar automáticamente patologías dentales en radiografías con alta precisión y velocidad, abordando desafíos propios del Big Data médico.
+
+**Desafíos clínicos superados:**
+- **Volumen de datos restringido:** Dataset cerrado de 1075 imágenes de entrenamiento y 121 de validación.
+- **Clases minoritarias / Complejidad geométrica:** Las caries son pequeñas y de bordes difusos, contrastando con el alto contraste de los implantes.
+- **Optimización sin datos externos:** Maximización del rendimiento global mediante Transfer Learning, Fine-Tuning avanzado y Hyperparameter Tuning genético.
+
+**Conceptos de Machine Learning aplicados:**
+1. **Redes Neuronales Convolucionales (CNN):** YOLOv8 extrae mapas de características de forma jerárquica (bordes -> texturas -> morfología dental).
+2. **Detección de Objetos:** Clasificación simultánea y predicción de coordenadas exactas (bounding boxes).
+3. **Transfer Learning y Fine-Tuning:** Uso de pesos preentrenados (dataset COCO) y re-especialización de los filtros superiores hacia las densidades radiológicas del tejido dental.
 
 ### 3.2 Estructura de directorios
 
@@ -325,71 +335,41 @@ nc: 6  # Número de clases
 names: ['caries', 'sarro', 'lesion_periapical', 'restauracion', 'implante', 'diente_impactado']
 ```
 
-### 3.5 Proceso de entrenamiento: Fases de Fine-Tuning
+### 3.5 Proceso de entrenamiento y Tuning Genético
 
-El proyecto siguió una estrategia progresiva de optimización:
+El proyecto siguió una estrategia progresiva de optimización, evolucionando a través de múltiples experimentos:
 
-#### Fase 1: Equilibrio entre Freeze y Aprendizaje
+#### Evolución de la estrategia
+1. **Equilibrio Freeze/Aprendizaje:** Reducir la congelación de capas (freeze) permitió la adaptación al dominio médico sin perder generalización.
+2. **Estrategia para Dataset Pequeño:** Cero congelación (*freeze: none*) con un learning rate suave demostró ser óptimo para el fine-tuning.
+3. **Escalado de Arquitectura:** El salto de la capacidad representacional de YOLO Nano a YOLO Medium produjo un incremento drástico en precisión.
 
-| Experimento | Freeze | Learning Rate | mAP50 | Resultado |
-| --- | --- | --- | --- | --- |
-| `dental_yolo26n_laptop` | 10 | Suave | 70.1% | Muy conservador |
-| `dental_yolo26n_laptop_freeze5` | 5 | Normal | 72.2% | Mejor balance |
+#### Tuning Automático de Hiperparámetros (Algoritmo Genético)
+Para la optimización final, se empleó un algoritmo evolutivo basado en mutaciones en lugar de búsquedas tradicionales (grid search):
+- **Proceso:** Ciclo de 10 iteraciones de 15 épocas cortas sobre YOLO Medium.
+- **Fitness:** Evaluación mediante una combinación ponderada de mAP50 y mAP50-95.
+- **Descubrimiento clave (Iteración 2):** Se halló un punto óptimo temprano que demostró gran potencial sin entrenar cientos de épocas completas (mAP50 80.34%).
+- **Justificación Clínica de la Configuración Mutada:**
+  - *Tasa de aprendizaje moderada (`lr0: 0.00403`):* Evita oscilaciones bruscas en las transiciones de baja variación cromática típicas de radiografías.
+  - *Momento elevado (`momentum: 0.98`):* Mantiene el avance del gradiente a través de superficies planas.
+  - *Decaimiento de peso nulo (`weight_decay: 0.0`):* Evita suprimir filtros de texturas finas esenciales para detectar caries incipientes o microfisuras.
+  - *Desactivación de Mosaico al final (`close_mosaic: 10`):* Permite que las últimas épocas aprendan de la anatomía real y continua del maxilar, sin intersecciones ni cortes artificiales.
 
-**Aprendizaje:** Reducir freeze permite adaptación al dominio médico sin perder generalización
+#### Comparativa oficial de experimentos de entrenamiento
 
-#### Fase 2: Estrategias para Dataset Pequeño
+A continuación se presentan las ejecuciones más representativas en el servidor del proyecto:
 
-| Estrategia | Técnica | mAP50 | Nota |
-| --- | --- | --- | --- |
-| Regularizado | Dropout + Weight Decay | 73.1% | Frena aprendizaje |
-| Alta resolución | imgsz=1024, batch=4 | 74.8% | Inestable gradientes |
-| No-freeze suave | freeze=0, lr0=0.001 | **75.5%** | GANADOR |
+| Experimento | Arquitectura | Resolución | Freeze | LR Inicial | Época Óptima | mAP50 | Precisión | Recall |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **dental_definitivo_optimizado_medium** | yolo26m.pt (Medium) | 1024px | Ninguna | 0.00403 | 86 | **83.08%** | 76.51% | 79.21% |
+| **dental_nofreeze_suave_yolo26m** | yolo26m.pt (Medium) | 1024px | Ninguna | 0.00050 | 39 | **82.19%** | 85.34% | 72.87% |
+| **train6 (Tuning Iteración 2)** | yolo26m.pt (Medium) | 640px | Ninguna | 0.00603 | 13 | **79.94%** | 81.62% | 75.60% |
+| **dental_nofreeze_suave** | yolo26n.pt (Nano) | 800px | Ninguna | 0.00050 | 79 | **75.51%** | 80.43% | 71.37% |
+| **dental_alta_resolucion** | yolo26n.pt (Nano) | 1024px | 5 | 0.00100 | 50 | **74.13%** | 72.56% | 71.53% |
+| **dental_regularizado** | yolo26n.pt (Nano) | 800px | 5 | 0.00100 | 40 | **73.75%** | 80.02% | 65.06% |
+| **dental_yolov8 (Modelo Base)** | yolo26n.pt (Nano) | 640px | Ninguna | 0.01000 | 44 | **71.79%** | 68.05% | 68.35% |
 
-**Aprendizaje:** Zero freeze con learning rate ultra-bajo es óptimo para fine-tuning
-
-#### Fase 3: Escalado de Arquitectura
-
-| Modelo | Épocas | mAP50 | mAP50-95 |
-| --- | --- | --- | --- |
-| YOLO Nano (yolo26n.pt) | 150+ | 75.5% | 52.3% |
-| YOLO Medium (yolo26m.pt) | 39 | **82.19%** | **58.9%** |
-
-**Aprendizaje:** Saltar a modelo Medium produce mejora monumental (~7%)
-
-#### Fase 4: Tuning Automático de Hiperparámetros
-
-**Proceso:**
-1. Ejecución de búsqueda genética: `--tune --iterations 10`
-2. Descubrimiento de mutation rates óptimos para data augmentation
-3. Generación de `best_hyperparameters.yaml` con "receta secreta"
-
-**Resultados:**
-- mAP50: 80.34% (en solo 15 épocas de prueba)
-- Demuestra que la combinación de augmentation es óptima
-
-#### Fase 5: Modelo Definitivo
-
-**Configuración final (`dental_definitivo_optimizado_medium`):**
-```bash
-python tools/run_train_eval_predict_yolov8.py \
-  --data ./dataset/data.yaml \
-  --model yolo26m.pt \
-  --epochs 150 \
-  --imgsz 1024 \
-  --batch 8 \
-  --device auto \
-  --task both \
-  --cfg best_hyperparameters.yaml        # Inyectar hiperparámetros óptimos
-```
-
-**Resultados finales:**
-- **mAP50:** 87%
-- **mAP50-95:** 61%
-- **Inferencia:** 150-250ms (CPU), 50-100ms (GPU)
-- **Clases detectadas:** 6 patologías
-- **Confianza mínima:** 0.25
-- **NMS IoU:** 0.45
+**Impacto en la producción:** El modelo definitivo se entrenó inyectando dinámicamente la configuración evolutiva (`best_hyperparameters.yaml`), extendiendo la precisión del experimento inicial al entrenamiento completo.
 
 ### 3.6 Clases y patologías detectadas
 
@@ -402,46 +382,49 @@ python tools/run_train_eval_predict_yolov8.py \
 | 4 | Implante | Aditamentos dentales | 4% |
 | 5 | Diente impactado | No erupcionados | 3% |
 
-### 3.7 Artefactos generados durante entrenamiento
+### 3.7 Interpretación Clínica de los Artefactos Gráficos
 
-#### 3.7.1 Gráficas de rendimiento
+#### 3.7.1 Gráficas de rendimiento (Diagnóstico de Aprendizaje)
 
 **`results.png`:** "Electrocardiograma" del entrenamiento
-- Loss de entrenamiento vs validación
-- mAP50 y mAP50-95 evolución
-- Precisión y Recall por época
 
-**Cómo leerlo:**
-- ✅ Loss baja suavemente
-- ✅ Métricas suben y estabilizan
-- ❌ Val loss sube mientras train baja = **Overfitting**
+![results.png](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/results.png)
+
+- Muestra las curvas de pérdida (*loss*) tanto de Box Loss como Class Loss.
+- **Verificación de overfitting:** Es fundamental observar que el *validation loss* desciende suave y paralelamente al *training loss*, sin rebotar al alza. Esto certifica que la red neuronal aprende patrones generalizables sin limitarse a memorizar el dataset cerrado.
 
 #### 3.7.2 Curvas de evaluación
 
 **`PR_curve.png` (Precision-Recall):**
-- Equilibrio entre no fallar (Precision) y encontrarlo todo (Recall)
-- Cuanto más "abombada" hacia esquina superior derecha, mejor
+
+![BoxPR_curve.png](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/BoxPR_curve.png)
+
+- Representa la tasa de acierto (precisión) frente a la exhaustividad (sensibilidad).
+- Las curvas de **Implantes** y **Dientes impactados** muestran Áreas Bajo la Curva (AUC) de casi el **90%**, lo que garantiza detecciones fiables para estas clases de alto contraste y tamaño considerable.
 
 **`F1_curve.png` (F1 Score):**
-- Combina Precision y Recall
-- Punto más alto indica umbral óptimo `--conf`
 
-#### 3.7.3 Matrices y visualizaciones
+![BoxF1_curve.png](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/BoxF1_curve.png)
+
+- Proporciona el equilibrio ideal para configurar el umbral de inferencia (`--conf`).
+
+#### 3.7.3 Matrices y visualizaciones inferenciales
 
 **`confusion_matrix.png`:**
-- Diagonal principal = aciertos
-- Fuera diagonal = confusiones entre clases
-- Ej: Si ve números altos en (0,3), confunde Caries con Restauración
+
+![confusion_matrix.png](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/confusion_matrix.png)
+
+- Cruza la predicción con el diagnóstico real. La diagonal principal concentra el grueso de aciertos.
+- **Hallazgo clínico relevante:** Las confusiones registradas entre la clase *Caries* y falsos positivos con el fondo (background radiológico) son un comportamiento esperado médicamente, dado que las sombras de la superposición ósea a menudo mimetizan visualmente desmineralizaciones incipientes.
 
 **`val_batch*_labels.jpg` vs `val_batch*_pred.jpg`:**
-- Labels: Bounding boxes reales (gold standard)
-- Pred: Lo que dibuja la IA
-- Comparación visual directa
 
-**`train_batch*.jpg`:**
-- Muestra data augmentation aplicada
-- Rotaciones, oscurecimientos, traslaciones
-- Auditar que no sea extremo
+*(Arriba: Etiquetas reales. Abajo: Predicciones del modelo)*
+
+![val_batch0_labels.jpg](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/val_batch0_labels.jpg)
+![val_batch0_pred.jpg](entrenamiento%20ia/runs/train/dental_definitivo_optimizado_medium/val_batch0_pred.jpg)
+
+- Permite certificar cualitativamente el desempeño. El archivo "labels" funge de *gold standard* del experto, mientras que el "pred" dibuja las cajas predichas con su nivel de confianza, evaluando cómo la IA aísla las estructuras en casos complejos.
 
 ### 3.8 Pruebas del módulo de entrenamiento
 
@@ -471,11 +454,11 @@ python -m pytest tests/ -v
 
 | Métrica | Valor | Interpretación |
 | --- | --- | --- |
-| mAP50 | 87% | Excelente precisión |
-| mAP50-95 | 61% | Bueno (IoU más estricto) |
-| Precisión promedio | 84% | Pocos falsos positivos |
-| Recall promedio | 79% | Detecta mayormente casos |
-| F1-Score | 0.81 | Balance muy bueno |
+| mAP50 | 83.08% | Alta precisión clínica |
+| mAP50-95 | 53.98% | Adecuado con IoU estrictos |
+| Precisión promedio | 76.51% | Balanza falsos positivos clínicamente aceptables |
+| Recall promedio | 79.21% | Minimiza falsos negativos en diagnósticos sensibles |
+| F1-Score | 0.78 | Equilibrio sólido Precision-Recall |
 
 #### 3.9.2 Inferencia
 
@@ -496,47 +479,55 @@ python -m pytest tests/ -v
 | Implante | 88% | Alto | Bajo |
 | Diente impactado | 75% | Medio | Medio |
 
-### 3.10 Comandos prácticos
+### 3.10 Operación, Despliegue y Comandos Prácticos
 
-**Conversión datos:**
+#### 3.10.1 Comandos de ejecución diaria
+
+**Conversión etiquetas y dataset:**
 ```bash
-cd "entrenamiento ia"
 python tools/csv_to_yolo.py --dataset-root ./dataset
 ```
 
-**Entrenamiento básico:**
+**Entrenamiento de Producción (con tuning evolutivo):**
 ```bash
 python tools/train_yolov8.py \
   --data ./dataset/data.yaml \
   --model yolo26m.pt \
-  --epochs 100 \
-  --imgsz 640 \
-  --batch 8 \
-  --device auto
-```
-
-**Evaluación completa:**
-```bash
-python tools/eval_predict_yolov8.py \
-  --task both \
-  --data ./dataset/data.yaml \
-  --source ./dataset/images/test \
-  --model best.pt \
-  --device auto
-```
-
-**Pipeline end-to-end:**
-```bash
-python tools/run_train_eval_predict_yolov8.py \
-  --data ./dataset/data.yaml \
-  --source ./dataset/images/test \
-  --model yolo26m.pt \
   --epochs 150 \
   --imgsz 1024 \
-  --batch 8 \
-  --device auto \
-  --task both
+  --batch 7 \
+  --cfg runs/train/dental_tuning_medium_hiperparametros/best_hyperparameters.yaml \
+  --name "dental_definitivo_optimizado_medium"
 ```
+
+**Validación e Inferencia consolidada:**
+```bash
+python tools/eval_predict_yolov8.py --task both --data ./dataset/data.yaml --source ./dataset/images/test --model runs/train/dental_definitivo_optimizado_medium/weights/best.pt --device auto
+```
+
+#### 3.10.2 Presets para evitar errores de memoria (VRAM)
+- **Preset `GPU segura` (Portátiles, <6GB VRAM):** Modelo Nano (`yolo26n.pt`), resolución `640px`, batch `4`.
+- **Preset `GPU agresiva` (Workstations, >12GB VRAM):** Modelo Medium (`yolo26m.pt`), resolución `1024px`, batch `8`.
+
+#### 3.10.3 Despliegue clínico optimizado (ONNX)
+Para integrar el modelo en la interfaz de usuario web (Backend FastAPI / Frontend Vue) sin la excesiva dependencia de todo PyTorch, se exportan los pesos optimizados:
+
+```python
+from ultralytics import YOLO
+
+# Cargar modelo PyTorch final
+model = YOLO("runs/train/dental_definitivo_optimizado_medium/weights/best.pt")
+
+# Exportar a ONNX (Inferencia en CPU/GPU independiente)
+model.export(format="onnx", imgsz=1024, half=False)
+```
+*Recomendación:* Habilitar **Test-Time Augmentation (TTA)** en producción para elevar la sensibilidad ante patologías diminutas durante la inferencia real-time.
+
+### 3.11 Documentación de Pruebas y Entregables del Proyecto
+El directorio `Documentación de pruebas` incluye los entregables formales de validación MLOps:
+- **`Precision_Dental_AI.pptx`**: Soporte visual de defensas para tribunales.
+- **`comparacion_resultados.docx` / `.pdf` / `.md`**: Memoria técnica pormenorizada del proceso experimental, justificación de arquitectura y análisis cualitativo.
+- **`Table 1.csv`**: Registro estructurado de la comparativa de modelos, preparado para ingesta en plataformas de Data BI.
 
 ---
 

@@ -32,7 +32,7 @@ LEVANTAR_FRONTEND() {
     if command -v gnome-terminal &> /dev/null; then
         gnome-terminal --title="Frontend IA Dental" -- bash -c "pnpm run dev; exec bash"
     elif command -v x-terminal-emulator &> /dev/null; then
-        x-terminal-emulator -T "Frontend IA Dental" -e "bash -c 'pnpm run dev; exec bash'" &
+        x-terminal-emulator -T "Frontend IA Dental" -e bash -c "pnpm run dev; exec bash" &
     else
         echo -e "\e[33mNo se encontró un emulador de terminal (gnome-terminal/xterm). Ejecutando en background...\e[0m"
         nohup pnpm run dev > frontend.log 2>&1 &
@@ -42,7 +42,7 @@ LEVANTAR_FRONTEND() {
 
 LEVANTAR_BACKEND() {
     echo -e "\e[36mIniciando el backend (uvicorn)...\e[0m"
-    
+
     local CMD=""
     if [ -f "backend/.venv/bin/activate" ]; then
         CMD="cd backend && source .venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000; exec bash"
@@ -50,16 +50,16 @@ LEVANTAR_BACKEND() {
         echo -e "\e[33mAdvertencia: No se encontró el entorno virtual en backend/.venv\e[0m"
         CMD="cd backend && uvicorn main:app --reload --host 0.0.0.0 --port 8000; exec bash"
     fi
-    
+
     if command -v gnome-terminal &> /dev/null; then
         gnome-terminal --title="Backend IA Dental" -- bash -c "$CMD"
     elif command -v x-terminal-emulator &> /dev/null; then
-        x-terminal-emulator -T "Backend IA Dental" -e "bash -c '$CMD'" &
+        x-terminal-emulator -T "Backend IA Dental" -e bash -c "$CMD" &
     else
         echo -e "\e[33mNo se encontró un emulador de terminal. Ejecutando en background...\e[0m"
         nohup bash -c "${CMD/exec bash/}" > backend.log 2>&1 &
     fi
-    
+
     echo -e "\e[32mBackend iniciado.\e[0m"
 }
 
