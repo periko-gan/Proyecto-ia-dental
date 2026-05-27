@@ -1,0 +1,10 @@
+*
+!backend/
+!backend/**
+!entrenamiento ia/
+!entrenamiento ia/runs/
+!entrenamiento ia/runs/train/
+!entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/
+!entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/
+!entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt
+
