@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     port: int = 8000
 
     mongo_uri: str = "mongodb://localhost:27017"
+#     mongo_uri: str = "mongodb://mongo:tcqdewabqmmzf1pi@dentisia-dentalai-fnjrtl:27017/?authSource=admin&directConnection=true"
     mongo_db_name: str = "dental_ai"
     mongo_analyses_collection: str = "analyses"
     mongo_users_collection: str = "users"
