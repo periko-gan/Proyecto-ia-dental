@@ -152,3 +152,7 @@ while true; do
         *) echo -e "\e[31mOpción no válida. Por favor, elige una opción entre 1 y 11.\e[0m" ;;
     esac
 done
+
+#Para ejecutar el script, asegúrate de darle permisos de ejecución con:
+#chmod +x start_aplicaion.sh
+#LIBGL_ALWAYS_SOFTWARE=1 bash start_aplicaion.sh
