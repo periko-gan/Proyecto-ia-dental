@@ -9,6 +9,10 @@ WORKDIR /app
 # Habilitar corepack para usar pnpm sin necesidad de instalarlo manualmente
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
+# URL GraphQL inyectada en build para que la SPA use el proxy de Nginx en producción.
+ARG VITE_GRAPHQL_ENDPOINT=/graphql
+ENV VITE_GRAPHQL_ENDPOINT=${VITE_GRAPHQL_ENDPOINT}
+
 # Copiar los archivos de definición de dependencias
 COPY package.json pnpm-lock.yaml ./
 
@@ -31,6 +35,9 @@ FROM nginx:alpine AS production-stage
 
 # Copiar los archivos compilados de la Etapa 1 al directorio público de Nginx
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# Configurar Nginx para servir la SPA y reenviar llamadas al backend.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exponer el puerto en el que Nginx escuchará las peticiones
 EXPOSE 80
