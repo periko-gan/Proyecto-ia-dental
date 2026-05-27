@@ -19,14 +19,14 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    mongo_uri: str = "mongodb://localhost:27017"
-#     mongo_uri: str = "mongodb://mongo:tcqdewabqmmzf1pi@dentisia-dentalai-fnjrtl:27017/?authSource=admin&directConnection=true"
+#     mongo_uri: str = "mongodb://localhost:27017"
+    mongo_uri: str = "mongodb://mongo:rpcw4f2yead185w8@dentalai-mongodb-xtfufx:27017/?authSource=admin&directConnection=true"
     mongo_db_name: str = "dental_ai"
     mongo_analyses_collection: str = "analyses"
     mongo_users_collection: str = "users"
 
 #     model_path: str = "../entrenamiento ia pruebas/best.pt"
-    model_path: str = "../entrenamiento ia/runs/train/dental_nofreeze_suave_yolo26m/weights/best.pt"
+    model_path: str = "./model/best.pt"
 #     model_path: str = "../entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt"
     model_version: str = "best.pt"
     model_device: str = "auto"
