@@ -12,7 +12,7 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
     <!--    <Header/>-->
 
     <!-- Sidebar -->
-    <Aside />
+    <Aside/>
 
     <!-- Main Content Canvas -->
     <main class="pt-20 md:pl-64 min-h-screen flex flex-col lg:flex-row gap-0">
@@ -30,7 +30,7 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
             </div>
             <div class="flex gap-3">
               <div
-                class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]"
+                  class="badge badge-secondary badge-outline gap-2 p-3 font-bold uppercase tracking-widest text-[10px]"
               >
                 <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
                 Sistema de IA listo
@@ -39,7 +39,7 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
           </div>
           <!-- Drag & Drop Zone -->
           <div class="relative group">
-            <UploadImages />
+            <UploadImages/>
           </div>
           <!-- Bento Grid Tools -->
           <!--          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">-->
@@ -86,9 +86,9 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
                 Analizando patrones patológicos... 78% completado
               </div>
               <progress
-                class="progress progress-primary w-full mt-2"
-                max="100"
-                value="78"
+                  class="progress progress-primary w-full mt-2"
+                  max="100"
+                  value="78"
               ></progress>
             </div>
             <button class="btn btn-sm btn-ghost">Cancelar</button>
@@ -172,17 +172,16 @@ import UploadImages from '@/components/parts/upload_images/UploadImages.vue'
       <!--      </aside>-->
     </main>
     <!-- Footer (Shared Component) -->
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
 <style>
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
+  font-variation-settings: 'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 /*

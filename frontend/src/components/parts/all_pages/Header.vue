@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import {useRoute} from 'vue-router'
 
 import logo from '@/assets/img/logo.png'
 
@@ -18,11 +18,11 @@ function navLinkClass(routeName) {
 <template>
   <!-- Navbar -->
   <header
-    class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8"
+      class="navbar fixed top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-8"
   >
     <!--    logo-->
     <router-link :to="{ name: 'Landing' }">
-      <img class="h-20 w-auto ml-2" :src="logo" alt="logo" />
+      <img class="h-20 w-auto ml-2" :src="logo" alt="logo"/>
     </router-link>
 
     <nav class="hidden lg:flex ml-10 space-x-2">
@@ -30,9 +30,9 @@ function navLinkClass(routeName) {
         Inicio
       </router-link>
       <router-link
-        :to="{ name: 'Login' }"
-        :class="navLinkClass('Iniciar sesión')"
-        class="uppercase"
+          :to="{ name: 'Login' }"
+          :class="navLinkClass('Iniciar sesión')"
+          class="uppercase"
       >
         Iniciar sesión
       </router-link>

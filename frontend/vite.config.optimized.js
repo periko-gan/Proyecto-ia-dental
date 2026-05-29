@@ -1,4 +1,10 @@
-# Configuración de Vite optimizada para Vercel
+#
+Configuración
+de
+Vite
+optimizada
+para
+Vercel
 import {fileURLToPath, URL} from 'node:url'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'

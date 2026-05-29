@@ -1,5 +1,5 @@
 <script setup>
-import { useLatestDiagnosisSummary } from '@/composables/useLatestDiagnosisSummary'
+import {useLatestDiagnosisSummary} from '@/composables/useLatestDiagnosisSummary'
 
 // Estado agregado del último diagnóstico y métricas derivadas.
 const {
@@ -26,10 +26,10 @@ const {
             <p class="text-[10px] text-slate-500 font-label tracking-wide uppercase">
               {{
                 latestAnalysis
-                  ? `${lastUpdate}`
-                  : analysesLoading
-                    ? 'Cargando historial'
-                    : 'Sin diagnóstico reciente'
+                    ? `${lastUpdate}`
+                    : analysesLoading
+                        ? 'Cargando historial'
+                        : 'Sin diagnóstico reciente'
               }}
             </p>
           </div>
@@ -42,17 +42,17 @@ const {
           <div class="flex items-start gap-4">
             <div class="w-full sm:w-32">
               <div
-                class="relative group w-full aspect-square rounded-xl overflow-hidden border border-slate-100"
+                  class="relative group w-full aspect-square rounded-xl overflow-hidden border border-slate-100"
               >
                 <img
-                  v-if="latestImageUrl"
-                  :src="latestImageUrl"
-                  :alt="`Radiografía - ${latestAnalysis.fileName}`"
-                  class="w-full h-full object-cover"
+                    v-if="latestImageUrl"
+                    :src="latestImageUrl"
+                    :alt="`Radiografía - ${latestAnalysis.fileName}`"
+                    class="w-full h-full object-cover"
                 />
                 <div
-                  v-else
-                  class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400"
+                    v-else
+                    class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400"
                 >
                   No hay imagen
                 </div>
@@ -95,8 +95,8 @@ const {
         </div>
 
         <div
-          v-else
-          class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-5 text-slate-600"
+            v-else
+            class="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-5 text-slate-600"
         >
           <p class="font-semibold">Aún no hay un diagnóstico reciente para resumir.</p>
           <p class="text-sm mt-1">

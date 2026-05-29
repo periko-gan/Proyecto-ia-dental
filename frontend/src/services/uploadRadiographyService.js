@@ -1,4 +1,4 @@
-import { postGraphQL } from '@/services/graphqlClient'
+import {postGraphQL} from '@/services/graphqlClient'
 
 // Mutación de carga de radiografía con retorno del análisis asociado.
 const UPLOAD_RADIOGRAPHY_MUTATION = `
@@ -33,18 +33,18 @@ mutation UploadRadiography($fileBase64: String!, $fileName: String!, $mimeType: 
 
 // Escapa caracteres conflictivos para mostrar la mutación en logs.
 function escapeGraphQLString(value) {
-  return String(value)
-    .replaceAll('\\', '\\\\')
-    .replaceAll('"', '\\"')
-    .replaceAll('\n', '\\n')
-    .replaceAll('\r', '\\r')
+    return String(value)
+        .replaceAll('\\', '\\\\')
+        .replaceAll('"', '\\"')
+        .replaceAll('\n', '\\n')
+        .replaceAll('\r', '\\r')
 }
 
 // Genera una vista previa acotada de la mutación para depuración.
-function buildMutationPreview({ fileBase64, fileName, mimeType }) {
-  const previewBase64 = fileBase64.length > 120 ? `${fileBase64.slice(0, 120)}…` : fileBase64
+function buildMutationPreview({fileBase64, fileName, mimeType}) {
+    const previewBase64 = fileBase64.length > 120 ? `${fileBase64.slice(0, 120)}…` : fileBase64
 
-  return `mutation UploadRadiography {
+    return `mutation UploadRadiography {
   uploadRadiography(
     fileBase64: "${escapeGraphQLString(previewBase64)}",
     fileName: "${escapeGraphQLString(fileName)}",
@@ -77,39 +77,38 @@ function buildMutationPreview({ fileBase64, fileName, mimeType }) {
 }`
 }
 
-export async function uploadRadiography({ fileBase64, fileName, mimeType }) {
-  // Logs de diagnóstico para validar el payload enviado.
+export async function uploadRadiography({fileBase64, fileName, mimeType}) {
+    // Logs de diagnóstico para validar el payload enviado.
 
 
-  try {
+    try {
 
-    const data = await postGraphQL(UPLOAD_RADIOGRAPHY_MUTATION, {
-      fileBase64,
-      fileName,
-      mimeType,
-    })
+        const data = await postGraphQL(UPLOAD_RADIOGRAPHY_MUTATION, {
+            fileBase64,
+            fileName,
+            mimeType,
+        })
 
 
+        if (data.uploadRadiography?.success) {
 
-    if (data.uploadRadiography?.success) {
-
-    } else {
-      console.warn(`
+        } else {
+            console.warn(`
 ⚠️ ERROR en la respuesta:
 ├─ Success: ${data.uploadRadiography?.success}
 └─ Mensaje: ${data.uploadRadiography?.message}
       `)
-    }
+        }
 
-    return data.uploadRadiography
-  } catch (error) {
-    console.error('❌ Error al enviar radiografía:')
-    console.error({
-      errorName: error.name,
-      errorMessage: error.message,
-      errorStack: error.stack,
-      fullError: error,
-    })
-    throw error
-  }
+        return data.uploadRadiography
+    } catch (error) {
+        console.error('❌ Error al enviar radiografía:')
+        console.error({
+            errorName: error.name,
+            errorMessage: error.message,
+            errorStack: error.stack,
+            fullError: error,
+        })
+        throw error
+    }
 }

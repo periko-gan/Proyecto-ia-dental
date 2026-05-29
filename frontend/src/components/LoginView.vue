@@ -9,11 +9,11 @@ import Formulario from '@/components/parts/login_register/Formulario.vue'
 <template>
   <!--  <div class="bg-surface text-on-surface selection:bg-secondary-container/30">-->
   <div class="bg-surface font-body text-on-surface">
-    <Header />
+    <Header/>
 
-    <Formulario page="login" />
+    <Formulario page="login"/>
 
-    <Footer />
+    <Footer/>
   </div>
 </template>
 

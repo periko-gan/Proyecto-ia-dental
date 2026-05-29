@@ -1,31 +1,31 @@
 <script setup>
 import logo from '@/assets/img/logo.png'
-import { useAside } from '@/composables/useAside'
+import {useAside} from '@/composables/useAside'
 
 // Estado del sidebar y handlers (logout + menú móvil).
-const { loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu, logoutAndClose } =
-  useAside()
+const {loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu, logoutAndClose} =
+    useAside()
 </script>
 
 <template>
   <!-- Mobile: hamburger button -->
   <button
-    aria-label="Abrir menú"
-    @click="openMenu"
-    class="md:hidden fixed top-4 left-4 z-50 btn btn-square btn-ghost"
+      aria-label="Abrir menú"
+      @click="openMenu"
+      class="md:hidden fixed top-4 left-4 z-50 btn btn-square btn-ghost"
   >
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
     >
       <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
       />
     </svg>
   </button>
@@ -35,26 +35,26 @@ const { loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu,
     <div class="absolute inset-0 bg-black/40" @click="closeMenu" aria-hidden="true"></div>
     <aside class="relative w-64 h-full bg-white border-r border-slate-200 p-6 shadow-lg">
       <button
-        aria-label="Cerrar menú"
-        @click="closeMenu"
-        class="btn btn-ghost btn-square absolute top-4 right-4"
+          aria-label="Cerrar menú"
+          @click="closeMenu"
+          class="btn btn-ghost btn-square absolute top-4 right-4"
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
         >
           <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
           />
         </svg>
       </button>
       <!-- drawer content -->
       <div class="flex flex-col items-center mb-6">
-        <img class="h-20 w-auto" :src="logo" alt="logo" />
+        <img class="h-20 w-auto" :src="logo" alt="logo"/>
         <p class="text-xs font-bold text-on-surface pt-4">
           Hola <span class="capitalize">{{ loggedUserName }}</span>
         </p>
@@ -63,27 +63,27 @@ const { loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu,
         <ul class="menu menu-md w-full p-0 gap-1">
           <li>
             <router-link
-              @click="closeMenu"
-              :to="{ name: 'Dashboard' }"
-              :class="navLinkClass('Dashboard')"
+                @click="closeMenu"
+                :to="{ name: 'Dashboard' }"
+                :class="navLinkClass('Dashboard')"
             >
               <span class="uppercase">Dashboard</span>
             </router-link>
           </li>
           <li>
             <router-link
-              @click="closeMenu"
-              :to="{ name: 'Analyze' }"
-              :class="navLinkClass('Analyze')"
+                @click="closeMenu"
+                :to="{ name: 'Analyze' }"
+                :class="navLinkClass('Analyze')"
             >
               <span class="uppercase">Analizar nueva imagen</span>
             </router-link>
           </li>
           <li>
             <router-link
-              @click="closeMenu"
-              :to="{ name: 'Diagnostic' }"
-              :class="navLinkClass('Diagnostic')"
+                @click="closeMenu"
+                :to="{ name: 'Diagnostic' }"
+                :class="navLinkClass('Diagnostic')"
             >
               <span class="uppercase">Último Diagnóstico</span>
             </router-link>
@@ -100,11 +100,11 @@ const { loggedUserName, navLinkClass, handleLogout, isOpen, openMenu, closeMenu,
 
   <!-- Desktop/large aside -->
   <aside
-    class="w-55 h-full fixed top-0 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all"
+      class="w-55 h-full fixed top-0 left-0 hidden md:flex flex-col bg-white border-r border-slate-200 z-40 transition-all"
   >
     <div class="px-6 py-6 border-t border-slate-200/50">
       <div class="flex flex-col items-center tex mb-6">
-        <img class="h-20 w-auto ml-2" :src="logo" alt="logo" />
+        <img class="h-20 w-auto ml-2" :src="logo" alt="logo"/>
         <p class="text-xs font-bold text-on-surface pt-5">
           Hola <span class="capitalize">{{ loggedUserName }}</span>
         </p>

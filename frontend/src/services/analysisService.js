@@ -1,4 +1,4 @@
-import { postGraphQL } from '@/services/graphqlClient'
+import {postGraphQL} from '@/services/graphqlClient'
 
 // Consulta base para obtener el historial de análisis del usuario.
 const MY_ANALYSES_QUERY = `
@@ -24,6 +24,6 @@ const MY_ANALYSES_QUERY = `
 
 // Paginación simple con limit/offset para el historial.
 export async function fetchMyAnalyses(limit = 20, offset = 0) {
-  const data = await postGraphQL(MY_ANALYSES_QUERY, { limit, offset })
-  return data.myAnalyses
+    const data = await postGraphQL(MY_ANALYSES_QUERY, {limit, offset})
+    return data.myAnalyses
 }
