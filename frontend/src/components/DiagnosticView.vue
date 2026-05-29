@@ -5,8 +5,8 @@ import Aside from '@/components/parts/all_pages/Aside.vue'
 import Footer from '@/components/parts/all_pages/Footer.vue'
 import ImageAnalyzed from '@/components/parts/diagnostic/ImageAnalyzed.vue'
 import DentalProblems from '@/components/parts/diagnostic/DentalProblems.vue'
-import { computed } from 'vue'
-import { getSession } from '@/services/authService.js'
+import {computed} from 'vue'
+import {getSession} from '@/services/authService.js'
 
 const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesi√≥n')
 </script>
@@ -14,7 +14,7 @@ const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesi√
 <template>
   <div class="bg-surface font-body text-on-surface">
     <!-- SideNavBar -->
-    <Aside />
+    <Aside/>
 
     <!-- Main Content Canvas -->
     <main class="md:ml-64 pt-20 px-8 pb-12 min-h-screen">
@@ -32,25 +32,24 @@ const loggedUserEmail = computed(() => getSession()?.email || 'Usuario sin sesi√
         </div>
         <div class="grid grid-cols-12 gap-6">
           <!-- Left: Visualizer -->
-          <ImageAnalyzed />
+          <ImageAnalyzed/>
 
           <!-- Right: Findings Panel -->
-          <DentalProblems />
+          <DentalProblems/>
         </div>
       </div>
     </main>
     <!-- Footer -->
-    <Footer />
+    <Footer/>
   </div>
 </template>
 
 <style scoped>
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
+  font-variation-settings: 'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 .glass-panel {

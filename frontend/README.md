@@ -97,8 +97,8 @@ VITE_GRAPHQL_ENDPOINT=http://localhost:8080/graphql
 2. Se ejecuta la mutación GraphQL `loginUser(email, password)`
 3. Retorna `accessToken` y datos de usuario
 4. Se almacena en `sessionStorage`:
-   - `accessToken` - para autorización GraphQL
-   - `user` - JSON con `userId`, `email`, `isActive`, `role`
+    - `accessToken` - para autorización GraphQL
+    - `user` - JSON con `userId`, `email`, `isActive`, `role`
 
 ### Protección de rutas
 
@@ -115,19 +115,19 @@ El dashboard se adapta automáticamente a diferentes tamaños de pantalla:
 ### Componentes principales
 
 1. **Health Score Hero**
-   - Muestra puntuación de salud (promedio de confianza de todos los hallazgos)
-   - Radiograma circular con indicador de porcentaje
-   - Recuento de severidades (crítico, advertencia, éxito)
+    - Muestra puntuación de salud (promedio de confianza de todos los hallazgos)
+    - Radiograma circular con indicador de porcentaje
+    - Recuento de severidades (crítico, advertencia, éxito)
 
 2. **Latest Diagnosis Summary**
-   - Thumbnail de la radiografía más reciente
-   - Resumen del hallazgo principal
-   - Confianza promedio del análisis
+    - Thumbnail de la radiografía más reciente
+    - Resumen del hallazgo principal
+    - Confianza promedio del análisis
 
 3. **Problem Types Chart**
-   - Visualiza distribución de problemas detectados
-   - Categorías: Caries, Empastes, Implantes, Dientes impactados
-   - Muestra conteos y porcentajes
+    - Visualiza distribución de problemas detectados
+    - Categorías: Caries, Empastes, Implantes, Dientes impactados
+    - Muestra conteos y porcentajes
 
 ## Tailwind CSS v4 + daisyUI
 
@@ -163,6 +163,7 @@ docker compose up --build -d
 ```
 
 Acceso:
+
 - Si puerto `80` está disponible: `http://localhost:80`
 - Si puerto `80` está ocupado: `http://localhost:8080` (cambiar mapeo en `docker-compose.yml` a `8080:80`)
 

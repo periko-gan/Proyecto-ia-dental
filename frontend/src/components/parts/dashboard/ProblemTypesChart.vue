@@ -1,8 +1,8 @@
 <script setup>
-import { useProblemTypesChart } from '@/composables/useProblemTypesChart'
+import {useProblemTypesChart} from '@/composables/useProblemTypesChart'
 
 // Conteos y porcentajes de problemas agrupados por tipo.
-const { problemCounts, problemPercentages } = useProblemTypesChart()
+const {problemCounts, problemPercentages} = useProblemTypesChart()
 </script>
 
 <template>
@@ -21,56 +21,56 @@ const { problemCounts, problemPercentages } = useProblemTypesChart()
       <div class="flex justify-evenly w-full">
         <div class="flex flex-col items-center gap-6">
           <div
-            class="radial-progress text-caries font-black font-headline text-lg"
-            role="progressbar"
-            :style="`--value:${problemPercentages.caries}; --size:6rem; --thickness: 8px;`"
+              class="radial-progress text-caries font-black font-headline text-lg"
+              role="progressbar"
+              :style="`--value:${problemPercentages.caries}; --size:6rem; --thickness: 8px;`"
           >
             {{ problemPercentages.caries }}%
           </div>
           <span
-            class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
-            >Caries ({{ problemCounts.caries }})</span
+              class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
+          >Caries ({{ problemCounts.caries }})</span
           >
         </div>
         <div class="flex flex-col items-center gap-6">
           <div
-            class="radial-progress text-empaste font-black font-headline text-lg"
-            role="progressbar"
-            :style="`--value:${problemPercentages.empaste}; --size:6rem; --thickness: 8px;`"
+              class="radial-progress text-empaste font-black font-headline text-lg"
+              role="progressbar"
+              :style="`--value:${problemPercentages.empaste}; --size:6rem; --thickness: 8px;`"
           >
             {{ problemPercentages.empaste }}%
           </div>
           <span
-            class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
-            >Empaste ({{ problemCounts.empaste }})</span
+              class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
+          >Empaste ({{ problemCounts.empaste }})</span
           >
         </div>
       </div>
       <div class="flex justify-evenly w-full mt-6">
         <div class="flex flex-col items-center gap-6">
           <div
-            class="radial-progress text-implante font-black font-headline text-lg"
-            role="progressbar"
-            :style="`--value:${problemPercentages.implante}; --size:6rem; --thickness: 8px;`"
+              class="radial-progress text-implante font-black font-headline text-lg"
+              role="progressbar"
+              :style="`--value:${problemPercentages.implante}; --size:6rem; --thickness: 8px;`"
           >
             {{ problemPercentages.implante }}%
           </div>
           <span
-            class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
-            >Implante ({{ problemCounts.implante }})</span
+              class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
+          >Implante ({{ problemCounts.implante }})</span
           >
         </div>
         <div class="flex flex-col items-center gap-6">
           <div
-            class="radial-progress text-impactado font-black font-headline text-lg"
-            role="progressbar"
-            :style="`--value:${problemPercentages.impactado}; --size:6rem; --thickness: 8px;`"
+              class="radial-progress text-impactado font-black font-headline text-lg"
+              role="progressbar"
+              :style="`--value:${problemPercentages.impactado}; --size:6rem; --thickness: 8px;`"
           >
             {{ problemPercentages.impactado }}%
           </div>
           <span
-            class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
-            >Diente impactado ({{ problemCounts.impactado }})</span
+              class="badge badge-ghost text-[10px] font-bold tracking-widest uppercase py-2 h-auto"
+          >Diente impactado ({{ problemCounts.impactado }})</span
           >
         </div>
       </div>
@@ -82,12 +82,15 @@ const { problemCounts, problemPercentages } = useProblemTypesChart()
 .text-caries {
   color: #ef4444;
 }
+
 .text-empaste {
   color: #f59e0b;
 }
+
 .text-implante {
   color: #12457eff;
 }
+
 .text-impactado {
   color: #8b5cf6;
 }

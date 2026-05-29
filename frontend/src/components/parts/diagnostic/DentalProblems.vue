@@ -1,11 +1,11 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useDentalProblems } from '@/composables/useDentalProblems'
-import { getProblemHexColor, translateProblem } from '@/utils/problemTranslations'
+import {computed, ref} from 'vue'
+import {useDentalProblems} from '@/composables/useDentalProblems'
+import {getProblemHexColor, translateProblem} from '@/utils/problemTranslations'
 
 // Estado de detecciones, filtros y acciones de toggle.
-const { totalDetections, detectionStats, toggleDetection, isDetectionEnabled, minimumConfidence } =
-  useDentalProblems()
+const {totalDetections, detectionStats, toggleDetection, isDetectionEnabled, minimumConfidence} =
+    useDentalProblems()
 
 // Estado visual para el bubble del slider.
 const isSliding = ref(false)
@@ -30,7 +30,7 @@ const sliderBubbleLeft = computed(() => {
 <template>
   <div class="col-span-12 lg:col-span-4 space-y-6">
     <div
-      class="card bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col lg:h-[calc(60vh+55px)]"
+        class="card bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col lg:h-[calc(60vh+55px)]"
     >
       <div class="card-body p-6 flex flex-col h-full overflow-hidden">
         <div class="flex items-center justify-between mb-2 shrink-0">
@@ -41,7 +41,7 @@ const sliderBubbleLeft = computed(() => {
         </div>
 
         <div
-          class="mb-4 shrink-0 rounded-xl border border-cyan-200/70 bg-linear-to-br from-cyan-50 to-blue-50 px-4 py-1.5 shadow-sm"
+            class="mb-4 shrink-0 rounded-xl border border-cyan-200/70 bg-linear-to-br from-cyan-50 to-blue-50 px-4 py-1.5 shadow-sm"
         >
           <div class="flex items-center justify-between gap-3">
             <div>
@@ -56,26 +56,26 @@ const sliderBubbleLeft = computed(() => {
 
           <div class="relative pt-6">
             <div
-              v-show="isSliding"
-              class="absolute top-0 rounded-md bg-cyan-700 px-2 py-1 text-[10px] font-bold text-white shadow"
-              :style="{ left: sliderBubbleLeft }"
+                v-show="isSliding"
+                class="absolute top-0 rounded-md bg-cyan-700 px-2 py-1 text-[10px] font-bold text-white shadow"
+                :style="{ left: sliderBubbleLeft }"
             >
               {{ formatMinimumConfidence(minimumConfidence) }}
             </div>
 
             <input
-              v-model.number="minimumConfidence"
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              class="range range-info range-sm"
-              @mousedown="isSliding = true"
-              @mouseup="isSliding = false"
-              @touchstart="isSliding = true"
-              @touchend="isSliding = false"
-              @focus="isSliding = true"
-              @blur="isSliding = false"
+                v-model.number="minimumConfidence"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                class="range range-info range-sm"
+                @mousedown="isSliding = true"
+                @mouseup="isSliding = false"
+                @touchstart="isSliding = true"
+                @touchend="isSliding = false"
+                @focus="isSliding = true"
+                @blur="isSliding = false"
             />
           </div>
 
@@ -91,14 +91,14 @@ const sliderBubbleLeft = computed(() => {
         <div class="space-y-4 overflow-y-auto flex-1 pr-2">
           <!-- Detecciones críticas -->
           <template
-            v-for="(detection, index) in detectionStats.critical"
-            :key="`critical-${index}`"
+              v-for="(detection, index) in detectionStats.critical"
+              :key="`critical-${index}`"
           >
             <div
-              @click="toggleDetection(detection)"
-              class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
-              :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
-              :style="{ borderLeftColor: getProblemHexColor(detection) }"
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }"
             >
               <div class="p-2">
                 <div class="flex justify-between items-start mb-2">
@@ -108,8 +108,8 @@ const sliderBubbleLeft = computed(() => {
                     </h4>
                   </div>
                   <div
-                    class="badge badge-sm font-black text-[10px] text-white border-none"
-                    :style="{ backgroundColor: getProblemHexColor(detection) }"
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }"
                   >
                     CRÍTICO
                   </div>
@@ -120,10 +120,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                    class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                    :style="{ color: getProblemHexColor(detection) }"
-                    :value="getConfidencePercent(detection.confidence)"
-                    max="100"
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"
                   ></progress>
                 </div>
               </div>
@@ -133,10 +133,10 @@ const sliderBubbleLeft = computed(() => {
           <!-- Detecciones de seguimiento -->
           <template v-for="(detection, index) in detectionStats.warning" :key="`warning-${index}`">
             <div
-              @click="toggleDetection(detection)"
-              class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
-              :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
-              :style="{ borderLeftColor: getProblemHexColor(detection) }"
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }"
             >
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
@@ -146,8 +146,8 @@ const sliderBubbleLeft = computed(() => {
                     </h4>
                   </div>
                   <div
-                    class="badge badge-sm font-black text-[10px] text-white border-none"
-                    :style="{ backgroundColor: getProblemHexColor(detection) }"
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }"
                   >
                     SEGUIMIENTO
                   </div>
@@ -158,10 +158,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                    class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                    :style="{ color: getProblemHexColor(detection) }"
-                    :value="getConfidencePercent(detection.confidence)"
-                    max="100"
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"
                   ></progress>
                 </div>
               </div>
@@ -171,10 +171,10 @@ const sliderBubbleLeft = computed(() => {
           <!-- Detecciones óptimas -->
           <template v-for="(detection, index) in detectionStats.success" :key="`success-${index}`">
             <div
-              @click="toggleDetection(detection)"
-              class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
-              :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
-              :style="{ borderLeftColor: getProblemHexColor(detection) }"
+                @click="toggleDetection(detection)"
+                class="card bg-surface-container-low border-l-4 rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
+                :class="!isDetectionEnabled(detection) ? 'opacity-40 grayscale' : ''"
+                :style="{ borderLeftColor: getProblemHexColor(detection) }"
             >
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
@@ -184,8 +184,8 @@ const sliderBubbleLeft = computed(() => {
                     </h4>
                   </div>
                   <div
-                    class="badge badge-sm font-black text-[10px] text-white border-none"
-                    :style="{ backgroundColor: getProblemHexColor(detection) }"
+                      class="badge badge-sm font-black text-[10px] text-white border-none"
+                      :style="{ backgroundColor: getProblemHexColor(detection) }"
                   >
                     ÓPTIMO
                   </div>
@@ -196,10 +196,10 @@ const sliderBubbleLeft = computed(() => {
                     <span>{{ getConfidencePercent(detection.confidence) }}%</span>
                   </div>
                   <progress
-                    class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
-                    :style="{ color: getProblemHexColor(detection) }"
-                    :value="getConfidencePercent(detection.confidence)"
-                    max="100"
+                      class="progress w-full h-1.5 [&::-webkit-progress-value]:bg-current [&::-moz-progress-bar]:bg-current"
+                      :style="{ color: getProblemHexColor(detection) }"
+                      :value="getConfidencePercent(detection.confidence)"
+                      max="100"
                   ></progress>
                 </div>
               </div>
@@ -220,7 +220,7 @@ const sliderBubbleLeft = computed(() => {
               <div class="flex items-center gap-2 text-primary mb-1">
                 <span class="material-symbols-outlined text-sm">shield</span>
                 <span class="text-[10px] font-bold uppercase tracking-widest"
-                  >Precisión médica</span
+                >Precisión médica</span
                 >
               </div>
               <p class="text-[11px] leading-relaxed text-slate-500 italic">
