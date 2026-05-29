@@ -79,8 +79,7 @@ export function useDiagnosticAnalysis() {
       imageSrc,
     }
     persistDiagnosticState()
-    console.log('📊 Análisis diagnosticado:', analysis)
-    console.log('🖼️ Imagen: ', currentImage.value)
+
   }
 
   /**

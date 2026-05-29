@@ -79,35 +79,20 @@ function buildMutationPreview({ fileBase64, fileName, mimeType }) {
 
 export async function uploadRadiography({ fileBase64, fileName, mimeType }) {
   // Logs de diagnóstico para validar el payload enviado.
-  console.log('📤 Iniciando envío de radiografía al backend...')
-  console.log(`   📄 Archivo: ${fileName}`)
-  console.log(`   🖼️  Tipo MIME: ${mimeType}`)
-  console.log(`   📊 Tamaño base64: ${fileBase64.length} caracteres`)
-  console.log('🧩 Mutación GraphQL con valores reales:')
-  console.log(buildMutationPreview({ fileBase64, fileName, mimeType }))
+
 
   try {
-    console.log('🔄 Enviando mutación GraphQL...')
+
     const data = await postGraphQL(UPLOAD_RADIOGRAPHY_MUTATION, {
       fileBase64,
       fileName,
       mimeType,
     })
 
-    console.log('✅ Respuesta recibida del backend:')
-    console.log('─'.repeat(60))
-    console.log(JSON.stringify(data.uploadRadiography, null, 2))
-    console.log('─'.repeat(60))
+
 
     if (data.uploadRadiography?.success) {
-      console.log(`
-✨ ¡ÉXITO! ✨
-├─ Análisis ID: ${data.uploadRadiography.analysis?.analysisId}
-├─ Estado: ${data.uploadRadiography.analysis?.status}
-├─ Tiempo inferencia: ${data.uploadRadiography.analysis?.inferenceTimeMs}ms
-├─ Versión modelo: ${data.uploadRadiography.analysis?.modelVersion}
-└─ Mensaje: ${data.uploadRadiography.message}
-      `)
+
     } else {
       console.warn(`
 ⚠️ ERROR en la respuesta:

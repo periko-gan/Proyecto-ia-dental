@@ -244,12 +244,7 @@ export function useUploadImagesQueue() {
       return []
     }
 
-    console.log(`
-📦 INICIANDO ENVÍO DE COLA
-├─ Total de archivos: ${payload.length}
-├─ Archivos: ${payload.map((p) => p.fileName).join(', ')}
-└─ Tamaño total: ${payload.reduce((sum, p) => sum + p.sizeBytes, 0)} bytes
-    `)
+
 
     isSendingQueue.value = true
     const results = []
@@ -257,12 +252,7 @@ export function useUploadImagesQueue() {
     try {
       for (let index = 0; index < payload.length; index++) {
         const item = payload[index]
-        console.log(`
-⏳ Enviando archivo ${index + 1}/${payload.length}...
-├─ Nombre: ${item.fileName}
-├─ Tipo: ${item.mimeType}
-└─ Tamaño: ${item.sizeBytes} bytes
-        `)
+
 
         const response = await uploadRadiography(item)
 
@@ -281,19 +271,8 @@ export function useUploadImagesQueue() {
 
       const allSucceeded = results.length > 0 && results.every((item) => item.success)
 
-      console.log(
-        `
-✅ RESUMEN DEL ENVÍO
-├─ Total procesado: ${results.length}
-├─ Exitosos: ${results.filter((r) => r.success).length}
-├─ Fallidos: ${results.filter((r) => !r.success).length}
-└─ Resultados:`,
-        results,
-      )
-
       if (allSucceeded) {
         sendSummaryMessage.value = `Se enviaron ${results.length} archivo(s) correctamente.`
-        console.log(`🎉 ¡TODOS LOS ARCHIVOS SE ENVIARON EXITOSAMENTE!`)
 
         // Guardar el análisis del primer resultado exitoso
         const firstSuccessfulResult = results.find((r) => r.success)
@@ -311,7 +290,7 @@ export function useUploadImagesQueue() {
           setAnalysis(firstSuccessfulResult.analysis, imageData)
 
           // Redirigir a diagnóstico
-          console.log('🔄 Redirigiendo a /diagnostic...')
+
           await router.push('/diagnostic')
         }
 
@@ -329,7 +308,7 @@ export function useUploadImagesQueue() {
       return results
     } finally {
       isSendingQueue.value = false
-      console.log('════════════════════════════════════════════════════════════')
+
     }
   }
 
