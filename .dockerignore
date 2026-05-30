@@ -8,3 +8,18 @@
 !entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/
 !entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt
 
+# Frontend paths
+!frontend/
+!frontend/**
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+
+# Ignore local build artifacts and node_modules
+frontend/node_modules
+node_modules
+frontend/dist
+dist
+.git
+.idea
+__pycache__

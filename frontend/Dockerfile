@@ -14,16 +14,17 @@ ARG VITE_GRAPHQL_ENDPOINT=/graphql
 ENV VITE_GRAPHQL_ENDPOINT=${VITE_GRAPHQL_ENDPOINT}
 
 # Copiar los archivos de definición de dependencias
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY frontend/package.json ./frontend/
 
 # Instalar las dependencias de forma exacta usando el archivo lock
 RUN pnpm install --frozen-lockfile
 
 # Copiar el resto del código fuente del proyecto
-COPY . .
+COPY frontend/ ./frontend/
 
 # Borrar dist y compilar la aplicación para producción
-RUN rm -rf dist && pnpm run build
+RUN rm -rf frontend/dist && pnpm --filter frontend build
 
 # Compilar la aplicación para producción (esto generará la carpeta /dist)
 #RUN pnpm run build
@@ -34,10 +35,10 @@ RUN rm -rf dist && pnpm run build
 FROM nginx:alpine AS production-stage
 
 # Copiar los archivos compilados de la Etapa 1 al directorio público de Nginx
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/frontend/dist /usr/share/nginx/html
 
 # Configurar Nginx para servir la SPA y reenviar llamadas al backend.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Exponer el puerto en el que Nginx escuchará las peticiones
 EXPOSE 80
