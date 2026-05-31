@@ -40,6 +40,8 @@ services:
       dockerfile: backend/Dockerfile
     container_name: backend-api
     working_dir: /app/backend
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend:/app/backend
       - "./entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights:/app/entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights"
