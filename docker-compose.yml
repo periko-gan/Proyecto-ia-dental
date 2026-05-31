@@ -40,8 +40,9 @@ services:
       dockerfile: backend/Dockerfile
     container_name: backend-api
     working_dir: /app/backend
-    env_file:
-      - ./backend/.env
+    environment:
+      - DENTAL_AI_MONGO_URI=mongodb://mongo:27017
+      - DENTAL_AI_MODEL_PATH=src/model/best.pt
     volumes:
       - ./backend:/app/backend
     # Lanza uvicorn tal y como lo has solicitado
