@@ -18,7 +18,7 @@ RUN pip install --upgrade pip \
 	&& pip install -r requirements.txt
 
 COPY backend/ ./
-COPY ["entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt", "/app/entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt"]
+# COPY ["entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt", "/app/entrenamiento ia/runs/train/dental_definitivo_optimizado_medium/weights/best.pt"]
 
 EXPOSE 8000
 
