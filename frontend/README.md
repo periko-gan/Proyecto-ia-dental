@@ -243,7 +243,7 @@ En bloques `<style>` de Vue, usar solo comentarios en bloque:
 ### Debugging
 
 - **Inspeccionar requests GraphQL**: Abrir DevTools → Network tab → filtrar "graphql"
-- **Verificar variables de entorno**: Abrir DevTools → Console → `console.log(import.meta.env)`
+- **Verificar variables de entorno**: Abrir DevTools y revisar `import.meta.env` en la consola o con herramientas de depuración
 - **Ver estado de Pinia**: Instalar [Pinia DevTools](https://devtools.vuejs.org/)
 
 ## Notas importantes
