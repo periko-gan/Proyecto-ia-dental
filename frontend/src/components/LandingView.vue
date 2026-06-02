@@ -322,7 +322,7 @@ import Footer from '@/components/parts/all_pages/Footer.vue'
                 >
               </div>
               <p
-                  class="font-headline text-2xl lg:text-3xl text-white font-medium leading-snug mb-8 italic"
+                  class="font-headline text-2xl lg:text-3xl font-medium leading-snug mb-8 italic"
               >
                 "Dentis AI ha transformado la forma en que comunico hallazgos a mis pacientes. El
                 análisis automatizado aporta rigor técnico y evidencia visual que genera confianza
@@ -340,8 +340,8 @@ import Footer from '@/components/parts/all_pages/Footer.vue'
                   />
                 </div>
                 <div>
-                  <h5 class="font-headline font-bold text-white">Dr. Julian Reed, DDS</h5>
-                  <p class="text-sm text-white text-on-surface-variant font-medium">
+                  <h5 class="font-headline font-bold ">Dr. Julian Reed, DDS</h5>
+                  <p class="text-sm text-on-surface-variant font-medium">
                     Jefe de Cirugía Oral, Metro Dental Specialists
                   </p>
                 </div>
