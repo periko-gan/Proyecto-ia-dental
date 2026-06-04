@@ -60,7 +60,7 @@ const {
           >
             <span
                 class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90"
-            >{{ heroCompletedAnalyses.length }} radiografiàs analizadas</span
+            >{{ heroCompletedAnalyses.length }} radiografías analizadas</span
             >
             <span
                 class="badge badge-outline inline-flex whitespace-nowrap w-max max-w-full border-white/20 text-white/90"
