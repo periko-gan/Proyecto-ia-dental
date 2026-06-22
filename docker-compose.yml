@@ -139,47 +139,7 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  # ==========================================
-  # ORQUESTACIÓN AUXILIAR (NODE-RED)
-  # ==========================================
-  node-red:
-    image: nodered/node-red:latest
-    container_name: nodered
-    restart: unless-stopped
-    ports:
-      - "1880:1880"
-    volumes:
-      - ./docker/data/nodered:/data
-    networks:
-      - ia_dental_net
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
 
-
-
-  # ==========================================
-  # VISUALIZACIÓN TÉCNICA Y ANALÍTICA (GRAFANA)
-  # ==========================================
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - ./docker/data/grafana:/var/lib/grafana
-    networks:
-      - ia_dental_net
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
 
 volumes:
   backend_uploads:
